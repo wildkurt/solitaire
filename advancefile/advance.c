@@ -6,13 +6,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include "advance.h"
-#include "../checkfile/check.h"
 
 int main(int args, char *argv[]){
     gameConfig gameFile = {'n', -1, 0,'n', 'n', 'n', 'n', -1, ""};
     char *filename = NULL;
     FILE *input;
-    char *check = "./check ";
+    char *check = "check ";
     char argument[MAX_SIZE]= "";
     char *ptr;
     char c;
@@ -48,8 +47,9 @@ int main(int args, char *argv[]){
     else{
         strcat(argument, check);
         strcat(argument, filename);
-        if(system(argument)){
+        if(!system(argument)){
             fprintf(stderr, "File is not valid\n");
+            exit(1);
         }
         input = fopen(filename, "r");
     }

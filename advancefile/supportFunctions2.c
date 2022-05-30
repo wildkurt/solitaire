@@ -6,7 +6,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "advance.h"
-#include "../checkfile/check.h"
 
 int flipCardStockToWaste(gameConfig *gameFile){
     Card *ptr;
