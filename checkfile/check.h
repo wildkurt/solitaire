@@ -8,4 +8,7 @@ typedef struct{
     int turnOver;
     int limit;
 }Rules;
+
+void countCards(int *covered, int *stock, int *waste);
+
 #endif //SOLITAIRE_CHECK_H

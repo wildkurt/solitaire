@@ -13,4 +13,5 @@ typedef struct{
 int isRank(char c);
 int isSuit(char c);
 char isRedOrBlack(char c);
+int rankValue(char c);
 #endif //SOLITAIRE_CARD_H

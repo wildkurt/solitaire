@@ -15,6 +15,8 @@ int findFoundations(char *buffer, FILE *input, int *line){
             break;
         }
         for(int i = 0; buffer[i] != '\0'; i++){
+            if(buffer[i] == '#')
+                break;
             if((buffer[i] == '_' || isRank(buffer[i])) && isSuit(buffer[i + 1])){
                 fd[index].rank = buffer[i];
                 fd[index].suit = buffer[i+1];

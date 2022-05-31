@@ -6,13 +6,20 @@
 #include "check.h"
 #include "foundation.h"
 #include "tableau.h"
-
+#include "stockWaste.h"
+/** The main program will open the file then parse it to find all
+ * the required elements. During parsing, it calls functions that
+ * will determine if there is a element present and will also
+ * check the tableaus for a legal order. Foundations will be checked
+ * for correct suits. It will then initiate a count of covered cards
+ * and cards in the stock and waste*/
 int main(int args, char *argv[]){
     FILE *input;
     char buffer[50];
     Rules rules;
     char *lim;
-    int found = 0, line = 0;
+    int found = 0, line = 0, covered = 0, stock = 0, waste = 0;
+
     if(args < 2){
         input = fopen((const char *) stdin, "r");
     }
@@ -25,6 +32,8 @@ int main(int args, char *argv[]){
     }
     while(fgets(buffer, 50, input) != 0){
         line++;
+        if(buffer[0] == '#')
+            continue;
         if(strstr(buffer, "RULES:") != 0){
             found++;
         }
@@ -74,6 +83,7 @@ int main(int args, char *argv[]){
                 fprintf(stderr,"Foundations are incorrect or incomplete line %d\n", line);
                 return 1;
             }
+            //printFoundation();
             found++;
         }
         if(strstr(buffer, "TABLEAU:") != 0){
@@ -86,18 +96,36 @@ int main(int args, char *argv[]){
                 fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
                 return 1;
             }
+            //printTableau();
             found++;
         }
-        printTableau();
         if(strstr(buffer, "STOCK:") != 0){
-            printf("%s", buffer);
+            if(found < 7){
+                fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
+                return 1;
+            }
+            found++;
+            if(!findStockWaste(buffer, input, &line)){
+                fprintf(stderr, "Stock not found or stock is incorrect line %d\n",line);
+                return 1;
+            }
+            //printStockWaste();
+            found++;
         }
         if(strstr(buffer, "MOVES:") != 0){
-            printf("%s", buffer);
+            found++;
+            break;
         }
         memset(buffer,0,50);
     }
-    printf("Turn over: %d, Limit: %d\n", rules.turnOver, rules.limit);
+    if(found == 10){
+        printf("File is valid\n");
+    }
+    countCards(&covered, &stock, &waste);
+    printf("%d covered cards\n", covered);
+    printf("%d stock cards\n", stock);
+    printf("%d waste cards\n", waste);
+
     fclose(input);
     return 0;
 }

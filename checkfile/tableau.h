@@ -17,6 +17,8 @@ Card t2[30];
 Card t1[30];
 
 int findTableau(char *buffer, FILE *input, int *line);
+Card *setPointer( int col);
+int countCoveredCards();
 void printTableau();
 
 #endif //SOLITAIRE_TABLEAU_H

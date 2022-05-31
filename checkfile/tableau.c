@@ -5,33 +5,35 @@
 #include "tableau.h"
 #include <string.h>
 
-void setPointer(Card *ptr, int col){
+Card *setPointer( int col){
     switch(col){
-        case 7 : ptr = t7; break;
-        case 6 : ptr = t6; break;
-        case 5 : ptr = t5; break;
-        case 4 : ptr = t4; break;
-        case 3 : ptr = t3; break;
-        case 2 : ptr = t2; break;
-        case 1 : ptr = t1; break;
-        default: ptr = 0; break;
+        case 7 : return t7;
+        case 6 : return t6;
+        case 5 : return t5;
+        case 4 : return t4;
+        case 3 : return t3;
+        case 2 : return t2;
+        case 1 : return t1;
+        default: return 0;
     }
 }
 
 int isTableauCorrect(){
     Card *ptr;
-
-    for(int i = 7; i >=1; i--){
-        setPointer(ptr,i);
+    int column = 7;
+    while(column != 0){
+        ptr = setPointer(column);
         while(ptr->rank != '|'){
             ptr++;
         }
         ptr++;
-        while(isRank(ptr->rank)){
-            if(isRedOrBlack(ptr->suit) == isRedOrBlack((ptr+1)->suit))
+        while(isRank((ptr + 1)->rank)){
+            if(isRedOrBlack(ptr->suit) == isRedOrBlack((ptr + 1)->suit))
                 return 0;
-            ptr++;
+            if(rankValue(ptr->rank) <= rankValue((ptr + 1)->rank))
+                return 0;
         }
+        column--;
     }
     return 1;
 }
@@ -43,11 +45,15 @@ int findTableau(char *buffer, FILE *input, int *line){
 
     do{
         line++;
-        setPointer(ptr, tabCol);
+        ptr = setPointer(tabCol);
         index = 0;
+        covered = 'T';
         for(int i = 0; buffer[i] != '\n'; i++){
+            if(buffer[i]=='#')
+                break;
             if(strstr(buffer,"TABLEAU:")!=0){
                 fgets(buffer, 50, input);
+                i--;
                 continue;
             }
             if(isRank(buffer[i]) && isSuit(buffer[i+1])){
@@ -65,6 +71,7 @@ int findTableau(char *buffer, FILE *input, int *line){
                 ptr[index].rank = buffer[i];
                 ptr[index].suit = 0;
                 ptr[index].covered = 'F';
+                covered = 'F';
                 index++;
             }
         }
@@ -82,10 +89,30 @@ int findTableau(char *buffer, FILE *input, int *line){
 void printTableau(){
     Card *ptr;
     for(int i = 7; i >= 1; i--){
-        setPointer(ptr,i);
-        while(isRank(ptr->rank)){
-            printf("%c%c ",ptr->rank, ptr->suit);
+        ptr = setPointer(i);
+        while(isRank(ptr->rank) || ptr->rank == '|'){
+            if(ptr->suit == 0)
+                printf("%c ", ptr->rank);
+            else
+                printf("%c%c ",ptr->rank, ptr->suit);
             ptr++;
         }
+        printf("\n");
     }
+}
+
+int countCoveredCards(){
+    int coveredCount = 0, column = 7;
+    Card *ptr;
+    while(column != 0){
+        ptr = setPointer(column);
+        while(isRank(ptr->rank)){
+            if(ptr->covered == 'T')
+                coveredCount++;
+            ptr++;
+        }
+        column--;
+    }
+
+    return coveredCount;
 }
