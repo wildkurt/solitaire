@@ -7,7 +7,7 @@
 
 #define MAX_SIZE 100
 #include "../checkfile/check.h"
-
+#include "../checkfile/card.h"
 typedef struct gameConfig{
     char limitOnMoves; //from command line
     int moves; //from command line

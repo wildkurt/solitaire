@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "advance.h"
+#include "../checkfile/foundation.h"
+#include "../checkfile/tableau.h"
+#include "../checkfile/stockWaste.h"
 
 int main(int args, char *argv[]){
     gameConfig gameFile = {'n', -1, 0,'n', 'n', 'n', 'n', -1, ""};
@@ -66,13 +69,13 @@ int main(int args, char *argv[]){
             sscanf(ptr, "%*s %d", &gameFile.wasteResetsAllowed);
         }
         if(strstr(buffer, "FOUNDATIONS:")!=0){
-            findFoundations(buffer, input, &n, foundations);
+            findFoundations(buffer, input, &n);
         }
         if(strstr(buffer, "TABLEAU:")!=0){
-            findTableaus(input, &n, t7, t6, t5, t4, t3, t2, t1);
+            findTableau(buffer, input, &n);
         }
         if(strstr(buffer, "STOCK:")!=0){
-            findStockWaste(buffer, input, &n, sw);
+            findStockWaste(buffer, input, &n);
         }
         if(strstr(buffer, "MOVES:")!=0){
             processMoves(buffer, input, &gameFile);

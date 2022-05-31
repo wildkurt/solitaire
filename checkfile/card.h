@@ -8,10 +8,12 @@ typedef struct{
     char rank;
     char suit;
     char covered;
+    char stock;
 }Card;
 
 int isRank(char c);
 int isSuit(char c);
 char isRedOrBlack(char c);
 int rankValue(char c);
+char valueRank(int c);
 #endif //SOLITAIRE_CARD_H

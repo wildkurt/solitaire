@@ -15,7 +15,7 @@
  * and cards in the stock and waste*/
 int main(int args, char *argv[]){
     FILE *input;
-    char buffer[50];
+    char buffer[MAX_BUFFER];
     Rules rules;
     char *lim;
     int found = 0, line = 0, covered = 0, stock = 0, waste = 0;
@@ -30,7 +30,7 @@ int main(int args, char *argv[]){
         fprintf(stderr, "Unable to open file %s\n", argv[1]);
         return 1;
     }
-    while(fgets(buffer, 50, input) != 0){
+    while(fgets(buffer, MAX_BUFFER, input) != 0){
         line++;
         if(buffer[0] == '#')
             continue;
@@ -94,9 +94,10 @@ int main(int args, char *argv[]){
             found++;
             if(!findTableau(buffer, input, &line)){
                 fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
+                printTableau();
                 return 1;
             }
-            //printTableau();
+
             found++;
         }
         if(strstr(buffer, "STOCK:") != 0){
@@ -116,10 +117,17 @@ int main(int args, char *argv[]){
             found++;
             break;
         }
-        memset(buffer,0,50);
+        memset(buffer,0,MAX_BUFFER);
+    }
+    if(missingDuplicateCards()){
+        return 1;
     }
     if(found == 10){
         printf("File is valid\n");
+    }
+    else{
+        fprintf(stderr, "File is invalid at line %d\n", line);
+        return 1;
     }
     countCards(&covered, &stock, &waste);
     printf("%d covered cards\n", covered);

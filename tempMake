@@ -3,12 +3,14 @@ XX=g++
 CFLAGS=-I.
 DEPS = card.h check.h foundation.h stockWaste.h tableau.h
 DEPT = advance.h
+DEPU = cardHeader.h foundations.h gameConfiguration.h rules.h switches.h Tableaus.h
 OBJ = check.o card.o checkf.o foundation.o stockWaste.o tableau.o
 OBJS = advance.o supportFunctions2.o foundation.o stockWaste.o tableau.o card.o
+OBJT = winnable.o cardFunctions.o foundations.o gameConfiguration.o Tableaus.o
 
-VPATH = checkfile : advancefile
+VPATH = checkfile : advancefile : winnablefile
 
-build: check advance
+build: check advance winnable
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -16,13 +18,19 @@ build: check advance
 %.o: %.c $(DEPT)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
+%.o: %.cpp $(DEPU)
+	$(XX) -c -o $@ $< $(CFLAGS)
+
 check: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 advance: $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS)
 
+winnable: $(OBJT)
+	$(XX) -o $@ $^ $(CFLAGS)
+
 .PHONY: clean
 
 clean:
-	rm check advance *.o
+	rm  winnable check advance *.o

@@ -4,6 +4,15 @@
 
 #include "tableau.h"
 #include <string.h>
+#include "check.h"
+
+Card t7[30];
+Card t6[30];
+Card t5[30];
+Card t4[30];
+Card t3[30];
+Card t2[30];
+Card t1[30];
 
 Card *setPointer( int col){
     switch(col){
@@ -20,20 +29,23 @@ Card *setPointer( int col){
 
 int isTableauCorrect(){
     Card *ptr;
-    int column = 7;
-    while(column != 0){
-        ptr = setPointer(column);
-        while(ptr->rank != '|'){
+    int col = 7;
+    while(col != 0){
+        ptr = setPointer(col);
+        while(isRank(ptr->rank)){
             ptr++;
         }
         ptr++;
         while(isRank((ptr + 1)->rank)){
-            if(isRedOrBlack(ptr->suit) == isRedOrBlack((ptr + 1)->suit))
+            if(isRedOrBlack(ptr->suit) == isRedOrBlack((ptr + 1)->suit)){
                 return 0;
-            if(rankValue(ptr->rank) <= rankValue((ptr + 1)->rank))
+            }
+            else if(rankValue(ptr->rank) <= rankValue((ptr+1)->rank)){
                 return 0;
+            }
+            ptr++;
         }
-        column--;
+        col--;
     }
     return 1;
 }
@@ -44,15 +56,17 @@ int findTableau(char *buffer, FILE *input, int *line){
     char covered = 'T';
 
     do{
-        line++;
+        *line +=1;
         ptr = setPointer(tabCol);
         index = 0;
         covered = 'T';
-        for(int i = 0; buffer[i] != '\n'; i++){
+        for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){
             if(buffer[i]=='#')
                 break;
             if(strstr(buffer,"TABLEAU:")!=0){
-                fgets(buffer, 50, input);
+                fgets(buffer, MAX_BUFFER, input);
+                if(strstr(buffer,"TABLEAU:")!=0)
+                    break;
                 i--;
                 continue;
             }
@@ -77,7 +91,8 @@ int findTableau(char *buffer, FILE *input, int *line){
         }
         if(strstr(buffer,"TABLEAU:")==0)
             tabCol--;
-    }while(fgets(buffer, 50, input) != 0 && tabCol != 0);
+        memset(buffer,0,MAX_BUFFER);
+    }while(fgets(buffer, MAX_BUFFER, input) != 0 && tabCol != 0);
     if(isTableauCorrect() && tabCol == 0){
         return 1;
     }

@@ -6,6 +6,9 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "advance.h"
+#include "../checkfile/foundation.h"
+#include "../checkfile/tableau.h"
+#include "../checkfile/stockWaste.h"
 
 int flipCardStockToWaste(gameConfig *gameFile){
     Card *ptr;
@@ -37,14 +40,6 @@ int flipCardStockToWaste(gameConfig *gameFile){
     return 0;
 }
 
-void printCardArray(Card *arr){
-    while(arr->rank != '\0'){
-        printf("%c%c covered: %c", arr->rank, arr->suit, arr->covered);
-        arr++;
-    }
-    printf("\n");
-}
-
 int resetWasteToStock(gameConfig *gameFile){
     if(gameFile->limitedGame == 'y' && gameFile->wasteResetsAllowed == 0){
         return 1;
@@ -60,6 +55,7 @@ int resetWasteToStock(gameConfig *gameFile){
         *(ptr-1) = temp;
         ptr--;
     }
+    return 0;
 }
 Card *setCol(char c){
 
@@ -90,6 +86,7 @@ Card *setCol(char c){
     else if(c == 'f'){
         return foundations;
     }
+    return 0;
 }
 
 int moveColToCol(char source, char dest){
@@ -143,7 +140,6 @@ int moveColToCol(char source, char dest){
             sourceCol->rank = '\0';
             sourceCol->suit = '\0';
             sourceCol->covered = '\0';
-            sourceCol->waste = '\0';
             sourceCol->stock ='\0';
             sourceCol++;
         }
@@ -176,7 +172,6 @@ int moveColToCol(char source, char dest){
             sourceCol->suit = '\0';
             sourceCol->covered = '\0';
             sourceCol->stock = '\0';
-            sourceCol->waste = '\0';
             sourceCol++;
         }
         return 0;
@@ -196,7 +191,6 @@ int moveColToFoundation(char source){
             temp->suit = '\0';
             temp->covered = '\0';
             temp->stock = '\0';
-            temp->waste = '\0';
             if((temp-1)->rank == '|' && (temp-1) != setCol(source)){
                 Card tempC;
                 tempC = *(temp-1);
@@ -245,7 +239,7 @@ int moveWasteToCol(char dest){
 }
 
 int moveWasteToFoundation(){
-    Card *waste, *found;
+    Card *waste;
     waste = sw;
 
     while((waste+1)->rank != '|'){
@@ -293,6 +287,7 @@ int performMoves(char source, char dest){
             }
         }
     }
+    return 0;
 }
 
 void processMoves(char *buffer, FILE *input, gameConfig *gameFile){
@@ -399,17 +394,11 @@ void writeToExchange(gameConfig *gameFile){
     else
         printf("  turn 1\n");
     printf("FOUNDATIONS:\n");
-    printCards(foundations, 4);
+    printFoundation();
     printf("TABLEAU:\n");
-    printCards(t7, 30);
-    printCards(t6, 30);
-    printCards(t5, 30);
-    printCards(t4, 30);
-    printCards(t3, 30);
-    printCards(t2, 30);
-    printCards(t1, 30);
+    printTableau();
     printf("STOCK:\n");
-    printCards(sw,30);
+    printStockWaste();
     printf("MOVES:\n");
 }
 
@@ -424,7 +413,7 @@ void writeHumanReadable(gameConfig *gameFile){
     seven = t7;
 
     printf("Foundations\n");
-    printCards(foundations,4);
+    printFoundation();
     printf("Tableau\n");
 
     while(1){

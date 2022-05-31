@@ -4,16 +4,21 @@
 
 #include "stockWaste.h"
 #include <string.h>
+#include "check.h"
 
 int findStockWaste(char *buffer, FILE *input, int *line){
     char covered = 'F', foundMoves ='F';
     int index = 0;
     do{
-        for(int i = 0; buffer[i] != '\n'; i++){
+        for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){
             if(buffer[i] =='#')
                 break;
             if(strstr(buffer, "STOCK:") != 0){
-                fgets(buffer, 50, input);
+                fgets(buffer, MAX_BUFFER, input);
+                if(strstr(buffer, "MOVES") != 0)
+                    foundMoves = 'T';
+                if(strstr(buffer, "STOCK:") != 0)
+                    break;
                 i--;
                 continue;
             }
@@ -26,20 +31,28 @@ int findStockWaste(char *buffer, FILE *input, int *line){
                 sw[index].rank = buffer[i];
                 sw[index].suit = 0;
                 sw[index].covered = 'F';
+                sw[index].stock = 'F';
                 covered = 'T';
                 index++;
             }
             if(isRank(buffer[i]) && isSuit(buffer[i+1])){
                 sw[index].rank = buffer[i];
                 sw[index].suit = buffer[i+1];
-                if(covered == 'F')
+                if(covered == 'F'){
                     sw[index].covered = 'F';
-                else
+                    sw[index].stock = 'F';
+                }
+                else{
                     sw[index].covered = 'T';
+                    sw[index].stock = 'T';
+                }
                 index++;
             }
         }
-    }while(fgets(buffer, 50, input)!=0 && foundMoves == 'F');
+        if(foundMoves == 'T')
+            break;
+        memset(buffer, 0, MAX_BUFFER);
+    }while(fgets(buffer, MAX_BUFFER, input)!=0);
     return 1;
 }
 

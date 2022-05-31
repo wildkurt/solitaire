@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "foundation.h"
+#include "check.h"
 
 int findFoundations(char *buffer, FILE *input, int *line){
     int index = 0;
@@ -14,7 +15,7 @@ int findFoundations(char *buffer, FILE *input, int *line){
             fputs(buffer, input);
             break;
         }
-        for(int i = 0; buffer[i] != '\0'; i++){
+        for(int i = 0; buffer[i] != '\0' || i < MAX_BUFFER; i++){
             if(buffer[i] == '#')
                 break;
             if((buffer[i] == '_' || isRank(buffer[i])) && isSuit(buffer[i + 1])){
@@ -24,7 +25,8 @@ int findFoundations(char *buffer, FILE *input, int *line){
                 index++;
             }
         }
-    }while(fgets(buffer,50, input) != 0);
+        memset(buffer, 0, MAX_BUFFER);
+    }while(fgets(buffer,MAX_BUFFER, input) != 0);
     if(fd[0].suit == 'c' && fd[1].suit == 'd' && fd[2].suit == 'h' && fd[3].suit == 's')
         return 1;
     else
