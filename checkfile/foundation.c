@@ -7,6 +7,10 @@
 #include "foundation.h"
 #include "check.h"
 
+/** This just gets the foundations and makes sure the suits are in the right order.
+ * There is a function to print the foundations for testing purposes for check,
+ * put can be used in other executables like advance.*/
+
 int findFoundations(char *buffer, FILE *input, int *line){
     int index = 0;
     do{

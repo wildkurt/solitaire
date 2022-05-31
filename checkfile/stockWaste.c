@@ -5,7 +5,7 @@
 #include "stockWaste.h"
 #include <string.h>
 #include "check.h"
-
+/** Similar to findTableau, but only need to file one array*/
 int findStockWaste(char *buffer, FILE *input, int *line){
     char covered = 'F', foundMoves ='F';
     int index = 0;
@@ -55,7 +55,7 @@ int findStockWaste(char *buffer, FILE *input, int *line){
     }while(fgets(buffer, MAX_BUFFER, input)!=0);
     return 1;
 }
-
+//Just prints the cards in the stock waste.
 void printStockWaste(){
     Card *ptr = sw;
     while(isRank(ptr->rank) || ptr->rank =='|'){

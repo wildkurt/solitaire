@@ -4,7 +4,7 @@ CFLAGS=-I.
 DEPS = card.h check.h foundation.h stockWaste.h tableau.h
 DEPT = advance.h
 OBJ = check.o card.o checkf.o foundation.o stockWaste.o tableau.o
-OBJS = advance.o supportFunctions2.o foundation.o stockWaste.o tableau.o card.o
+OBJS = advance.o foundation.o stockWaste.o tableau.o card.o
 
 VPATH = checkfile : advancefile
 
