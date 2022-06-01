@@ -10,13 +10,14 @@
 #include "../checkfile/tableau.h"
 #include "../checkfile/foundation.h"
 #include "../checkfile/stockWaste.h"
+#include "moves.h"
 
 int main(int args, char *argv[]){
     GameConfiguration gameconfiguration ={'F', 0, 'F', 0, 'F'};
     FILE *input;
     char *check = "./check", *lim;
     char *inputFileName = 0;
-    int line = 0;
+    int line = 0, movess = 0;
     char buffer[MAX_BUFFER];
     Rules rules;
 
@@ -105,6 +106,9 @@ int main(int args, char *argv[]){
             break;
         }
         memset(buffer,0,MAX_BUFFER);
+    }
+    if(moves(input, &line, &moves, &rules) == 0){
+        return 1;
     }
     return 0;
 }

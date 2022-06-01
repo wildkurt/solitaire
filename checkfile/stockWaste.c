@@ -55,6 +55,55 @@ int findStockWaste(char *buffer, FILE *input, int *line){
     }while(fgets(buffer, MAX_BUFFER, input)!=0);
     return 1;
 }
+int doStockWasteCardTurnover(Rules *rules){
+    /* Case 1: the stock/waste is empty
+     * Case 2: All the cards are in the waste
+     * Case 3: Rule turn 3, and less then three
+     * cards in the stock
+     * Need to move the '|' to separate stock
+     * from waste. Waste is on the left, stock
+     * on the right.*/
+    //No cards in stock/waste
+    if(sw[0].rank == '|' && sw[1].rank == '\0'){
+        return 0; //false, illegal move
+    }
+    Card *ptr = sw;
+    while(ptr->rank != '|'){
+        ptr++;
+    }
+    //No more stock cards
+    if((ptr+1)->rank == '\0'){
+        return 0;
+    }
+    //Turn over one or three cards
+    int count = rules->turnOver;
+    while(count > 0 && ptr->rank != '\0'){
+        Card temp = *ptr;
+        *ptr = *(ptr + 1);
+        *(ptr + 1) = temp;
+        ptr++;
+        count--;
+    }
+    return 1;
+}
+
+int doStockWasteReset(Rules *rules){
+    /* Case 1: No cards in stock/waste
+     * Case 2: No resets left
+     * Case 3: Still stock cards left*/
+    //No cards left
+    if(sw[0].rank == '|' && sw[1].rank == '\0'){
+        return 0; //false, illegal move
+    }
+    //No resets left
+    if(rules->limit == 0){
+        return 0; //no resets left
+    }
+    //Still cards in stock
+    //TODO
+
+    //TODO perform stock waste reset
+}
 //Just prints the cards in the stock waste.
 void printStockWaste(){
     Card *ptr = sw;
