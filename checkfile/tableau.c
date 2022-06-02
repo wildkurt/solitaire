@@ -110,9 +110,14 @@ int findTableau(char *buffer, FILE *input, int *line){
                 covered = 'F';
                 index++;
             }
+            if(strstr(buffer,"STOCK:")!=0){
+                fputs(buffer,input);
+                break;
+            }
         }
-        if(strstr(buffer,"TABLEAU:")==0)
-            tabCol--;
+        if(strstr(buffer,"STOCK:")!=0){
+            break;
+        }
         memset(buffer,0,MAX_BUFFER);
     }while(fgets(buffer, MAX_BUFFER, input) != 0 && tabCol != 0);
     if(isTableauCorrect() && tabCol == 0){

@@ -1,0 +1,19 @@
+RULES:
+turn 1
+unlimited
+
+FOUNDATIONS:
+Qc Qd Jh Js
+
+TABLEAU:
+|Kc
+|Kd
+|Kh
+|Ks
+|
+|
+|
+
+STOCK:
+Qh | Qs
+MOVES:
