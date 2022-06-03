@@ -16,6 +16,6 @@ Td Qc | 9d
 2h | Qh
 | 4d
 STOCK:
-| Jd 3d Ac Kc 4h 2s Qd 6d Kh 5s 4s Ah Ts 4c 5d
+Jd | 3d Ac Kc 4h 2s Qd 6d Kh 5s 4s Ah Ts 4c 5d
 2d 9c 9h 2c Jh 8s 3s 8d 5c
 MOVES:

@@ -5,11 +5,16 @@
 #include "stockWaste.h"
 #include <string.h>
 #include "check.h"
+#include <stdlib.h>
+
+Card sw[30];
+
 /** Similar to findTableau, but only need to file one array*/
 int findStockWaste(char *buffer, FILE *input, int *line){
     char covered = 'F', foundMoves ='F';
     int index = 0;
     do{
+        *line = *line + 1;
         for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){
             if(buffer[i] =='#')
                 break;
@@ -81,6 +86,7 @@ int doStockWasteCardTurnover(Rules *rules){
         Card temp = *ptr;
         *ptr = *(ptr + 1);
         *(ptr + 1) = temp;
+        ptr->covered = 'F';
         ptr++;
         count--;
     }
@@ -91,6 +97,7 @@ int doStockWasteReset(Rules *rules){
     /* Case 1: No cards in stock/waste
      * Case 2: No resets left
      * Case 3: Still stock cards left*/
+    int count = 0;
     //No cards left
     if(sw[0].rank == '|' && sw[1].rank == '\0'){
         return 0; //false, illegal move
@@ -100,19 +107,86 @@ int doStockWasteReset(Rules *rules){
         return 0; //no resets left
     }
     //Still cards in stock
-    //TODO
-
-    //TODO perform stock waste reset
+    Card *ptr = sw;
+    while(ptr->rank != '|'){
+        ptr++;
+        count++;
+    }
+    if((ptr + 1)->rank != '\0'){
+        return 0;
+    }
+    for(int i = count; i > 0 ; i--){
+        Card temp = *(ptr -1);
+        *(ptr - 1) = *ptr;
+        *ptr = temp;
+        ptr--;
+    }
+    if(rules->limit > 0)
+        rules->limit = rules->limit - 1;
+    return 1;
 }
 //Just prints the cards in the stock waste.
 void printStockWaste(){
     Card *ptr = sw;
-    while(isRank(ptr->rank) || ptr->rank =='|'){
-        if(ptr->suit == 0)
-            printf("%c %c ",ptr->rank, ptr->covered);
+    while(ptr->rank != '\0'){
+        if(ptr->rank == '|')
+            printf("%c ", ptr->rank);
         else
-            printf("%c%c %c ", ptr->rank, ptr->suit, ptr->covered);
+            printf("%c%c ", ptr->rank, ptr->suit);
         ptr++;
     }
     printf("\n");
+}
+
+int stockWasteEmpty(){
+    if(sw[0].rank == '|' && sw[1].rank == '\0')
+        return 1;
+    else
+        return 0;
+}
+
+void printStockWasteTop(Rules *rules){
+    Card *ptr = sw;
+    while(ptr->rank != '|'){
+        ptr++;
+    }
+    if(rules->turnOver == 3){
+        if((ptr-3)->rank != '\0')
+            printf("%c%c ",(ptr-3)->rank, (ptr-3)->suit);
+        if((ptr-2)->rank != '\0')
+            printf("%c%c ",(ptr-2)->rank, (ptr-2)->suit);
+        if((ptr-1)->rank != '\0')
+            printf("%c%c ",(ptr-1)->rank, (ptr-1)->suit);
+    }
+    else{
+        if((ptr-1)->rank != '\0')
+        printf("%c%c\n", (ptr-1)->rank, (ptr-1)->suit);
+    }
+}
+
+Card *stockWastePtr(){return sw;}
+
+Card *getTopWasteCard(){
+    Card *ptr = sw;
+    while((ptr+1)->rank != '|'){
+        ptr++;
+    }
+    return ptr;
+}
+
+Card *removeWasteCard(Card *ptr){
+    /*Removing a card from the waste assuming it is a waste card.
+     * Case 1: it is the only card in the stock/waste
+     * Case 2: it is the only card in the waste
+     * Case 3: there are other cards in the waste*
+     * Should only have to remove one card even if draw three is a rule.
+     * Assuming the card removal requested is the top card*/
+    //Putting card on the heap so it can be copied to array on the stack
+    Card *temp = malloc(sizeof(Card));
+    *temp = *ptr;
+    while(ptr->rank != '\0'){
+        *ptr = *(ptr+1);
+        ptr++;
+    }
+    return temp;
 }

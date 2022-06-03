@@ -11,6 +11,8 @@
  * There is a function to print the foundations for testing purposes for check,
  * put can be used in other executables like advance.*/
 
+Card fd[4];
+
 int findFoundations(char *buffer, FILE *input, int *line){
     int index = 0;
     do{
@@ -43,3 +45,7 @@ void printFoundation(){
     }
     printf("\n");
 }
+
+Card *fdPtr(){return fd;}
+
+int addCardToFoundation(Card *card){}

@@ -5,6 +5,8 @@
 #include "tableau.h"
 #include <string.h>
 #include "check.h"
+#include <stdlib.h>
+
 /** This has all the functions that operate on tableau and
  * holds the tableaus themselves.*/
 Card t7[30];
@@ -69,13 +71,15 @@ int isTableauCorrect(){
 int findTableau(char *buffer, FILE *input, int *line){
     Card *ptr;
     int tabCol = 7, index;
-    char covered = 'T';
+    char covered;
 
     do{
         *line +=1;
         ptr = setPointer(tabCol);
         index = 0;
         covered = 'T';
+        if(strstr(buffer,"TABLEAU:")!=0)
+            fgets(buffer, MAX_BUFFER, input);
         for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){
             if(buffer[i]=='#')
                 break;
@@ -115,6 +119,7 @@ int findTableau(char *buffer, FILE *input, int *line){
                 break;
             }
         }
+        tabCol--;
         if(strstr(buffer,"STOCK:")!=0){
             break;
         }
@@ -141,4 +146,26 @@ void printTableau(){
         }
         printf("\n");
     }
+}
+
+Card *getTopColCard(int col){
+    /*Case 1: Column is empty
+     * Case 2: Column is not empty*/
+    Card *ptr = setPointer(col);
+    if(ptr->rank == '|' && (ptr+1)->rank == '\0')
+        return 0;
+    while((ptr + 1)->rank != '\0'){
+        ptr++;
+    }
+    return ptr;
+}
+
+void addCardToColumn(Card *ptr, int col){
+    //assuming ptr is on the heap and not the stack
+    Card *tabptr = setPointer(col);
+    while(tabptr->rank != '\0'){
+        tabptr++;
+    }
+    *tabptr = *ptr;
+    free(ptr);
 }

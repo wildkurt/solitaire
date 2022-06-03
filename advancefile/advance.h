@@ -12,4 +12,5 @@ typedef struct{
     char *filename;
     char exchangeFormat;
 }GameConfiguration;
+
 #endif //SOLITAIRE_ADVANCE_H

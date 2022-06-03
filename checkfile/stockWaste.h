@@ -9,11 +9,14 @@
 #include "check.h"
 #include <stdio.h>
 
-Card sw[30];
-
 int findStockWaste(char *buffer, FILE *input, int *line);
 int doStockWasteCardTurnover(Rules *rules);
 int doStockWasteReset(Rules *rules);
+int stockWasteEmpty();
+void printStockWasteTop(Rules *rules);
 void printStockWaste();
+Card *stockWastePtr();
+Card *getTopWasteCard();
+Card *removeWasteCard(Card *ptr);
 
 #endif //SOLITAIRE_STOCKWASTE_H

@@ -11,5 +11,7 @@
 int findTableau(char *buffer, FILE *input, int *line);
 Card *setPointer( int col);
 void printTableau();
+Card *getTopColCard(int col);
+void addCardToColumn(Card *ptr, int col);
 
 #endif //SOLITAIRE_TABLEAU_H

@@ -1,6 +1,7 @@
 //
 // Created by wendellbest on 5/30/22.
 //
+
 #include "check.h"
 #include "card.h"
 #include "stockWaste.h"
@@ -19,7 +20,7 @@ void countCards(int *covered, int *stock, int *waste){
         }
         col--;
     }
-    ptr = sw;
+    ptr = stockWastePtr();
     while(ptr->rank != '\0'){
         if(ptr->stock == 'T'){
             *stock = *stock + 1;
@@ -30,24 +31,26 @@ void countCards(int *covered, int *stock, int *waste){
         ptr++;
     }
 }
+
 int indexSetter(char c){
     switch (c){
         case 'c' : return 0;
         case 'd' : return 13;
         case 'h' : return 26;
         case 's' : return 39;
+        default: return -1;
     }
 }
 int missingDuplicateCards(){
     int deck[52] = {0};
     int total = 0, missing = 0, duplicates = 0;
-
+    Card *ptrfd = fdPtr();
     for(int i = 0; i < 4; i++){
-        if(fd[i].rank == '_')
+        if(ptrfd[i].rank == '_')
             continue;
-        int limit = rankValue(fd[i].rank);
+        int limit = rankValue(ptrfd[i].rank);
         for(int j = limit; j >=0 ; j--){
-            deck[j + indexSetter(fd[i].suit)]  += 1;
+            deck[j + indexSetter(ptrfd[i].suit)]  += 1;
         }
     }
     Card *ptr;
@@ -61,7 +64,7 @@ int missingDuplicateCards(){
         }
         col--;
     }
-    ptr = sw;
+    ptr = stockWastePtr();
     while(ptr->rank != '\0'){
         if(ptr->rank != '|')
             deck[rankValue(ptr->rank) + indexSetter(ptr->suit)] += 1;

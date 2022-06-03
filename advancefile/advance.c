@@ -11,11 +11,12 @@
 #include "../checkfile/foundation.h"
 #include "../checkfile/stockWaste.h"
 #include "moves.h"
+#include "printGame.h"
 
 int main(int args, char *argv[]){
     GameConfiguration gameconfiguration ={'F', 0, 'F', 0, 'F'};
     FILE *input;
-    char *check = "./check", *lim;
+    char *check = "./cmake-build-debug/check", *lim;
     char *inputFileName = 0;
     int line = 0, movess = 0;
     char buffer[MAX_BUFFER];
@@ -107,8 +108,9 @@ int main(int args, char *argv[]){
         }
         memset(buffer,0,MAX_BUFFER);
     }
-    if(moves(input, &line, &moves, &rules) == 0){
+    if(moves(input, &line, &movess, &rules) == 0){
         return 1;
     }
+    printGame(&rules, &gameconfiguration, &movess);
     return 0;
 }

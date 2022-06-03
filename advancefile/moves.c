@@ -50,6 +50,11 @@
 #include "moves.h"
 #include "../checkfile/check.h"
 #include "../checkfile/stockWaste.h"
+#include "../checkfile/tableau.h"
+#include "../checkfile//foundation.h"
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
 
 int validSource(char c){
     switch(c){
@@ -89,7 +94,7 @@ int moves(FILE *input, int *line, int *moves, Rules *rules){
     char buffer[MAX_BUFFER];
     while(fgets(buffer, MAX_BUFFER, input)){
         *line = *line + 1;
-        for(int i = 0; i < MAX_BUFFER; i++){
+        for(int i = 0; i < MAX_BUFFER && buffer[i] != '\0'; i++){
             if(validAction(buffer[i])){
                 *moves = *moves + 1;
                 if(buffer[i] == '.'){
@@ -105,8 +110,49 @@ int moves(FILE *input, int *line, int *moves, Rules *rules){
                     }
                 }
             }
-            else if(validSource(buffer[i])){}
+            else if(validSource(buffer[i]) && buffer[i+1] == '-' && buffer[i+2] == '>' && validDestination(buffer[i+3])){
+                //Case 1: move from waste to col
+                //Case 2: move from waste to foundation
+                //Case 3: move from col to col
+                //Case 4: move from col to foundation
+                *moves = *moves + 1;
+                if(buffer[i] == 'w'){
+                    if(isdigit(buffer[i+3])){
+                    /* To move from waste to column:
+                     * 1. Can only remove one card from waste
+                     * 2. Waste card needs to be one rank higher and opposite color of card on top of col*/
+                        if(stockWasteEmpty() == 0){
+                            Card *src = getTopWasteCard();
+                            Card *dst = getTopColCard(buffer[i+3] - '0');
+                            if(isRedOrBlack(src->suit) != isRedOrBlack(dst->suit) && rankValue(src->rank)+1 == rankValue(dst->rank)){
+                                addCardToColumn(removeWasteCard(src),buffer[i+3] - '0');
+                            }
+                            else{
+                                fprintf(stderr,"Move %d is illegal: %c%c%c%c\n", *moves, buffer[i], buffer[i+1], buffer[i+2], buffer[i+3]);
+                                return 0;
+                            }
+                        }
+                    }
+                    if(buffer[i+3] == 'f') {
+                        /*Case 1: The foundation is empty
+                         * Case 2: The foundation is not empty*/
+                        Card *src = getTopWasteCard();
+                        if(addCardToFoundation(src) == 0){
+                            fprintf(stderr,"Move %d is illegal: %c%c%c%c\n", *moves, buffer[i], buffer[i+1], buffer[i+2], buffer[i+3]);
+                            return 0;
+                        }
+                    }
+                }
+                if(isdigit(buffer[i])){}
+                i+=4;
+            }
+            else if(buffer[i] != ' ' && buffer[i] != '-' && buffer[i] != '>'){
+                *moves = *moves + 1;
+                fprintf(stderr,"Move %d is illegal: %c\n", *moves, buffer[i]);
+                return 0;
+            }
         }
+        memset(buffer,0,MAX_BUFFER);
     }
     return 1;
 }
