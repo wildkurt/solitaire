@@ -1,6 +1,6 @@
 # 45 covered cards and 24 stock and 0 waste
 RULES:
-turn 3
+turn 1
 limit 10
 FOUNDATIONS:
 _c

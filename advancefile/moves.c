@@ -51,7 +51,8 @@
 #include "../checkfile/check.h"
 #include "../checkfile/stockWaste.h"
 #include "../checkfile/tableau.h"
-#include "../checkfile//foundation.h"
+#include "../checkfile/foundation.h"
+#include "printGame.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -72,7 +73,7 @@ int validSource(char c){
 
 int validDestination(char c){
     switch(c){
-        case 'F' : return 1;
+        case 'f' : return 1;
         case '1' : return 1;
         case '2' : return 1;
         case '3' : return 1;
@@ -90,11 +91,15 @@ int validAction(char c){
         default: return 0;
     }
 }
-int moves(FILE *input, int *line, int *moves, Rules *rules){
-    char buffer[MAX_BUFFER];
+int moves(FILE *input, int *line, int *moves, Rules *rules, GameConfiguration *gameConfiguration){
+    char buffer[MAX_BUFFER] = {0};
     while(fgets(buffer, MAX_BUFFER, input)){
         *line = *line + 1;
+        if(*moves == gameConfiguration->numberMovesToPlay)
+            break;
         for(int i = 0; i < MAX_BUFFER && buffer[i] != '\0'; i++){
+            if(buffer[i] == '\n')
+                break;
             if(validAction(buffer[i])){
                 *moves = *moves + 1;
                 if(buffer[i] == '.'){
@@ -125,7 +130,22 @@ int moves(FILE *input, int *line, int *moves, Rules *rules){
                             Card *src = getTopWasteCard();
                             Card *dst = getTopColCard(buffer[i+3] - '0');
                             if(isRedOrBlack(src->suit) != isRedOrBlack(dst->suit) && rankValue(src->rank)+1 == rankValue(dst->rank)){
-                                addCardToColumn(removeWasteCard(src),buffer[i+3] - '0');
+                                if(addCardToColumn(src,buffer[i+3] - '0') == 0){
+                                    fprintf(stderr,"Move %d is illegal: %c%c%c%c\n", *moves, buffer[i], buffer[i+1], buffer[i+2], buffer[i+3]);
+                                    return 0;
+                                }
+                                else{
+                                    removeWasteCard(src);
+                                }
+                            }
+                            else if(dst->rank == '|' && src->rank == 'K'){
+                                if(addCardToColumn(src, buffer[i+3] -'0') == 0){
+                                    fprintf(stderr,"Move %d is illegal: %c%c%c%c\n", *moves, buffer[i], buffer[i+1], buffer[i+2], buffer[i+3]);
+                                    return 0;
+                                }
+                                else{
+                                    removeWasteCard(src);
+                                }
                             }
                             else{
                                 fprintf(stderr,"Move %d is illegal: %c%c%c%c\n", *moves, buffer[i], buffer[i+1], buffer[i+2], buffer[i+3]);
@@ -141,10 +161,30 @@ int moves(FILE *input, int *line, int *moves, Rules *rules){
                             fprintf(stderr,"Move %d is illegal: %c%c%c%c\n", *moves, buffer[i], buffer[i+1], buffer[i+2], buffer[i+3]);
                             return 0;
                         }
+                        else{
+                            removeWasteCard(src);
+                        }
                     }
                 }
-                if(isdigit(buffer[i])){}
-                i+=4;
+                if(isdigit(buffer[i])){
+                    if(buffer[i+3] == 'f'){
+                        Card *src = getTopColCard(buffer[i] - '0');
+                        if(addCardToFoundation(src)){
+                            removeCardFromCol(buffer[i]-'0');
+                        }
+                        else{
+                            fprintf(stderr,"Move %d is illegal: %c%c%c%c\n", *moves, buffer[i], buffer[i+1], buffer[i+2], buffer[i+3]);
+                            return 0;
+                        }
+                    }
+                    else if(isdigit(buffer[i+3])){
+                        if(moveColToCol(buffer[i]-'0', buffer[i+3] - '0') == 0){
+                            fprintf(stderr,"Move %d is illegal: %c%c%c%c\n", *moves, buffer[i], buffer[i+1], buffer[i+2], buffer[i+3]);
+                            return 0;
+                        }
+                    }
+                }
+                i+=3;
             }
             else if(buffer[i] != ' ' && buffer[i] != '-' && buffer[i] != '>'){
                 *moves = *moves + 1;

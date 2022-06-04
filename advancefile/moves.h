@@ -6,7 +6,8 @@
 #define SOLITAIRE_MOVES_H
 #include <stdio.h>
 #include "../checkfile/check.h"
+#include "advance.h"
 
-int moves(FILE *input, int *line, int *moves, Rules *rules);
+int moves(FILE *input, int *line, int *moves, Rules *rules, GameConfiguration *gameconfiguration);
 
 #endif //SOLITAIRE_MOVES_H

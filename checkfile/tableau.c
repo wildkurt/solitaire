@@ -153,19 +153,113 @@ Card *getTopColCard(int col){
      * Case 2: Column is not empty*/
     Card *ptr = setPointer(col);
     if(ptr->rank == '|' && (ptr+1)->rank == '\0')
-        return 0;
+        return ptr;
     while((ptr + 1)->rank != '\0'){
         ptr++;
     }
     return ptr;
 }
 
-void addCardToColumn(Card *ptr, int col){
+int addCardToColumn(Card *ptr, int col){
+    /* Case 1: The column is not empty
+     * Case 2: The column is empty*/
     //assuming ptr is on the heap and not the stack
     Card *tabptr = setPointer(col);
     while(tabptr->rank != '\0'){
         tabptr++;
     }
+    if((tabptr - 1)->rank == '|' && ptr->rank != 'K')
+        return 0;
     *tabptr = *ptr;
-    free(ptr);
+    return 1;
+}
+
+void removeCardFromCol(int col){
+    /* Case 1: the top card has other face up cards below it
+     * Case 2: the top card has a face down card below it
+     * Case 3: the top card is the last card in the col*/
+    Card *ptr = setPointer(col);
+    while(ptr->rank != '\0'){
+        ptr++;
+    }
+    ptr--;
+    //Card below is covered
+    if((ptr-2)->covered == 'T' && (ptr-1)->rank == '|'){
+        ptr->rank = '\0';
+        ptr->suit = '\0';
+        ptr->covered = '\0';
+        ptr->stock = '\0';
+        Card temp = *(ptr-2);
+        *(ptr -2) = *(ptr-1);
+        *(ptr-1) = temp;
+        (ptr-1)->covered = 'F';
+    }
+    //Card is the last or card below is face up
+    else{
+        ptr->rank = '\0';
+        ptr->suit = '\0';
+        ptr->covered = '\0';
+        ptr->stock = '\0';
+    }
+}
+
+int moveColToCol(int src, int dst){
+    /* Case 1: the dst col is empty, src must be a King
+     * Case 2: The card in src and dst are the top cards
+     * Case 3: The card in src has more cards on top of it
+     * and all of them need to be moved to other column.*/
+    //Get pointers to the columns
+    Card *srcptr = setPointer(src);
+    Card *dstptr = setPointer(dst);
+    //increment the pointers to the '|' then increment by one
+    while(srcptr->rank != '|'){
+        srcptr++;
+    }
+    if(srcptr->rank != '\0'){
+        srcptr++;
+    }
+    while(dstptr->rank != '\0'){
+        dstptr++;
+    }
+    dstptr--;
+    //src and dst pointers both at a face up card, need to find
+    //a card in src that is opposite suit and one rank higher then
+    //transfer all cards to dst
+
+    while(srcptr->rank != '\0'){
+        if(isRedOrBlack(srcptr->suit) != isRedOrBlack(dstptr->suit) && rankValue(srcptr->rank) == rankValue(dstptr->rank) - 1){
+            while(srcptr->rank != '\0'){
+                *(++dstptr) = *srcptr;
+                srcptr->rank = '\0';
+                srcptr->suit = '\0';
+                srcptr->covered = '\0';
+                srcptr->stock = '\0';
+                if((srcptr-1)->rank == '|' && (srcptr-1) != setPointer(src)){
+                    Card temp = *(srcptr-2);
+                    *(srcptr-2) = *(srcptr-1);
+                    *(srcptr-1) = temp;
+                }
+                srcptr++;
+            }
+            return 1;
+        }
+        else if(dstptr->rank == '|' && srcptr->rank =='K'){
+            while(srcptr->rank != '\0'){
+                *(++dstptr) = *srcptr;
+                srcptr->rank = '\0';
+                srcptr->suit = '\0';
+                srcptr->covered = '\0';
+                srcptr->stock = '\0';
+                if((srcptr-1)->rank == '|' && (srcptr-2) != setPointer(src)){
+                    Card temp = *(srcptr-2);
+                    *(srcptr-2) = *(srcptr-1);
+                    *(srcptr-1) = temp;
+                }
+                srcptr++;
+            }
+            return 1;
+        }
+        srcptr++;
+    }
+    return 0;
 }

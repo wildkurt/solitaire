@@ -17,6 +17,6 @@ void printStockWasteTop(Rules *rules);
 void printStockWaste();
 Card *stockWastePtr();
 Card *getTopWasteCard();
-Card *removeWasteCard(Card *ptr);
+void removeWasteCard(Card *ptr);
 
 #endif //SOLITAIRE_STOCKWASTE_H

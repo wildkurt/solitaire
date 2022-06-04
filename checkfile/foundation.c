@@ -48,4 +48,16 @@ void printFoundation(){
 
 Card *fdPtr(){return fd;}
 
-int addCardToFoundation(Card *card){}
+int addCardToFoundation(Card *card){
+    for(int i = 0; i < 4; i++){
+        if(fd[i].suit == card->suit && rankValue(fd[i].rank) + 1 == rankValue(card->rank)){
+            fd[i] = *card;
+            return 1;
+        }
+        else if(fd[i].rank == '_' && card->rank == 'A' && fd[i].suit == card->suit){
+            fd[i] = *card;
+            return 1;
+        }
+    }
+    return 0;
+}

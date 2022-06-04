@@ -174,7 +174,7 @@ Card *getTopWasteCard(){
     return ptr;
 }
 
-Card *removeWasteCard(Card *ptr){
+void removeWasteCard(Card *ptr){
     /*Removing a card from the waste assuming it is a waste card.
      * Case 1: it is the only card in the stock/waste
      * Case 2: it is the only card in the waste
@@ -182,11 +182,8 @@ Card *removeWasteCard(Card *ptr){
      * Should only have to remove one card even if draw three is a rule.
      * Assuming the card removal requested is the top card*/
     //Putting card on the heap so it can be copied to array on the stack
-    Card *temp = malloc(sizeof(Card));
-    *temp = *ptr;
     while(ptr->rank != '\0'){
         *ptr = *(ptr+1);
         ptr++;
     }
-    return temp;
 }

@@ -12,9 +12,10 @@
 #include "../checkfile/stockWaste.h"
 #include "moves.h"
 #include "printGame.h"
+#include "printGameToFile.h"
 
 int main(int args, char *argv[]){
-    GameConfiguration gameconfiguration ={'F', 0, 'F', 0, 'F'};
+    GameConfiguration gameconfiguration ={'F', -1, 'F', 0, 'F'};
     FILE *input;
     char *check = "./cmake-build-debug/check", *lim;
     char *inputFileName = 0;
@@ -108,9 +109,13 @@ int main(int args, char *argv[]){
         }
         memset(buffer,0,MAX_BUFFER);
     }
-    if(moves(input, &line, &movess, &rules) == 0){
+    if(moves(input, &line, &movess, &rules, &gameconfiguration) == 0){
         return 1;
     }
+    //printf("Processed %d moves, all valid\n", movess);
     printGame(&rules, &gameconfiguration, &movess);
+    if(gameconfiguration.writeToFile == 'T'){
+        printGameToFile(&rules, &gameconfiguration);
+    }
     return 0;
 }
