@@ -1,7 +1,7 @@
 //
 // Created by wendellbest on 5/31/22.
 //
-/** Movement rules:
+/** Movement Rules:
  * STOCK: can only remove the top card and expose the next card in the waste.
  * Reseting the stock/waste back to stock counts as a move. One or three cards
  * can be turned over, but it has to be three when the rule says three. If there
@@ -22,7 +22,7 @@
  * be placed on empty tableau spots.
  *
  * OTHER RULES:
- * The input file has rules for number of cards to turn over (one or three) and also
+ * The input file has Rules for number of cards to turn over (one or three) and also
  * sets how many times the stock/waste can be reset, either N times or unlimited.
  *
  * OTHER FLAGS:

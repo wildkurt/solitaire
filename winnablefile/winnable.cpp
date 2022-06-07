@@ -4,12 +4,16 @@
 
 #include <iostream>
 #include <cstring>
-#include "switches.h"
+#include <cstdlib>
+#include "Switches.h"
+#include "GameConfiguration.h"
+#include "ReadInputFile.h"
 
 /**The main program will receive the name of the input file and */
 int main(int args, char *argv[]){
     std::string filename;
     Switches inputSwitches;
+    std::string check = "./cmake-build-debug/check ";
     if(args < 2){
         std::cin >> filename;
     }
@@ -33,11 +37,11 @@ int main(int args, char *argv[]){
             }
         }
     }
-    int number = 0;
-    std::cout << inputSwitches.getInputFileName() << std::endl;
-    char argument[100] = "./cmake-build-debug/check ";
-    argument = strcat(argument, inputSwitches.getInputFileName());
-    number = system(argument);
-    //std::cout << "Returned " << number << std::endl;
+    GameConfiguration gameConfiguration(inputSwitches);
+    ReadInputFile reader(gameConfiguration);
+    std::string argg = check + inputSwitches.getInputFileName();
+    system(argg.c_str());
+    //Run program to parse file
+    reader.getFileInput();
     return 0;
 }
