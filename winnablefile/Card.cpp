@@ -1,5 +1,5 @@
 //
-// Created by wendellbest on 6/6/22.
+// Created by wende on 6/7/2022.
 //
 
 #include "Card.h"
@@ -20,4 +20,20 @@ char Card::getRank() {
 
 char Card::getSuit() {
     return suit;
+}
+
+bool Card::isValidRank(char c) {
+    bool result = false;
+    if(c == 'A' || c == 'J' || c=='Q' || c=='K')
+        result = true;
+    else if(c >= '2' && c <= '9')
+        result = true;
+    return result;
+}
+
+bool Card::isValidSuit(char c) {
+    bool result = false;
+    if(c == 'c' || c == 'd' || c == 'h' || c == 's')
+        result = true;
+    return result;
 }

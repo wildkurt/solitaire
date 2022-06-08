@@ -1,23 +1,25 @@
 //
-// Created by wendellbest on 6/6/22.
+// Created by wende on 6/7/2022.
 //
 
 #include "GameConfiguration.h"
-GameConfiguration::GameConfiguration() = default;
-GameConfiguration::GameConfiguration(Switches switches) {
-    this->switches = switches;
+
+#include <utility>
+
+GameConfiguration::GameConfiguration(std::string inputfilename) {
+    this->inputfilename = std::move(inputfilename);
+    rules = rules.findRules(this->inputfilename);
+    foundation = foundation.getFoundation(this->inputfilename);
 }
 
-Switches GameConfiguration::getSwitches() {
-    return switches;
+int GameConfiguration::getRulesTurn() {
+    return rules.getTurn();
 }
 
-Rules GameConfiguration::getRules() {
-    return rules;
+int GameConfiguration::getRulesLimit() {
+    return rules.getLimit();
 }
 
-Tableau GameConfiguration::getTableau() {
-    return tableau;
+bool GameConfiguration::isGameFoundationFilled() {
+    return foundation.isFoundationFilled();
 }
-
-
