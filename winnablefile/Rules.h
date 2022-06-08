@@ -1,21 +1,21 @@
 //
-// Created by wendellbest on 6/6/22.
+// Created by wende on 6/7/2022.
 //
 
 #ifndef SOLITAIRE_RULES_H
 #define SOLITAIRE_RULES_H
 
-#include <string>
+#include <fstream>
 
 class Rules {
 private:
-    int turnover;
+    int turn;
     int limit;
 public:
     Rules();
-    void setTurnOver(std::string turnover);
-    void setLimit(std::string limit);
-    int findRules(std::string filename);
+    Rules findRules(const std::string& inputfilename);
+    int getTurn();
+    int getLimit();
 };
 
 

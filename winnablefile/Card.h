@@ -1,5 +1,5 @@
 //
-// Created by wendellbest on 6/6/22.
+// Created by wende on 6/7/2022.
 //
 
 #ifndef SOLITAIRE_CARD_H
@@ -15,6 +15,8 @@ public:
     Card(char rank, char suit);
     char getRank();
     char getSuit();
+    static bool isValidRank(char c);
+    static bool isValidSuit(char c);
 };
 
 

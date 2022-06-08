@@ -1,30 +1,25 @@
 //
-// Created by wendellbest on 6/6/22.
+// Created by wende on 6/7/2022.
 //
 
 #ifndef SOLITAIRE_GAMECONFIGURATION_H
 #define SOLITAIRE_GAMECONFIGURATION_H
 
-
+#include <string>
 #include "Rules.h"
 #include "Foundation.h"
-#include "Tableau.h"
-#include "Stock.h"
-#include "Switches.h"
 
 class GameConfiguration {
 private:
+    std::string inputfilename;
     Rules rules;
     Foundation foundation;
-    Tableau tableau;
-    Stock stock;
-    Switches switches;
 public:
-    GameConfiguration();
-    explicit GameConfiguration(Switches switches);
-    Switches getSwitches();
-    Rules getRules();
-    Tableau getTableau();
+    GameConfiguration()=default;
+    explicit GameConfiguration(std::string inputfilename);
+    int getRulesTurn();
+    int getRulesLimit();
+    bool isGameFoundationFilled();
 };
 
 

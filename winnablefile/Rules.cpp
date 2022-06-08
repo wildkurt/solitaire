@@ -1,44 +1,47 @@
 //
-// Created by wendellbest on 6/6/22.
+// Created by wende on 6/7/2022.
 //
 
-#include <iostream>
-#include <fstream>
-#include <string>
 #include "Rules.h"
 
 Rules::Rules() {
-    turnover = 0;
+    turn = 0;
     limit = 0;
 }
 
-void Rules::setTurnOver(std::string turnover) {
-    if(turnover.find("turn 3"))
-        turnover = 3;
-    else
-        turnover = 1;
-}
-
-void Rules::setLimit(std::string limit) {
-    if(limit.find("limit "))
-        this->limit = std::stoi(limit);
-}
-
-int Rules::findRules(std::string filename) {
+Rules Rules::findRules(const std::string& inputfilename) {
+    Rules temp;
+    std::fstream inputfile;
     std::string buffer;
-    std::ifstream inputfile;
-    inputfile.open(filename);
+
+    inputfile.open(inputfilename);
     if(inputfile.is_open()){
-        while(inputfile.good() && limit == 0 && turnover == 0){
-            std::getline(inputfile,buffer);
-            if(buffer.find("turn")){
-                this->setTurnOver(buffer.substr(buffer.find("turn")));
+        while(inputfile.good()){
+            std::getline(inputfile, buffer);
+            if(buffer.find("limit ") != std::string::npos){
+                temp.limit = std::stoi(buffer.substr(buffer.find_last_of("limit ") + 1));
             }
-            if(buffer.find("limit")){
-                this->setLimit(buffer.substr(buffer.find("limit")));
+            else if(buffer.find("unlimited") != std::string::npos){
+                temp.limit = -1;
+            }
+            else if(buffer.find("turn 3") != std::string::npos){
+                temp.turn = 3;
+            }
+            else if(buffer.find("turn 1")!= std::string::npos){
+                temp.turn = 1;
+            }
+            if(temp.turn > 0 && (temp.limit < 0 || temp.limit > 0)){
+                break;
             }
         }
-        return 0;
     }
-    return 1;
+    return temp;
+}
+
+int Rules::getTurn() {
+    return turn;
+}
+
+int Rules::getLimit() {
+    return limit;
 }

@@ -1,0 +1,5 @@
+RULES:
+turn 3
+limit 100
+FOUNDATION:
+_c _d _h _s
