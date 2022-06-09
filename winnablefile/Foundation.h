@@ -17,6 +17,7 @@ public:
     void addCardToFoundation(Card card);
     Foundation getFoundation(std::string inputfilename);
     bool isFoundationFilled();
+    void printFoundation();
 };
 
 

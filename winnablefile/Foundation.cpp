@@ -4,6 +4,7 @@
 
 #include "Foundation.h"
 #include <fstream>
+#include <iostream>
 
 void Foundation::addCardToFoundation(Card card) {
     if(card.getSuit() == 'c'){
@@ -21,7 +22,7 @@ void Foundation::addCardToFoundation(Card card) {
 }
 
 Foundation Foundation::getFoundation(std::string inputfilename) {
-    bool result = false, found = false;
+    bool found = false;
     std::string buffer;
     std::fstream inputfile;
     Foundation temp;
@@ -73,5 +74,12 @@ Foundation::Foundation(Foundation &foundation) {
     for(int i = 0; i < 4; i++){
         this->fd[i] = foundation.fd[i];
     }
+}
+
+void Foundation::printFoundation() {
+    for(int i = 0; i < 4; i++){
+        std::cout << fd[i].getRank() << fd[i].getSuit() <<" ";
+    }
+    std::cout << std::endl;
 }
 

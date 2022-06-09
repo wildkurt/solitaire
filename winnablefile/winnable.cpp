@@ -23,9 +23,9 @@ int main(int argc, char *argv[]){
     std::string inputfilename;
     std::string buffer;
     //use for windows
-    std::string check = R"(C:\Users\wende\OneDrive\Documents\ProgrammingWork\my-c-and-c-plus-plus-projects\Solitaire\cmake-build-debug\check )";
+    //std::string check = R"(C:\Users\wende\OneDrive\Documents\ProgrammingWork\my-c-and-c-plus-plus-projects\Solitaire\cmake-build-debug\check )";
     //use for linux
-    //std::string check = "./cmake-build-debug/check ";
+    std::string check = "./cmake-build-debug/check ";
     Testing test;
     std::fstream inputfile;
     GameConfiguration game;
@@ -58,5 +58,10 @@ int main(int argc, char *argv[]){
     //std::string argument = check + inputfilename;
     //system(argument.c_str());
     std::cout << "Limit: " << game.getRulesLimit() << " Turn: " << game.getRulesTurn() << std::endl;
-    std::cout << "Foundation filled: " << game.isGameFoundationFilled() << std::endl;
+    std::cout << "Foundation filled: ";
+    game.printGameFoundation();
+    std::cout << "Tableau:" << std::endl;
+    game.printGameTableau();
+    std::cout << "Stock:" << std::endl;
+    game.printGameStock();
 }

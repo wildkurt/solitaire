@@ -6,6 +6,7 @@
 #define SOLITAIRE_TABLEAU_H
 
 #include "Card.h"
+#include <string>
 
 class Tableau {
 private:
@@ -16,6 +17,12 @@ private:
     Card t3[30];
     Card t2[30];
     Card t1[30];
+public:
+    Tableau()=default;
+    Tableau getTableau(std::string inputfilename);
+    void addCardToCol(Card card, int col);
+    Card *getColPtr(int c);
+    void printTableau();
 };
 
 
