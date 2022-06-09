@@ -17,6 +17,8 @@ int findFoundations(char *buffer, FILE *input, int *line){
     int index = 0;
     do{
         *line = *line + 1;
+        if(buffer[0] == '\0' || buffer[0] == '#')
+            continue;
         if(strstr(buffer, "TABLEAU:") != 0){
             fputs(buffer, input);
             break;

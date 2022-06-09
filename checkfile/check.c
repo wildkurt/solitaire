@@ -40,7 +40,7 @@ int main(int args, char *argv[]){
     while(fgets(buffer, MAX_BUFFER, input) != 0){
         line++;
         //Ignore hashes
-        if(buffer[0] == '#')
+        if(buffer[0] == '#' || buffer[0] == '\0')
             continue;
         //RULES:
         if(strstr(buffer, "RULES:") != 0){
@@ -158,7 +158,7 @@ int main(int args, char *argv[]){
     printf("%d covered cards\n", covered);
     printf("%d stock cards\n", stock);
     printf("%d waste cards\n", waste);
-
+    printf("\n");
     fclose(input);
 
     return 0;

@@ -14,10 +14,12 @@ Stock Stock::getStock(std::string inputfilename) {
     if(inputfile.is_open()){
         while(inputfile.good()){
             std::getline(inputfile, buffer);
+            if(buffer[0] == '#' || buffer[0] == '\0')
+                continue;
             if(buffer.find("STOCK:") != std::string::npos)
                 found = true;
             if(found == true){
-                for(int i = 0; i < buffer.length(); i++){
+                for(int i = 0; i < buffer.length() && buffer[i]!= '#'; i++){
                     if(buffer[i] == '#' || buffer[i] == 'M'){
                         found2 = true;
                         break;

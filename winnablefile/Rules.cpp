@@ -18,8 +18,15 @@ Rules Rules::findRules(const std::string& inputfilename) {
     if(inputfile.is_open()){
         while(inputfile.good()){
             std::getline(inputfile, buffer);
+            if(buffer[0] == '#' || buffer[0] == '\0')
+                continue;
             if(buffer.find("limit ") != std::string::npos){
-                temp.limit = std::stoi(buffer.substr(buffer.find_last_of("limit ") + 1));
+                int endLimit = buffer.find_first_of("limit") + 5;
+                int endNumber = buffer.find_first_of('#');
+                if(endNumber == 0)
+                    endNumber = buffer.find_first_of('\0');
+                std::string sudtemp = buffer.substr(endLimit, endNumber - endLimit);
+                temp.limit = std::stoi(sudtemp);
             }
             else if(buffer.find("unlimited") != std::string::npos){
                 temp.limit = -1;

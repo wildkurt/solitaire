@@ -78,6 +78,8 @@ int findTableau(char *buffer, FILE *input, int *line){
         ptr = setPointer(tabCol);
         index = 0;
         covered = 'T';
+        if(buffer[0] == '#' || buffer[0] == '\0')
+            continue;
         if(strstr(buffer,"TABLEAU:")!=0)
             fgets(buffer, MAX_BUFFER, input);
         for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){

@@ -51,13 +51,11 @@ int main(int argc, char *argv[]){
             inputfilename = buffer;
         }
     }
-
-    game = GameConfiguration(inputfilename);
-
     //test.printSwitches(limitMoves,numberOfMoves,hashTable,safeMoves,verboseMode,inputfilename);
-    //std::string argument = check + inputfilename;
-    //system(argument.c_str());
-    std::cout << "Limit: " << game.getRulesLimit() << " Turn: " << game.getRulesTurn() << std::endl;
+    std::string argument = check + inputfilename;
+    system(argument.c_str());
+    game = GameConfiguration(inputfilename);
+    //std::cout << "Limit: " << game.getRulesLimit() << " Turn: " << game.getRulesTurn() << std::endl;
     std::cout << "Foundation filled: ";
     game.printGameFoundation();
     std::cout << "Tableau:" << std::endl;

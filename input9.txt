@@ -1,16 +1,18 @@
-RULES:
-turn 3
-limit 100
-FOUNDATION:
-_c _d _h _s
-TABLEAU:
-Ac 2c 3c 4c 5c 6c | 7c
-8c 9c Tc Jc Qc | Kc
-Ad 2d 3d 4d | 5d
-6d 7d 8d | 9d
-Td Jd | Qd
-Kd | Ah
-| 2h
-STOCK:
-| 3h 4h 5h 6h 7h 8h 9h Th Jh Qh Kh As 2s 3s 4s 5s 6s 7s 8s 9s Ts Js Qs Ks
-MOVES:
+# ignore this
+RULES: # ignore this
+turn 3 # ignore this
+limit 100 # ignore this
+FOUNDATIONS: # ignore this
+_c _d _h _s # ignore this
+TABLEAU: # ignore this
+Ac 2c 3c 4c 5c 6c | 7c # ignore this
+8c 9c Tc Jc Qc | Kc # ignore this
+Ad 2d 3d 4d | 5d # ignore this
+6d 7d 8d | 9d # ignore this
+Td Jd | Qd # ignore this
+Kd | Ah # ignore this
+| 2h # ignore this
+STOCK: # ignore this
+| 3h 4h 5h 6h 7h 8h 9h Th Jh Qh Kh As 2s 3s 4s 5s 6s 7s 8s 9s Ts Js Qs Ks # ignore this
+MOVES: # ignore this
+# ignore this

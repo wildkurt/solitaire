@@ -17,6 +17,8 @@ Tableau Tableau::getTableau(std::string inputfilename) {
     if(inputfile.is_open()){
         while(inputfile.good()){
             std::getline(inputfile, buffer);
+            if(buffer[0] == '#' || buffer[0] == '\0')
+                continue;
             if(buffer.find("TABLEAU:") != std::string::npos){
                 std::getline(inputfile, buffer);
                 found1 = true;
@@ -24,7 +26,7 @@ Tableau Tableau::getTableau(std::string inputfilename) {
             if(buffer.find("STOCK:") != std::string::npos || col == 0)
                 break;
             if(found1){
-                for(int i = 0; i < buffer.length(); i++){
+                for(int i = 0; i < buffer.length() && buffer[i] != '#'; i++){
                     if(Card::isValidRank(buffer[i]) && Card::isValidSuit(buffer[i+1]))
                         temp.addCardToCol(Card(buffer[i], buffer[i+1]), col);
                     else if(buffer[i] == '|')

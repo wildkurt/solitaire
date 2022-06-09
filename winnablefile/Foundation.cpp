@@ -31,7 +31,7 @@ Foundation Foundation::getFoundation(std::string inputfilename) {
     if(inputfile.is_open()){
         while(inputfile.good() && !isFoundationFilled()){
             std::getline(inputfile,buffer);
-            if(buffer.find("FOUNDATION:") != std::string::npos) {
+            if(buffer.find("FOUNDATIONS:") != std::string::npos) {
                 found = true;
                 std::getline(inputfile,buffer);
             }

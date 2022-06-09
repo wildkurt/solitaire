@@ -15,6 +15,8 @@ int findStockWaste(char *buffer, FILE *input, int *line){
     int index = 0;
     do{
         *line = *line + 1;
+        if(buffer[0] == '#' || buffer[0] == '\0')
+            continue;
         for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){
             if(buffer[i] =='#')
                 break;
