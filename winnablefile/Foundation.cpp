@@ -6,6 +6,19 @@
 #include <fstream>
 #include <iostream>
 
+Foundation::Foundation(Foundation &foundation) {
+    for(int i = 0; i < 4; i++){
+        this->fd[i] = foundation.fd[i];
+    }
+}
+
+Foundation &Foundation::operator=(const Foundation &foundation) {
+    for(int i = 0; i < 4; i++){
+        this->fd[i] = foundation.fd[i];
+    }
+    return *this;
+}
+
 void Foundation::addCardToFoundation(Card card) {
     if(card.getSuit() == 'c'){
         fd[0] = card;
@@ -22,7 +35,7 @@ void Foundation::addCardToFoundation(Card card) {
 }
 
 Foundation Foundation::getFoundation(std::string inputfilename) {
-    bool found = false;
+    bool found = false, covered = false;
     std::string buffer;
     std::fstream inputfile;
     Foundation temp;
@@ -41,12 +54,12 @@ Foundation Foundation::getFoundation(std::string inputfilename) {
                         break;
                     }
                     if(buffer[i] == '_' && Card::isValidSuit(buffer[i+1])){
-                        Card card(buffer[i], buffer[i+1]);
+                        Card card(buffer[i], buffer[i+1], covered);
                         temp.addCardToFoundation(card);
                     }
                     else{
                         if(Card::isValidRank(buffer[i]) && Card::isValidSuit(buffer[i+1])){
-                            Card card(buffer[i], buffer[i++]);
+                            Card card(buffer[i], buffer[i++], covered);
                             temp.addCardToFoundation(card);
                         }
                     }
@@ -70,16 +83,12 @@ bool Foundation::isFoundationFilled() {
     return result;
 }
 
-Foundation::Foundation(Foundation &foundation) {
-    for(int i = 0; i < 4; i++){
-        this->fd[i] = foundation.fd[i];
-    }
-}
-
 void Foundation::printFoundation() {
     for(int i = 0; i < 4; i++){
         std::cout << fd[i].getRank() << fd[i].getSuit() <<" ";
     }
     std::cout << std::endl;
 }
+
+
 

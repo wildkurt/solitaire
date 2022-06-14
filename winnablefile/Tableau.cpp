@@ -6,9 +6,34 @@
 #include <fstream>
 #include <iostream>
 
+Tableau::Tableau(const Tableau &tableau) {
+    for(int i = 0; i < 30; i++){
+        this->t7[i] = tableau.t7[i];
+        this->t6[i] = tableau.t6[i];
+        this->t5[i] = tableau.t5[i];
+        this->t4[i] = tableau.t4[i];
+        this->t3[i] = tableau.t3[i];
+        this->t2[i] = tableau.t2[i];
+        this->t1[i] = tableau.t1[i];
+    }
+}
+
+Tableau &Tableau::operator=(const Tableau &tableau) {
+    for(int i = 0; i < 30; i++){
+        this->t7[i] = tableau.t7[i];
+        this->t6[i] = tableau.t6[i];
+        this->t5[i] = tableau.t5[i];
+        this->t4[i] = tableau.t4[i];
+        this->t3[i] = tableau.t3[i];
+        this->t2[i] = tableau.t2[i];
+        this->t1[i] = tableau.t1[i];
+    }
+    return *this;
+}
+
 Tableau Tableau::getTableau(std::string inputfilename) {
     Tableau temp;
-    bool found1 = false;
+    bool found1 = false, covered = true;
     std::string buffer;
     std::fstream inputfile;
     int col = 7;
@@ -23,16 +48,22 @@ Tableau Tableau::getTableau(std::string inputfilename) {
                 std::getline(inputfile, buffer);
                 found1 = true;
             }
-            if(buffer.find("STOCK:") != std::string::npos || col == 0)
+            if(buffer.find("STOCK:") != std::string::npos)
                 break;
-            if(found1){
+            if(found1 && col != 0){
                 for(int i = 0; i < buffer.length() && buffer[i] != '#'; i++){
-                    if(Card::isValidRank(buffer[i]) && Card::isValidSuit(buffer[i+1]))
-                        temp.addCardToCol(Card(buffer[i], buffer[i+1]), col);
-                    else if(buffer[i] == '|')
-                        temp.addCardToCol(Card(buffer[i], '0'), col);
+                    if(Card::isValidRank(buffer[i]) && Card::isValidSuit(buffer[i+1])){
+                        Card card(buffer[i],buffer[i+1], covered);
+                        temp.addCardToCol(card, col);
+                    }
+                    else if(buffer[i] == '|'){
+                        covered = false;
+                        Card card(buffer[i], '0', covered);
+                        temp.addCardToCol(card, col);
+                    }
                 }
                 col--;
+                covered = true;
             }
             if(col == 0)
                 break;
@@ -78,4 +109,22 @@ void Tableau::printTableau() {
         }
         std::cout << std::endl;
     }
+}
+
+bool Tableau::anyCoveredCards() {
+    bool result = false;
+    Card *ptr;
+    for(int i = 1; i < 8; i++){
+        ptr = getColPtr(i);
+        while(ptr->getRank() != 0){
+            if(ptr->isCovered() == true){
+                result = true;
+                break;
+            }
+            ptr++;
+        }
+        if(result == true)
+            break;
+    }
+    return result;
 }

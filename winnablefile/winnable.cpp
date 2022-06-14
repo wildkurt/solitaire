@@ -4,6 +4,7 @@
 #include "Testing.h"
 #include "Rules.h"
 #include "GameConfiguration.h"
+#include "winnable.h"
 #include <string>
 #include <cstdlib>
 #include <fstream>
@@ -22,13 +23,6 @@ int main(int argc, char *argv[]){
     bool verboseMode = false;
     std::string inputfilename;
     std::string buffer;
-    //use for windows
-    //std::string check = R"(C:\Users\wende\OneDrive\Documents\ProgrammingWork\my-c-and-c-plus-plus-projects\Solitaire\cmake-build-debug\check )";
-    //use for linux
-    std::string check = "./cmake-build-debug/check ";
-    Testing test;
-    std::fstream inputfile;
-    GameConfiguration game;
 
     for(int i = 0;i < argc; i++){
         buffer = argv[i];
@@ -51,15 +45,7 @@ int main(int argc, char *argv[]){
             inputfilename = buffer;
         }
     }
-    //test.printSwitches(limitMoves,numberOfMoves,hashTable,safeMoves,verboseMode,inputfilename);
-    std::string argument = check + inputfilename;
-    system(argument.c_str());
-    game = GameConfiguration(inputfilename);
-    //std::cout << "Limit: " << game.getRulesLimit() << " Turn: " << game.getRulesTurn() << std::endl;
-    std::cout << "Foundation filled: ";
-    game.printGameFoundation();
-    std::cout << "Tableau:" << std::endl;
-    game.printGameTableau();
-    std::cout << "Stock:" << std::endl;
-    game.printGameStock();
+    GameConfiguration game(inputfilename);
+    winnable winner(limitMoves, numberOfMoves, hashTable, safeMoves, verboseMode);
+
 }

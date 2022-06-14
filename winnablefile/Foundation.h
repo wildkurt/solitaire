@@ -14,6 +14,8 @@ private:
 public:
     Foundation()=default;
     Foundation(Foundation &foundation);
+    ~Foundation()=default;
+    Foundation &operator=(Foundation const &foundation);
     void addCardToFoundation(Card card);
     Foundation getFoundation(std::string inputfilename);
     bool isFoundationFilled();

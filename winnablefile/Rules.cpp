@@ -9,6 +9,17 @@ Rules::Rules() {
     limit = 0;
 }
 
+Rules::Rules(const Rules &rules) {
+    this->turn = rules.turn;
+    this->limit = rules.limit;
+}
+
+Rules &Rules::operator=(const Rules &rules) {
+    this->turn = rules.turn;
+    this->limit = rules.limit;
+    return *this;
+}
+
 Rules Rules::findRules(const std::string& inputfilename) {
     Rules temp;
     std::fstream inputfile;
@@ -52,3 +63,5 @@ int Rules::getTurn() {
 int Rules::getLimit() {
     return limit;
 }
+
+

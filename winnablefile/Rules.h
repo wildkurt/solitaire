@@ -13,6 +13,9 @@ private:
     int limit;
 public:
     Rules();
+    ~Rules()=default;
+    Rules(Rules const &rules);
+    Rules &operator=(Rules const &rules);
     Rules findRules(const std::string& inputfilename);
     int getTurn();
     int getLimit();

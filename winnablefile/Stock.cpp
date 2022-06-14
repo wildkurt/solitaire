@@ -4,11 +4,24 @@
 
 #include "Stock.h"
 
+Stock::Stock(const Stock &stock) {
+    for(int i = 0; i < 30; i++){
+        this->sw[i] = stock.sw[i];
+    }
+}
+
+Stock &Stock::operator=(const Stock &stock) {
+    for(int i = 0; i < 30; i++){
+        this->sw[i] = stock.sw[i];
+    }
+    return *this;
+}
+
 Stock Stock::getStock(std::string inputfilename) {
     Stock temp;
     std::string buffer;
     std::fstream inputfile;
-    bool found = false, found2 = false;
+    bool found = false, found2 = false, covered = false;
 
     inputfile.open(inputfilename);
     if(inputfile.is_open()){
@@ -25,10 +38,13 @@ Stock Stock::getStock(std::string inputfilename) {
                         break;
                     }
                     if(buffer[i]=='|'){
-                        temp.addCardToStock(Card(buffer[i], '0'));
+                        Card card(buffer[i], '0', covered);
+                        temp.addCardToStock(card);
+                        covered = true;
                     }
                     else if(Card::isValidRank(buffer[i]), Card::isValidSuit(buffer[i+1])){
-                        temp.addCardToStock(Card(buffer[i], buffer[i+1]));
+                        Card card(buffer[i], buffer[i+1], covered);
+                        temp.addCardToStock(card);
                     }
                 }
             }
@@ -58,3 +74,13 @@ void Stock::addCardToStock(Card card) {
     }
     *ptr=card;
 }
+
+bool Stock::isStockEmptyAndOneWasteCard() {
+    bool result = false;
+    if(sw[0].getRank() == '|' && sw[1].getRank() == 0)
+        result = true;
+    else if(Card::isValidRank(sw[0].getRank()) && sw[1].getRank() == '|' && sw[2].getRank() == 0)
+        result = true;
+    return result;
+}
+

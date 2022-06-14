@@ -19,10 +19,14 @@ private:
     Card t1[30];
 public:
     Tableau()=default;
+    ~Tableau()=default;
+    Tableau(Tableau const &tableau);
+    Tableau &operator=(Tableau const &tableau);
     Tableau getTableau(std::string inputfilename);
     void addCardToCol(Card card, int col);
     Card *getColPtr(int c);
     void printTableau();
+    bool anyCoveredCards();
 };
 
 

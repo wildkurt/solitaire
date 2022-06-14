@@ -7,26 +7,39 @@
 Card::Card() {
     rank = 0;
     suit = 0;
+    covered = false;
 }
 
-Card::Card(char rank, char suit) {
+Card::Card(char rank, char suit, bool covered) {
     this->rank = rank;
     this->suit = suit;
+    this->covered = covered;
 }
 
-char Card::getRank() {
+Card::Card(Card &card) {
+    this->rank = card.rank;
+    this->suit = card.suit;
+    this->covered = card.covered;
+}
+
+Card &Card::operator=(Card const &card) {
+    this->rank = card.rank;
+    this->suit = card.suit;
+    this->covered = card.covered;
+    return *this;
+}
+
+char Card::getRank() const {
     return rank;
 }
 
-char Card::getSuit() {
+char Card::getSuit() const {
     return suit;
 }
 
 bool Card::isValidRank(char c) {
     bool result = false;
-    if(c == 'A' || c == 'J' || c=='Q' || c=='K')
-        result = true;
-    else if(c >= '2' && c <= '9')
+    if(c == 'A' || c == 'J' || c=='Q' || c=='K' || (c >= '2' && c <= '9'))
         result = true;
     return result;
 }
@@ -37,3 +50,5 @@ bool Card::isValidSuit(char c) {
         result = true;
     return result;
 }
+
+
