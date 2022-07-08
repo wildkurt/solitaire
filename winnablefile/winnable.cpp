@@ -46,6 +46,7 @@ int main(int argc, char *argv[]){
         }
     }
     GameConfiguration game(inputfilename);
+    game.printGameTableau();
     winnable winner(limitMoves, numberOfMoves, hashTable, safeMoves, verboseMode);
-
+    game = winner.findWinningMoves(game);
 }

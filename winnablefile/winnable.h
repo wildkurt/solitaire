@@ -17,10 +17,11 @@ private:
     bool safeMoves;
     bool verboseMode;
     int numberMoveMade;
-    char *movesArr;
 public:
     winnable()=default;
     winnable(bool limitmoves, int numberOfMoves, bool hashtable, bool safeMoves, bool verboseMode);
     GameConfiguration &findWinningMoves(GameConfiguration &game);
+    bool advanceConfirmsMoves(GameConfiguration &game, Moves move);
+    std::string writeGameToFileAddMove(GameConfiguration game, Moves move);
 };
 #endif //SOLITAIRE_WINNABLE_H

@@ -51,7 +51,7 @@ Tableau Tableau::getTableau(std::string inputfilename) {
             if(buffer.find("STOCK:") != std::string::npos)
                 break;
             if(found1 && col != 0){
-                for(int i = 0; i < buffer.length() && buffer[i] != '#'; i++){
+                for(long i = 0; i < buffer.length() && buffer[i] != '#'; i++){
                     if(Card::isValidRank(buffer[i]) && Card::isValidSuit(buffer[i+1])){
                         Card card(buffer[i],buffer[i+1], covered);
                         temp.addCardToCol(card, col);

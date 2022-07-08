@@ -17,6 +17,9 @@ public:
     Moves(Moves const &moves);
     Moves &operator=(Moves const &moves);
     bool isMoveValid();
+    char getSrc(){return src;}
+    char getDst(){return dst;}
+    void printMove();
 };
 
 

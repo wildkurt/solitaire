@@ -11,7 +11,7 @@
 #include "Foundation.h"
 #include "Tableau.h"
 #include "Stock.h"
-#include "Moves.h""
+#include "Moves.h"
 
 class GameConfiguration {
 private:
@@ -22,6 +22,7 @@ private:
     Stock stock;
     std::vector<Moves> moves;
     bool winningGameConfiguration;
+    long gameID;
 public:
     GameConfiguration();
     explicit GameConfiguration(std::string inputfilename);
@@ -37,6 +38,9 @@ public:
     bool isGameWinnable();
     void setWinningGameConfiguration(bool c){winningGameConfiguration = c;}
     void addMove(Moves move);
+    void gameConfigurationId();
+    long getGameConfigurationID(){return gameID;}
+    long numberOfMoves(){return moves.size();}
 };
 
 

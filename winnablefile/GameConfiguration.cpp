@@ -9,6 +9,7 @@
 GameConfiguration::GameConfiguration() {
     inputfilename = nullptr;
     winningGameConfiguration = false;
+    gameID = 0L;
 }
 
 GameConfiguration::GameConfiguration(std::string inputfilename) {
@@ -18,6 +19,7 @@ GameConfiguration::GameConfiguration(std::string inputfilename) {
     tableau = tableau.getTableau(this->inputfilename);
     stock = stock.getStock(this->inputfilename);
     winningGameConfiguration = false;
+    gameConfigurationId();
 }
 
 GameConfiguration::GameConfiguration(const GameConfiguration &game) {
@@ -27,6 +29,7 @@ GameConfiguration::GameConfiguration(const GameConfiguration &game) {
     this->tableau = game.tableau;
     this->stock = game.stock;
     this->winningGameConfiguration = game.winningGameConfiguration;
+    this->gameID = game.gameID;
 }
 
 GameConfiguration &GameConfiguration::operator=(const GameConfiguration &game) {
@@ -36,6 +39,7 @@ GameConfiguration &GameConfiguration::operator=(const GameConfiguration &game) {
     this->tableau = game.tableau;
     this->stock = game.stock;
     this->winningGameConfiguration = game.winningGameConfiguration;
+    this->gameID = game.gameID;
 
     return *this;
 }
@@ -73,4 +77,15 @@ bool GameConfiguration::isGameWinnable() {
 
 void GameConfiguration::addMove(Moves move) {
     moves.push_back(move);
+    this->gameConfigurationId();
 }
+
+void GameConfiguration::gameConfigurationId(){
+    long size = moves.size();
+    long result = 0;
+    for(int i = 0; i < size; i++){
+        result = (moves[i].getSrc() - '0') + (moves[i].getDst() - '0');
+    }
+    gameID = result;
+}
+

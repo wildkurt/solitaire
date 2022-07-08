@@ -22,8 +22,7 @@ int main(int args, char *argv[]){
     int line = 0, movess = 0;
     char buffer[MAX_BUFFER];
     Rules rules;
-
-    for(int i = 0; i < args; i++){
+    for(int i = 1; i < args; i++){
         //Switch "-m N" indicates at most N moves should be played from input file
         if(strcmp(argv[i],"-m") == 0){
             gameconfiguration.limitNumMoves = 'T';
@@ -42,8 +41,9 @@ int main(int args, char *argv[]){
             gameconfiguration.exchangeFormat = 'T';
         }
         else if(strstr(argv[i],"advance") == 0){
-            inputFileName = calloc(strlen(argv[i]+1),sizeof(char));
+            inputFileName = calloc(strlen(argv[i]) + 1,sizeof(char));
             inputFileName = strcpy(inputFileName, argv[i]);
+            gameconfiguration.filename = inputFileName;
         }
     }
     if(gameconfiguration.filename != (void *)0){

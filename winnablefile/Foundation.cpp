@@ -49,7 +49,7 @@ Foundation Foundation::getFoundation(std::string inputfilename) {
                 std::getline(inputfile,buffer);
             }
             if(found == true){
-                for(int i = 0; i < buffer.length(); i++){
+                for(long i = 0; i < buffer.length(); i++){
                     if(isFoundationFilled()){
                         break;
                     }

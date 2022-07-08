@@ -32,7 +32,7 @@ Stock Stock::getStock(std::string inputfilename) {
             if(buffer.find("STOCK:") != std::string::npos)
                 found = true;
             if(found == true){
-                for(int i = 0; i < buffer.length() && buffer[i]!= '#'; i++){
+                for(long i = 0; i < buffer.length() && buffer[i]!= '#'; i++){
                     if(buffer[i] == '#' || buffer[i] == 'M'){
                         found2 = true;
                         break;
