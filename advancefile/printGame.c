@@ -7,6 +7,7 @@
 #include "../checkfile/foundation.h"
 #include "../checkfile/tableau.h"
 #include "../checkfile/stockWaste.h"
+#include "printGameToFile.h"
 
 void printGameExchangeFormat(Rules *rules){
     printf("RULES:\n");
@@ -101,10 +102,6 @@ void printHumanReadable(Rules *rules, int *moves){
     }
 }
 
-writeGameToFile(Rules *rules, GameConfiguration *gameConfiguration){
-
-}
-
 void printGame(Rules *rules, GameConfiguration *gameConfiguration, int *moves){
     if(gameConfiguration->exchangeFormat == 'T'){
         printGameExchangeFormat(rules);
@@ -113,6 +110,6 @@ void printGame(Rules *rules, GameConfiguration *gameConfiguration, int *moves){
         printHumanReadable(rules, moves);
     }
     if(gameConfiguration->writeToFile == 'T'){
-        writeGameToFile(rules, gameConfiguration);
+        printGameToFile(rules, gameConfiguration);
     }
 }

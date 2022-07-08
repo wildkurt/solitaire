@@ -11,5 +11,7 @@
 #include "../checkfile/check.h"
 
 void printGame(Rules *rules, GameConfiguration *gameConfiguration, int *moves);
+void printHumanReadable(Rules *rules, int *moves);
+void printGameExchangeFormat(Rules *rules);
 
 #endif //SOLITAIRE_PRINTGAME_H
