@@ -1,52 +1,56 @@
 //
-// Created by wende on 6/7/2022.
+// Created by wendellbest on 7/7/22.
 //
-#include "Testing.h"
-#include "Rules.h"
-#include "GameConfiguration.h"
-#include "winnable.h"
 #include <string>
-#include <cstdlib>
-#include <fstream>
 #include <iostream>
+#include "winnable.h"
+#include "card.h"
 
 int main(int argc, char *argv[]){
-    //Retrieve comand line flags
-    //-m N : search should be limited to N moves, default value 1000
-    //-c : use a hash table cache
-    //-f : indicates safe moves to the foundation
-    //-v : verbose mode
-    bool limitMoves = false;
-    int numberOfMoves = 1000;
-    bool hashTable = false;
-    bool safeMoves = false;
-    bool verboseMode = false;
-    std::string inputfilename;
     std::string buffer;
+    bool limitedSearch = false;
+    long int numberLimitedSearch = 1000;
+    bool useHashTable = false;
+    bool useSafeMoves = false;
+    bool useVerboseMode = false;
+    std::string inputFileName;
 
-    for(int i = 0;i < argc; i++){
+    for(int i = 0; i < argc; i++){
         buffer = argv[i];
         if(buffer == "-m"){
-            limitMoves = true;
+            limitedSearch = true;
             buffer = argv[++i];
-            numberOfMoves = stoi(buffer);
-            continue;
+            numberLimitedSearch = stoi(buffer);
         }
         else if(buffer == "-c"){
-            hashTable = true;
+            useHashTable = true;
         }
         else if(buffer == "-f"){
-            safeMoves = true;
+            useSafeMoves = true;
         }
         else if(buffer == "-v"){
-            verboseMode = true;
+            useVerboseMode = true;
         }
         else if(buffer.find("winnable") == std::string::npos){
-            inputfilename = buffer;
+            inputFileName = buffer;
         }
     }
-    GameConfiguration game(inputfilename);
-    game.printGameTableau();
-    winnable winner(limitMoves, numberOfMoves, hashTable, safeMoves, verboseMode);
-    game = winner.findWinningMoves(game);
+    std::cout << "Limited Search is: " << limitedSearch << std::endl;
+    std::cout << "Limited Search Number is: " << numberLimitedSearch << std::endl;
+    std::cout << "Hash Table is: " << useHashTable << std::endl;
+    std::cout << "Safe Moves is: " << useSafeMoves << std::endl;
+    std::cout << "Verbos Mode is: " << useVerboseMode << std::endl;
+    std::cout << "File name is: " << inputFileName << std::endl;
+    std::cout << std::endl;
+    std::string check = "./cmake-build-debug/check ";
+    std::string argument = check + inputFileName;
+    system(argument.c_str());
+
+    card test1('A', 'd');
+    card test2('2', 'd');
+
+    std::cout << "Card one rank is: " << test1.getRank() << " Card suit is: " << test1.getSuit() << std::endl;
+    std::cout << "Card two rank is: " << test2.getRank() << " Card suit is: " << test2.getSuit() << std::endl;
+    std::cout << "Rank A is: " << test1.rankValue('A') << std::endl;
+    std::cout << "Rank B is: " << test1.rankValue('B') << std::endl;
 }
