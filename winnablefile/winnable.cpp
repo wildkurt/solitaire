@@ -6,6 +6,9 @@
 #include "winnable.h"
 #include "card.h"
 
+/*This is the main program that will read the input from the command line
+ * then start the process of building the game.*/
+
 int main(int argc, char *argv[]){
     std::string buffer;
     bool limitedSearch = false;
@@ -46,11 +49,5 @@ int main(int argc, char *argv[]){
     std::string argument = check + inputFileName;
     system(argument.c_str());
 
-    card test1('A', 'd');
-    card test2('2', 'd');
 
-    std::cout << "Card one rank is: " << test1.getRank() << " Card suit is: " << test1.getSuit() << std::endl;
-    std::cout << "Card two rank is: " << test2.getRank() << " Card suit is: " << test2.getSuit() << std::endl;
-    std::cout << "Rank A is: " << test1.rankValue('A') << std::endl;
-    std::cout << "Rank B is: " << test1.rankValue('B') << std::endl;
 }

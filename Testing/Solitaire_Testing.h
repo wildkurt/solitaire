@@ -1,0 +1,8 @@
+//
+// Created by wende on 7/24/2022.
+//
+
+#ifndef SOLITAIRE_SOLITAIRE_TESTING_H
+#define SOLITAIRE_SOLITAIRE_TESTING_H
+
+#endif //SOLITAIRE_SOLITAIRE_TESTING_H
