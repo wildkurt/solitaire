@@ -24,12 +24,14 @@ public:
         this->suit = old.suit;
     }
     card operator=(const card &old);
-    bool rankIsValid(char rank);
-    bool suitIsvalid(char suit);
+    static bool rankIsValid(char rank);
+    static bool suitIsvalid(char suit);
     int rankValue(char rank);
     char getRank();
     char getSuit();
     bool sameColorSuit(const card b);
+    void setRank(char c){rank = c;}
+    void setSuit(char c){suit = c;}
 };
 
 

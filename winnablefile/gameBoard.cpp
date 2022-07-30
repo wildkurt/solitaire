@@ -3,3 +3,9 @@
 //
 
 #include "gameBoard.h"
+
+gameBoard::gameBoard(std::string inputFileName) {
+    rules.getRules(inputFileName);
+    foundations.getFoundation(inputFileName);
+    tableau.getTableau(inputFileName);
+}

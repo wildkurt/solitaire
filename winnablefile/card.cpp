@@ -6,9 +6,8 @@
 
 card card::operator=(const card &old) {
     card temp;
+    temp.rank = old.rank;
     temp.suit = old.suit;
-    temp.suit = old.suit;
-    return temp;
 }
 
 bool card::rankIsValid(char rank) {

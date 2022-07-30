@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include "winnable.h"
-#include "card.h"
+#include "gameBoard.h"
 
 /*This is the main program that will read the input from the command line
  * then start the process of building the game.*/
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
     bool useSafeMoves = false;
     bool useVerboseMode = false;
     std::string inputFileName;
-
+    //Get the command line arguments
     for(int i = 0; i < argc; i++){
         buffer = argv[i];
         if(buffer == "-m"){
@@ -38,16 +38,11 @@ int main(int argc, char *argv[]){
             inputFileName = buffer;
         }
     }
-    std::cout << "Limited Search is: " << limitedSearch << std::endl;
-    std::cout << "Limited Search Number is: " << numberLimitedSearch << std::endl;
-    std::cout << "Hash Table is: " << useHashTable << std::endl;
-    std::cout << "Safe Moves is: " << useSafeMoves << std::endl;
-    std::cout << "Verbos Mode is: " << useVerboseMode << std::endl;
-    std::cout << "File name is: " << inputFileName << std::endl;
-    std::cout << std::endl;
+    //This will run check to see if the file is valid
     std::string check = "./cmake-build-debug/check ";
     std::string argument = check + inputFileName;
     system(argument.c_str());
-
+    //need to build the game from the file, a game is played on a board
+    gameBoard game(inputFileName);
 
 }

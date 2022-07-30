@@ -6,8 +6,15 @@
 #define SOLITAIRE_GAMERULES_H
 
 
-class gameRules {
+#include <string>
 
+class gameRules {
+private:
+    std::string filename;
+    int numCardsToTurnOver;
+    int numOfWasteResets;
+public:
+    void getRules(std::__cxx11::basic_string<char> basicString);
 };
 
 

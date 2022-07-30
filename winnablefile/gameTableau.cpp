@@ -3,3 +3,11 @@
 //
 
 #include "gameTableau.h"
+#include <fstream>
+
+void gameTableau::getTableau(std::__cxx11::basic_string<char> basicString) {
+    filename = basicString;
+    std::ifstream input;
+    input.open(filename,std::ios_base::in);
+    std::string buffer;
+}

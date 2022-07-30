@@ -6,8 +6,13 @@
 #define SOLITAIRE_GAMETABLEAU_H
 
 
-class gameTableau {
+#include <string>
 
+class gameTableau {
+private:
+    std::string filename;
+public:
+    void getTableau(std::__cxx11::basic_string<char> basicString);
 };
 
 
