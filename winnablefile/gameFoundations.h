@@ -14,6 +14,7 @@ private:
     std::string filename;
 public:
     void getFoundation(std::__cxx11::basic_string<char> basicString);
+    void printFoundation();
 };
 
 

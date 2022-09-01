@@ -15,6 +15,7 @@ private:
     int numOfWasteResets;
 public:
     void getRules(std::__cxx11::basic_string<char> basicString);
+    void printRules();
 };
 
 

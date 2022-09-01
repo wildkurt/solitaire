@@ -48,3 +48,11 @@ void gameFoundations::getFoundation(std::__cxx11::basic_string<char> basicString
         }
     }
 }
+
+void gameFoundations::printFoundation() {
+    std::cout << "The foundation is: ";
+    for(int i = 0; i < 4; i++){
+        std::cout << fnd[i].getRank() << fnd[i].getSuit() << " ";
+    }
+    std::cout << std::endl;
+}

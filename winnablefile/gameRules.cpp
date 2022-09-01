@@ -29,3 +29,9 @@ void gameRules::getRules(std::__cxx11::basic_string<char> basicString) {
         }
     }
 }
+
+void gameRules::printRules() {
+    std::cout << "The filename is: " << filename << std::endl;
+    std::cout << "The number of cards to turn over is: " << numCardsToTurnOver << std::endl;
+    std::cout << "The number of waste resets is: " << numOfWasteResets << std::endl;
+}

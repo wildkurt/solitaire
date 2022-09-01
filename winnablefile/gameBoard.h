@@ -10,6 +10,8 @@
 #include "gameTableau.h"
 #include "gameStock.h"
 
+/** gameBoard class will essentially contain a complete game*/
+
 class gameBoard {
 private:
     gameRules rules;
@@ -18,6 +20,7 @@ private:
     gameStock stock;
 public:
     gameBoard(std::string inputFileName);
+    void printGameBoard();
 };
 
 

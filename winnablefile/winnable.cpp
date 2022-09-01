@@ -5,6 +5,7 @@
 #include <iostream>
 #include "winnable.h"
 #include "gameBoard.h"
+#include "searchParameters.h"
 
 /*This is the main program that will read the input from the command line
  * then start the process of building the game.*/
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]){
     std::string argument = check + inputFileName;
     system(argument.c_str());
     //need to build the game from the file, a game is played on a board
+    searchParameters search(limitedSearch, numberLimitedSearch, useHashTable, useSafeMoves, useVerboseMode);
     gameBoard game(inputFileName);
-
+    game.printGameBoard();
 }
