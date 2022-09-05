@@ -13,6 +13,10 @@ private:
     card fnd[4];
     std::string filename;
 public:
+    gameFoundations()= default;
+    gameFoundations(const gameFoundations &old);
+    gameFoundations& operator=(const gameFoundations &old);
+    ~gameFoundations()= default;
     void getFoundation(std::__cxx11::basic_string<char> basicString);
     void printFoundation();
 };

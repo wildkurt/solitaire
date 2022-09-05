@@ -22,12 +22,17 @@ private:
     std::vector <card> col1;
 
 public:
+    gameTableau()= default;
+    gameTableau(const gameTableau &old);
+    gameTableau& operator=(const gameTableau &old);
+    ~gameTableau()= default;
     void getTableau(std::__cxx11::basic_string<char> basicString);
     void printTableau();
     void addCardsToColumn(int columns, card newCard);
     bool columnFilled(int columns);
     void printColumn(int i);
     std::vector<card> getColPtr(int i);
+    bool winningConfigTableau();
 };
 
 

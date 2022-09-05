@@ -13,9 +13,10 @@ private:
     bool useHashTable;
     bool useSafeMoves;
     bool useVerboseMode;
-
 public:
+    searchParameters();
     searchParameters(bool limitedSearch, long numberLimitedSearch, bool useHashTable, bool useSafeMoves, bool useVerboseMode);
+    ~searchParameters()= default;
 };
 
 

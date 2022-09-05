@@ -6,12 +6,36 @@
 #include <fstream>
 #include <iostream>
 
+gameTableau::gameTableau(const gameTableau &old) {
+    this->col7 = old.col7;
+    this->col6 = old.col6;
+    this->col5 = old.col5;
+    this->col4 = old.col4;
+    this->col3 = old.col3;
+    this->col2 = old.col2;
+    this->col1 = old.col1;
+    this->filename = old.filename;
+}
+
+gameTableau& gameTableau::operator=(const gameTableau &old) {
+    this->col7 = old.col7;
+    this->col6 = old.col6;
+    this->col5 = old.col5;
+    this->col4 = old.col4;
+    this->col3 = old.col3;
+    this->col2 = old.col2;
+    this->col1 = old.col1;
+    this->filename = old.filename;
+    return *this;
+}
+
 void gameTableau::getTableau(std::__cxx11::basic_string<char> basicString) {
     filename = basicString;
     std::ifstream input;
     input.open(filename,std::ios_base::in);
     std::string buffer;
     bool tabFound = false;
+    bool covered = true;
     int columns = 7;
 
     while(std::getline(input, buffer)){
@@ -26,16 +50,18 @@ void gameTableau::getTableau(std::__cxx11::basic_string<char> basicString) {
         if(tabFound == true){
             for(int i = 0; i < buffer.size(); i++){
                 if(card::rankIsValid(buffer[i]) && card::suitIsvalid(buffer[i+1])){
-                    card temp(buffer[i], buffer[i+1]);
+                    card temp(buffer[i], buffer[i+1], covered);
                     addCardsToColumn(columns, temp);
                 }
                 if(buffer[i] == '|'){
-                    card temp('|', 0);
+                    covered = false;
+                    card temp('|', 0, covered);
                     addCardsToColumn(columns, temp);
                 }
             }
             if(columnFilled(columns)){
                 columns--;
+                covered = true;
             }
         }
     }
@@ -98,5 +124,24 @@ std::vector<card> gameTableau::getColPtr(int i) {
         default : nullptr;
     }
 }
+
+bool gameTableau::winningConfigTableau() {
+    bool result = false;
+    for(int i = 7; i >=1; i--){
+        std::vector <card> ptr = getColPtr(i);
+        for(int j = 0; j < ptr.size(); j++){
+            if(ptr[j].getCovered() == true){
+                result = true;
+                break;
+            }
+        }
+        if(result == true){
+            break;
+        }
+    }
+    return result;
+}
+
+
 
 

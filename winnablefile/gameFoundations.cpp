@@ -5,6 +5,19 @@
 #include "gameFoundations.h"
 #include <fstream>
 #include <iostream>
+gameFoundations::gameFoundations(const gameFoundations &old) {
+    for(int i = 0; i < 4; i++)
+        this->fnd[i] = old.fnd[i];
+    this->filename = old.filename;
+}
+
+gameFoundations& gameFoundations::operator=(const gameFoundations &old) {
+    for(int i = 0; i < 4; i++){
+        this->fnd[i] = old.fnd[i];
+    }
+    this->filename = old.filename;
+    return *this;
+}
 
 void gameFoundations::getFoundation(std::__cxx11::basic_string<char> basicString) {
     filename = basicString;
@@ -56,3 +69,4 @@ void gameFoundations::printFoundation() {
     }
     std::cout << std::endl;
 }
+

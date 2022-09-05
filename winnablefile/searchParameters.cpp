@@ -4,6 +4,14 @@
 
 #include "searchParameters.h"
 
+searchParameters::searchParameters() {
+    limitedSearch = false;
+    numberLimitedSearch = 0;
+    useHashTable = false;
+    useSafeMoves = false;
+    useVerboseMode = false;
+}
+
 searchParameters::searchParameters(bool limitedSearch, long numberLimitedSearch, bool useHashTable, bool useSafeMoves, bool useVerboseMode) {
     this->limitedSearch = limitedSearch;
     this->numberLimitedSearch = numberLimitedSearch;
@@ -11,3 +19,4 @@ searchParameters::searchParameters(bool limitedSearch, long numberLimitedSearch,
     this->useSafeMoves = useSafeMoves;
     this->useVerboseMode = useVerboseMode;
 }
+

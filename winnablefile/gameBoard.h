@@ -9,6 +9,7 @@
 #include "gameFoundations.h"
 #include "gameTableau.h"
 #include "gameStock.h"
+#include "moves.h"
 
 /** gameBoard class will essentially contain a complete game*/
 
@@ -18,9 +19,17 @@ private:
     gameFoundations foundations;
     gameTableau tableau;
     gameStock stock;
+    std::vector <moves> movesList;
 public:
-    gameBoard(std::string inputFileName);
+    gameBoard()= default;
+    explicit gameBoard(std::string inputFileName);
+    gameBoard(const gameBoard &old);
+    gameBoard& operator=(const gameBoard &old);
     void printGameBoard();
+    bool gameInWinningConfig();
+    long numberOfMoves(){return movesList.size();}
+    void addMove(char from, char to);
+    void removeMove();
 };
 
 

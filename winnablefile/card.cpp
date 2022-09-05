@@ -4,10 +4,11 @@
 
 #include "card.h"
 
-card card::operator=(const card &old) {
-    card temp;
-    temp.rank = old.rank;
-    temp.suit = old.suit;
+card& card::operator=(const card &old) {
+    this->rank = old.rank;
+    this->suit = old.suit;
+    this->covered = old.covered;
+    return *this;
 }
 
 bool card::rankIsValid(char rank) {
@@ -61,6 +62,10 @@ bool card::sameColorSuit(const card b) {
             (this->suit == 'h' && b.suit == 'd'))
         result = true;
     return result;
+}
+
+bool card::getCovered() {
+    return covered;
 }
 
 
