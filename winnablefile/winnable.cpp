@@ -1,65 +1,106 @@
 //
-// Created by wende on 6/7/2022.
+// Created by wendellbest on 7/7/22.
 //
-#include "Testing.h"
-#include "Rules.h"
-#include "GameConfiguration.h"
 #include <string>
-#include <cstdlib>
-#include <fstream>
 #include <iostream>
+#include <cstdlib>
+#include "gameConfiguration.h"
+#include "parseGameFile.h"
+
+void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename);
+/*This is the main program that will read the input from the command line
+ * then start the process of building the game.*/
 
 int main(int argc, char *argv[]){
-    //Retrieve comand line flags
-    //-m N : search should be limited to N moves, default value 1000
-    //-c : use a hash table cache
-    //-f : indicates safe moves to the foundation
-    //-v : verbose mode
-    bool limitMoves = false;
-    int numberOfMoves = 1000;
-    bool hashTable = false;
-    bool safeMoves = false;
-    bool verboseMode = false;
-    std::string inputfilename;
     std::string buffer;
-    //use for windows
-    //std::string check = R"(C:\Users\wende\OneDrive\Documents\ProgrammingWork\my-c-and-c-plus-plus-projects\Solitaire\cmake-build-debug\check )";
-    //use for linux
-    std::string check = "./cmake-build-debug/check ";
-    Testing test;
-    std::fstream inputfile;
-    GameConfiguration game;
-
-    for(int i = 0;i < argc; i++){
-        buffer = argv[i];
-        if(buffer == "-m"){
-            limitMoves = true;
-            buffer = argv[++i];
-            numberOfMoves = stoi(buffer);
-            continue;
-        }
-        else if(buffer == "-c"){
-            hashTable = true;
-        }
-        else if(buffer == "-f"){
-            safeMoves = true;
-        }
-        else if(buffer == "-v"){
-            verboseMode = true;
-        }
-        else if(buffer.find("winnable") == std::string::npos){
-            inputfilename = buffer;
+    std::string filename;
+    std::string subString;
+    std::size_t find = 0;
+    bool limitedSequences = false;
+    long int nMoves = 1000;
+    bool useHashTable = false;
+    bool useSafeMoves = false;
+    bool useVerboseMode = false;
+    gameConfiguration game;
+    parseGameFile parser;
+    //Need to get flags from command-line switches or stdin
+    //stdin input
+    if(argc == 1) {
+        getline(std::cin, buffer);
+        for(int i = 0; i < buffer.length(); i++){
+            if(buffer[i] == '-'){
+                if(buffer[i+1] == 'c'){
+                    useHashTable = true;
+                    i++; //incrementing to keep from reading as filename
+                }
+                else if(buffer[i+1] == 'f'){
+                    useSafeMoves = true;
+                    i++; //incrementing to keep from reading as filename
+                }
+                else if(buffer[i+1] == 'v'){
+                    useVerboseMode = true;
+                    i++; //incrementing to keep from reading as filename
+                }
+                else if(buffer[i+1] == 'm'){
+                    limitedSequences = true;
+                    i+=3; //incrementing in order to make substring is a number
+                    for(;std::isdigit(buffer[i]);i++)
+                        subString = subString + buffer[i];
+                    nMoves = stoi(subString);
+                }
+            }
+            else{
+                if(filename.empty()){
+                    for(;std::isalnum(buffer[i]) || std::ispunct(buffer[i]); i++)
+                        filename = filename + buffer[i];
+                }
+            }
         }
     }
-    //test.printSwitches(limitMoves,numberOfMoves,hashTable,safeMoves,verboseMode,inputfilename);
-    std::string argument = check + inputfilename;
-    system(argument.c_str());
-    game = GameConfiguration(inputfilename);
-    //std::cout << "Limit: " << game.getRulesLimit() << " Turn: " << game.getRulesTurn() << std::endl;
-    std::cout << "Foundation filled: ";
-    game.printGameFoundation();
-    std::cout << "Tableau:" << std::endl;
-    game.printGameTableau();
-    std::cout << "Stock:" << std::endl;
-    game.printGameStock();
+    //Command line flags
+    else{
+        for(int i = 0;i < argc; i++){
+            buffer = argv[i];
+            if(buffer == "-m"){
+                limitedSequences = true;
+                buffer = argv[++i];
+                nMoves = stoi(buffer);
+                continue;
+            }
+            else if(buffer == "-c"){
+                useHashTable = true;
+            }
+            else if(buffer == "-f"){
+                useSafeMoves = true;
+            }
+            else if(buffer == "-v"){
+                useVerboseMode = true;
+            }
+            else if(buffer.find("winnable") == std::string::npos){
+                filename = buffer;
+            }
+        }
+    }
+    //for checking input settings for program
+    //printSettings(limitedSequences, nMoves, useHashTable, useSafeMoves, useVerboseMode, filename);
+
+    //Need to see if the file is valid
+    std::string command = "./cmake-build-debug/check ";
+    command = command + filename;
+    if(system(command.c_str()) != 0){
+        std::cerr << "File is invalid" << std::endl;
+        return 1;
+    }
+    //The files is valid, so need to parse the file to get the game configuration
+
+}
+
+void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename){
+    std::cout << std::endl;
+    std::cout << "limitedSequences is: " << limitedSequences << std::endl;
+    std::cout << "Number of move sequences: " << nMoves << std::endl;
+    std::cout << "Hash table is: " << useHashTable << std::endl;
+    std::cout << "Safe Moves is: " << useSafeMoves << std::endl;
+    std::cout << "Verbose Mode is: " << useVerboseMode << std::endl;
+    std::cout << "File name is: " << filename << std::endl;
 }

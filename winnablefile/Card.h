@@ -1,22 +1,26 @@
 //
-// Created by wende on 6/7/2022.
+// Created by wendellbest on 1/15/23.
 //
 
 #ifndef SOLITAIRE_CARD_H
 #define SOLITAIRE_CARD_H
 
-
-class Card {
+/**The Card Object*/
+class Card{
 private:
     char rank;
     char suit;
+    bool covered;
 public:
     Card();
-    Card(char rank, char suit);
+    Card(char rank, char suit, bool covered);
     char getRank();
-    char getSuit();
-    static bool isValidRank(char c);
-    static bool isValidSuit(char c);
+    char getCardSuit();
+    void setRank(char c);
+    void setSuit(char c);
+    int getRankValue(char c);
+    bool isCovered();
+    void setCovered(bool c);
 };
 
 

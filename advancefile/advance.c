@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 #include "../checkfile/check.h"
 #include "../checkfile/tableau.h"
 #include "../checkfile/foundation.h"
@@ -20,54 +21,105 @@ int main(int args, char *argv[]){
     char *check = "./cmake-build-debug/check", *lim;
     char *inputFileName = 0;
     int line = 0, movess = 0;
-    char buffer[MAX_BUFFER];
+    char buffer[MAX_BUFFER] = {0};
+    char nNumber[MAX_BUFFER] = {0};
+    char outPutFile[MAX_BUFFER] = {0};
+    char fileName[MAX_BUFFER] = {0};
+    char letter;
     Rules rules;
 
-    for(int i = 0; i < args; i++){
-        //Switch "-m N" indicates at most N moves should be played from input file
-        if(strcmp(argv[i],"-m") == 0){
-            gameconfiguration.limitNumMoves = 'T';
-            gameconfiguration.numberMovesToPlay = (long) strtol(argv[i+1],0,0);
-            i+=2;
+    //Input from stdin that handles any flags
+    if(args < 2){
+        int i = 0;
+        while(1){
+            letter = getchar();
+            if(letter == '\n')
+                break;
+            else
+                buffer[i++] = letter;
         }
-        //Switch "-o file" indicates game configuration output to a file
-        if(strcmp(argv[i],"-o") == 0){
-            gameconfiguration.writeToFile = 'T';
-            gameconfiguration.filename = calloc(strlen(argv[i+1]),sizeof(char));
-            gameconfiguration.filename = strcpy(gameconfiguration.filename,argv[i+1]);
-            i+=2;
+        //got the line from stdin in buffer, now to get flags if any
+        for(int i = 0; i < strlen(buffer); i++){
+            if(buffer[i] == '-'){
+                if(buffer[i+1] == 'm'){
+                    gameconfiguration.limitNumMoves = 'T';
+                    i+=3;
+                    int j = 0;
+                    while(isdigit(buffer[i])){
+                        nNumber[j++] = buffer[i++];
+                    }
+                    gameconfiguration.numberMovesToPlay = strtol(nNumber,0,0);
+                }
+                else if(buffer[i+1] == 'o'){
+                   gameconfiguration.writeToFile = 'T';
+                   i+=3;
+                   int j = 0;
+                   while(isalnum(buffer[i]) || ispunct(buffer[i])){
+                        outPutFile[j++] = buffer[i++];
+                   }
+                    gameconfiguration.filename = calloc(strlen(outPutFile) + 1, sizeof(char));
+                    gameconfiguration.filename = strcpy(gameconfiguration.filename, outPutFile);
+                }
+                else if(buffer[i+1] == 'x'){
+                    gameconfiguration.exchangeFormat = 'T';
+                    i+=2;
+                }
+            }
+            else{
+                int j = 0;
+                while(isalnum(buffer[i]) || ispunct(buffer[i])){
+                    fileName[j++] = buffer[i++];
+                }
+                gameconfiguration.filename = calloc(strlen(fileName)+1, sizeof(char));
+                gameconfiguration.filename = strcpy(gameconfiguration.filename, fileName);
+            }
         }
-        //Switch "-x" game in exchange format
-        if(strcmp(argv[i], "-x") == 0){
-            gameconfiguration.exchangeFormat = 'T';
-        }
-        else if(strstr(argv[i],"advance") == 0){
-            inputFileName = calloc(strlen(argv[i]+1),sizeof(char));
-            inputFileName = strcpy(inputFileName, argv[i]);
+
+    }
+    //flags from command line
+    else {
+        for (int i = 1; i < args; i++) {
+            //Switch "-m N" indicates at most N moves should be played from input file
+            if (strcmp(argv[i], "-m") == 0) {
+                gameconfiguration.limitNumMoves = 'T';
+                gameconfiguration.numberMovesToPlay = (long) strtol(argv[i + 1], 0, 0);
+                i += 2;
+            }
+            //Switch "-o file" indicates game configuration output to a file
+            if (strcmp(argv[i], "-o") == 0) {
+                gameconfiguration.writeToFile = 'T';
+                gameconfiguration.filename = calloc(strlen(argv[i + 1]), sizeof(char));
+                gameconfiguration.filename = strcpy(gameconfiguration.filename, argv[i + 1]);
+                i += 2;
+            }
+            //Switch "-x" game in exchange format
+            if (strcmp(argv[i], "-x") == 0) {
+                gameconfiguration.exchangeFormat = 'T';
+            } else if (strstr(argv[i], "advance") == 0) {
+                inputFileName = calloc(strlen(argv[i]) + 1, sizeof(char));
+                inputFileName = strcpy(inputFileName, argv[i]);
+                gameconfiguration.filename = inputFileName;
+            }
         }
     }
+    printf("%s\n",gameconfiguration.filename);
     if(gameconfiguration.filename != (void *)0){
-        input = fopen(inputFileName,"r");
+        input = fopen(gameconfiguration.filename,"r");
         if(input == (void *)0){
             fprintf(stderr, "Unable to open %s\n", inputFileName);
             return 1;
         }
         unsigned long checkSize = strlen(check);
-        unsigned long fileNameSize = strlen(inputFileName);
-        char *argument = malloc((checkSize + fileNameSize +1) * sizeof(char));
+        unsigned long fileNameSize = strlen(gameconfiguration.filename);
+        char *argument = malloc((checkSize + fileNameSize +2) * sizeof(char));
         argument = strcat(argument, check);
         argument = strcat(argument, " ");
-        argument = strcat(argument, inputFileName);
+        argument = strcat(argument, gameconfiguration.filename);
         if(system(argument)){
             return 1;
         }
     }
-    else{
-        input = stdin;
-        if(system(check)){
-            return 1;
-        }
-    }
+
     while(fgets(buffer, MAX_BUFFER, input) != 0){
         line++;
         //Ignore hashes
