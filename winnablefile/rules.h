@@ -5,6 +5,9 @@
 #ifndef SOLITAIRE_RULES_H
 #define SOLITAIRE_RULES_H
 
+#include <string>
+#include "gameConfiguration.h"
+
 /**Rules object*/
 
 class Rules{
@@ -21,6 +24,7 @@ public:
     int getResetLimit();
     int getRemainingResets();
     void incrementReset();
+    bool getRulesFromFile(std::string inputfile, gameConfiguration game);
 };
 
 

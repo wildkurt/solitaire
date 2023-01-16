@@ -14,12 +14,12 @@
 
 class gameConfiguration{
 private:
-    Rules rules;
     Foundation foundation;
     Tableau tableau;
     StockWaste stockWaste;
     Moves moves;
 public:
+    Rules rules;
     gameConfiguration();
 };
 
