@@ -36,6 +36,11 @@ if the moves are legal.
 
 WINNABLE:
 This program is based off of the part3.pdf.
+winnable.cpp is the main program.
+Made a class parseGameFile that is dedicated to getting the game from
+the game file.
+The game goes in to a gameConfiguration which has objects for the
+rules, foundation, tableau, stock/waste, and moves.
 
 GAME:
 This program is based off of the part4.pdf.

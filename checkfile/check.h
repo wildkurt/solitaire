@@ -5,7 +5,7 @@
 #ifndef SOLITAIRE_CHECK_H
 #define SOLITAIRE_CHECK_H
 
-#define MAX_BUFFER 100
+#define MAX_BUFFER 200
 
 typedef struct{
     int turnOver; // how many cards can be turned over in stock at a time
