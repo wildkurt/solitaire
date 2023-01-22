@@ -41,22 +41,14 @@ void Rules::incrementReset() {
     resetsRemaining++;
 }
 
-bool Rules::getRulesFromFile(std::string inputfile, gameConfiguration game) {
-    std::ifstream gameFile;
-    std::string buffer;
-    bool foundRules = false;
+void Rules::setRuleTurn(bool c) {
+    turn3cards = c;
+}
 
-    gameFile.open(inputfile);
-    if(gameFile.is_open()){
-        while(gameFile){
-            std::getline(gameFile, buffer);
-            if(buffer.find("RULES:"))
-                foundRules = true;
-            if(foundRules){
-                if(buffer.find("turn 1"))
-                    game.rules.
-            }
-        }
-    }
-    return false;
+void Rules::setRuleLimitNumber(int i) {
+    resetLimit = i;
+}
+
+void Rules::setRuleLimits(bool c) {
+    resetsLimited = c;
 }

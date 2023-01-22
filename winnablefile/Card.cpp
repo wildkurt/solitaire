@@ -2,6 +2,7 @@
 // Created by wendellbest on 1/15/23.
 //
 
+#include <string>
 #include "Card.h"
 
 Card::Card() {
@@ -13,7 +14,7 @@ Card::Card() {
 Card::Card(char rank, char suit, bool covered) {
     this->rank = rank;
     this->suit = suit;
-    this.covered = covered;
+    this->covered = covered;
 }
 
 char Card::getRank() {
@@ -57,4 +58,20 @@ bool Card::isCovered() {
 
 void Card::setCovered(bool c) {
     covered = c;
+}
+
+bool Card::isCardRank(char c) {
+    std::string ranks = "A23456789TJQK";
+    if(ranks.find(c) != std::string::npos)
+        return true;
+    else
+        return false;
+}
+
+bool Card::isCardSuit(char c) {
+    std::string suit = "chds";
+    if(suit.find(c)!=std::string::npos)
+        return true;
+    else
+        return false;
 }

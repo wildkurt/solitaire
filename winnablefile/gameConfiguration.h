@@ -21,6 +21,22 @@ private:
 public:
     Rules rules;
     gameConfiguration();
+    void setRuleCardTurn(bool c);
+    void setRuleResetLimit(bool c);
+    void setRuleResetNumber(int n);
+    void addCardToFoundation(Card c);
+    void addCardToTableau(int col, Card c);
+    void addCardToStockWaste(Card c);
+    void addMoveToMoves(Move m);
+    void getRules();
+
+    void getFoundation();
+
+    void getTableau();
+
+    void getStock();
+
+    void getMoves();
 };
 
 

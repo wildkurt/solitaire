@@ -18,6 +18,8 @@ public:
     char getTo();
     void setFrom(char c);
     void setTo(char c);
+    static bool isMove(char from, char to);
+    static bool isStockMove(char c);
 };
 
 

@@ -24,7 +24,9 @@ public:
     int getResetLimit();
     int getRemainingResets();
     void incrementReset();
-    bool getRulesFromFile(std::string inputfile, gameConfiguration game);
+    void setRuleTurn(bool c);
+    void setRuleLimits(bool c);
+    void setRuleLimitNumber(int i);
 };
 
 

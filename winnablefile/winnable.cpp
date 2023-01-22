@@ -8,6 +8,7 @@
 #include "parseGameFile.h"
 
 void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename);
+void printGame(gameConfiguration game);
 /*This is the main program that will read the input from the command line
  * then start the process of building the game.*/
 
@@ -82,7 +83,7 @@ int main(int argc, char *argv[]){
         }
     }
     //for checking input settings for program
-    //printSettings(limitedSequences, nMoves, useHashTable, useSafeMoves, useVerboseMode, filename);
+    printSettings(limitedSequences, nMoves, useHashTable, useSafeMoves, useVerboseMode, filename);
 
     //Need to see if the file is valid
     std::string command = "./cmake-build-debug/check ";
@@ -92,7 +93,10 @@ int main(int argc, char *argv[]){
         return 1;
     }
     //The files is valid, so need to parse the file to get the game configuration
-
+    //parser = parseGameFile(filename, game);
+    //game = parser.getGameFromfile();
+    //Print game
+    //printGame(game);
 }
 
 void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename){
@@ -103,4 +107,12 @@ void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool us
     std::cout << "Safe Moves is: " << useSafeMoves << std::endl;
     std::cout << "Verbose Mode is: " << useVerboseMode << std::endl;
     std::cout << "File name is: " << filename << std::endl;
+}
+
+void printGame(gameConfiguration game){
+    game.getRules();
+    game.getFoundation();
+    game.getTableau();
+    game.getStock();
+    game.getMoves();
 }

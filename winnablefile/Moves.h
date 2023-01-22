@@ -17,6 +17,7 @@ public:
     Moves();
     void addMove(Move move);
     Move getMoves();
+    void printMoves();
 };
 
 

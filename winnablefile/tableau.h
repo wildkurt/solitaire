@@ -20,6 +20,8 @@ public:
     Tableau();
     void addCardToTab(int col, Card card);
     bool areColumnCardsCovered();
+
+    void printTableaus();
 };
 
 

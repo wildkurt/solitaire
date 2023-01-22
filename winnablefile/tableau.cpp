@@ -2,6 +2,7 @@
 // Created by wendellbest on 1/15/23.
 //
 
+#include <iostream>
 #include "tableau.h"
 
 Tableau::Tableau() {
@@ -44,5 +45,17 @@ bool Tableau::areColumnCardsCovered() {
         }
     }
     return false;
+}
+
+void Tableau::printTableaus() {
+    for(int i = 7; i > 0; i--){
+        Card *ptr = colptr(i);
+        std::cout << "Tableau " << i << ": ";
+        while(ptr->getRank()!=0)
+            if(ptr->getRank() == '|')
+                std::cout << ptr->getRank() << " ";
+            else
+                std::cout << ptr->getRank() << ptr->getCardSuit() << " ";
+    }
 }
 
