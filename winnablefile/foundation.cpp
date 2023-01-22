@@ -2,6 +2,7 @@
 // Created by wendellbest on 1/15/23.
 //
 
+#include <iostream>
 #include "foundation.h"
 int indexOfSuit(char c){
     switch(c){
@@ -9,6 +10,7 @@ int indexOfSuit(char c){
         case 'd' : return 1;
         case 'h' : return 2;
         case 's' : return 3;
+        default : return 0;
     }
 }
 Foundation::Foundation() {
@@ -33,4 +35,12 @@ bool Foundation::isSafeToMoveCard(Card card) {
 void Foundation::addCardToFoundation(Card card) {
     farr[indexOfSuit(card.getCardSuit())].setRank(card.getRank());
     farr[indexOfSuit(card.getCardSuit())].setSuit(card.getCardSuit());
+}
+
+void Foundation::printFoundations() {
+    std::cout << "Clubs: " << farr[0].getRank() << farr[0].getCardSuit()<< std::endl;
+    std::cout << "Diamonds: " << farr[1].getRank() << farr[1].getCardSuit()<< std::endl;
+    std::cout << "Hearts: " << farr[2].getRank() << farr[2].getCardSuit()<< std::endl;
+    std::cout << "Spades: " << farr[3].getRank() << farr[3].getCardSuit()<< std::endl;
+
 }

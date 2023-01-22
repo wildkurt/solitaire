@@ -2,6 +2,7 @@
 // Created by wendellbest on 1/15/23.
 //
 
+#include <iostream>
 #include "StockWaste.h"
 
 StockWaste::StockWaste() {
@@ -32,4 +33,12 @@ bool StockWaste::isStockWasteInWinningCondition() {
         }
     }
     return true;
+}
+
+void StockWaste::printStock() {
+    for(int i = 0; swarr[i].getRank() != 0; i++)
+        if(reinterpret_cast<const char *>(swarr[i].getRank()) == "|")
+            std::cout << swarr[i].getRank() << " ";
+        else
+            std::cout << swarr[i].getRank() << swarr[i].getCardSuit()<<" ";
 }

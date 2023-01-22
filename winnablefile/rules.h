@@ -21,6 +21,9 @@ public:
     int getResetLimit();
     int getRemainingResets();
     void incrementReset();
+    void setRuleTurn(bool c);
+    void setRuleLimits(bool c);
+    void setRuleLimitNumber(int i);
 };
 
 

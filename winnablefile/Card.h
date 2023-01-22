@@ -21,6 +21,8 @@ public:
     int getRankValue(char c);
     bool isCovered();
     void setCovered(bool c);
+    static bool isCardRank(char c);
+    static bool isCardSuit(char c);
 };
 
 

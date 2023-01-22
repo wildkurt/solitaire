@@ -15,6 +15,8 @@ public:
     StockWaste();
     void addCardToStockWaste(Card card);
     bool isStockWasteInWinningCondition();
+
+    void printStock();
 };
 
 

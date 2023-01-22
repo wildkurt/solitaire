@@ -8,11 +8,13 @@
 /**The object for a Foundation*/
 class Foundation{
 private:
+    //c, d, h, s
     Card farr[4];
 public:
     Foundation();
     bool isSafeToMoveCard(Card card);
     void addCardToFoundation(Card card);
+    void printFoundations();
 };
 
 

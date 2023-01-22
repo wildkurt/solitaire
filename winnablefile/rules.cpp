@@ -37,3 +37,15 @@ int Rules::getRemainingResets() {
 void Rules::incrementReset() {
     resetsRemaining++;
 }
+
+void Rules::setRuleTurn(bool c) {
+    turn3cards = c;
+}
+
+void Rules::setRuleLimitNumber(int i) {
+    resetLimit = i;
+}
+
+void Rules::setRuleLimits(bool c) {
+    resetsLimited = c;
+}
