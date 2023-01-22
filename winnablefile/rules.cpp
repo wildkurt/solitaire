@@ -2,6 +2,9 @@
 // Created by wendellbest on 1/15/23.
 //
 
+#include <iostream>
+#include <fstream>
+#include <string>
 #include "rules.h"
 
 Rules::Rules() {

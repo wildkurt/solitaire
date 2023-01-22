@@ -4,10 +4,11 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "parseGameFile.h"
 
 parseGameFile::parseGameFile() {
-    inputfile = nullptr;
+    inputfile=nullptr;
     game = gameConfiguration();
 }
 
