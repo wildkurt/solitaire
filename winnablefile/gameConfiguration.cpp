@@ -11,6 +11,7 @@ gameConfiguration::gameConfiguration() {
     tableau = Tableau();
     stockWaste = StockWaste();
     moves = Moves();
+    configID = 0;
 }
 
 void gameConfiguration::setRuleCardTurn(bool c) {
@@ -62,3 +63,9 @@ void gameConfiguration::getStock() {
 void gameConfiguration::getMoves() {
     moves.printMoves();
 }
+
+void gameConfiguration::getGameId() {
+    configID = this->moves.buildGameConfigNumber();
+}
+
+

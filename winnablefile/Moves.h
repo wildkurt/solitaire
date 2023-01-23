@@ -18,6 +18,8 @@ public:
     void addMove(Move move);
     Move getMoves();
     void printMoves();
+    long int buildGameConfigNumber();
+    std::string moveString(char *from, char *to);
 };
 
 

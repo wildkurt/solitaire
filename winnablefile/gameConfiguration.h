@@ -19,6 +19,7 @@ private:
     Tableau tableau;
     StockWaste stockWaste;
     Moves moves;
+    long int configID;
 public:
     gameConfiguration();
     void setRuleCardTurn(bool c);
@@ -29,14 +30,11 @@ public:
     void addCardToStockWaste(Card c);
     void addMoveToMoves(Move m);
     void getRules();
-
     void getFoundation();
-
     void getTableau();
-
     void getStock();
-
     void getMoves();
+    void getGameId();
 };
 
 
