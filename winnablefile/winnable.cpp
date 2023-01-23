@@ -93,10 +93,10 @@ int main(int argc, char *argv[]){
         return 1;
     }
     //The files is valid, so need to parse the file to get the game configuration
-    //parser = parseGameFile(filename, game);
-    //game = parser.getGameFromfile();
+    parser = parseGameFile(filename, game);
+    game = parser.getGameFromfile();
     //Print game
-    //printGame(game);
+    printGame(game);
 }
 
 void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename){
@@ -107,12 +107,15 @@ void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool us
     std::cout << "Safe Moves is: " << useSafeMoves << std::endl;
     std::cout << "Verbose Mode is: " << useVerboseMode << std::endl;
     std::cout << "File name is: " << filename << std::endl;
+    std::cout << std::endl;
 }
 
 void printGame(gameConfiguration game){
+    std::cout << std::endl;
     game.getRules();
     game.getFoundation();
     game.getTableau();
     game.getStock();
     game.getMoves();
+    std::cout << std::endl;
 }
