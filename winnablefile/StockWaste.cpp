@@ -36,6 +36,7 @@ bool StockWaste::isStockWasteInWinningCondition() {
 }
 
 void StockWaste::printStock() {
+    std::cout << "Stock is: ";
     for(int i = 0; swarr[i].getRank() != 0; i++)
         if(reinterpret_cast<const char *>(swarr[i].getRank()) == "|")
             std::cout << swarr[i].getRank() << " ";

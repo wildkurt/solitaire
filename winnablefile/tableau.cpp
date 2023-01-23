@@ -51,11 +51,14 @@ void Tableau::printTableaus() {
     for(int i = 7; i > 0; i--){
         Card *ptr = colptr(i);
         std::cout << "Tableau " << i << ": ";
-        while(ptr->getRank()!=0)
+        while(ptr->getRank()!=0){
             if(ptr->getRank() == '|')
                 std::cout << ptr->getRank() << " ";
             else
                 std::cout << ptr->getRank() << ptr->getCardSuit() << " ";
+            ptr++;
+        }
+        std::cout << std::endl;
     }
 }
 
