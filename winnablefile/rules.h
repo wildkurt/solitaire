@@ -5,6 +5,9 @@
 #ifndef SOLITAIRE_RULES_H
 #define SOLITAIRE_RULES_H
 
+#include <string>
+#include "gameConfiguration.h"
+
 /**Rules object*/
 
 class Rules{

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "parseGameFile.h"
 
 parseGameFile::parseGameFile() {
