@@ -6,7 +6,10 @@
 #include <cstdlib>
 #include "gameConfiguration.h"
 #include "parseGameFile.h"
+#include "SearchSettings.h"
+#include "findWinning.h"
 
+//Functions used for testing
 void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename);
 void printGame(gameConfiguration game);
 /*This is the main program that will read the input from the command line
@@ -23,6 +26,7 @@ int main(int argc, char *argv[]){
     bool useSafeMoves = false;
     bool useVerboseMode = false;
     gameConfiguration game;
+    gameConfiguration winninggame;
     parseGameFile parser;
     //Need to get flags from command-line switches or stdin
     //stdin input
@@ -83,7 +87,7 @@ int main(int argc, char *argv[]){
         }
     }
     //for checking input settings for program
-    printSettings(limitedSequences, nMoves, useHashTable, useSafeMoves, useVerboseMode, filename);
+    //printSettings(limitedSequences, nMoves, useHashTable, useSafeMoves, useVerboseMode, filename);
 
     //Need to see if the file is valid
     std::string command = "./cmake-build-debug/check ";
@@ -92,11 +96,15 @@ int main(int argc, char *argv[]){
         std::cerr << "File is invalid" << std::endl;
         return 1;
     }
+    //Object to hold the search settings
+    SearchSettings settings(limitedSequences, nMoves, useHashTable, useSafeMoves, useVerboseMode);
     //The files is valid, so need to parse the file to get the game configuration
     parser = parseGameFile(filename, game);
     game = parser.getGameFromfile();
+    game.setGameId();
     //Print game
-    printGame(game);
+    //printGame(game);
+    //time to find the winning configuration
 }
 
 void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename){

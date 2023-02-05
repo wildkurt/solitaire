@@ -15,6 +15,17 @@ Move::Move(char from, char to) {
     this->to = to;
 }
 
+Move::Move(const Move &omove) {
+    from = omove.from;
+    to = omove.to;
+}
+
+Move &Move::operator=(const Move &omove) {
+    from = omove.from;
+    to = omove.to;
+    return *this;
+}
+
 char Move::getFrom() {
     return from;
 }
@@ -23,28 +34,6 @@ char Move::getTo() {
     return to;
 }
 
-void Move::setFrom(char c) {
-    from = c;
-}
 
-void Move::setTo(char c) {
-    to = c;
-}
 
-bool Move::isMove(char from, char to) {
-    std::string fromStr = "w1234567";
-    std::string toStr = "1234567f";
 
-    if(fromStr.find(from)!= std::string::npos && toStr.find(to)!= std::string::npos)
-        return true;
-    else
-    return false;
-}
-
-bool Move::isStockMove(char c) {
-    std::string altStr = ".r";
-    if(altStr.find(c) != std::string::npos)
-        return true;
-    else
-        return false;
-}

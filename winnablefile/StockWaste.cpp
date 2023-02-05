@@ -11,6 +11,19 @@ StockWaste::StockWaste() {
     }
 }
 
+StockWaste::StockWaste(const StockWaste &sw) {
+    for(int i = 0; i < 30; i++){
+        swarr[i] = sw.swarr[i];
+    }
+}
+
+StockWaste &StockWaste::operator=(const StockWaste &sw) {
+    for(int i = 0; i < 30; i++){
+        swarr[i] = sw.swarr[i];
+    }
+    return *this;
+}
+
 void StockWaste::addCardToStockWaste(Card card) {
     int i = 0;
     for(;i < 30; i++){
@@ -43,3 +56,5 @@ void StockWaste::printStock() {
         else
             std::cout << swarr[i].getRank() << swarr[i].getCardSuit()<<" ";
 }
+
+

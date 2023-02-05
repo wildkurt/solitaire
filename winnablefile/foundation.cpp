@@ -23,6 +23,18 @@ Foundation::Foundation() {
     farr[3].setRank('_');
     farr[3].setSuit('s');
 }
+Foundation::Foundation(const Foundation &fndtn) {
+    for(int i = 0; i < 4; i++){
+        farr[i] = fndtn.farr[i];
+    }
+}
+
+Foundation &Foundation::operator=(const Foundation &fndtn) {
+    for(int i = 0; i < 4; i++){
+        farr[i] = fndtn.farr[i];
+    }
+    return *this;
+}
 
 bool Foundation::isSafeToMoveCard(Card card) {
     for(int i = 0; i < 4; i++){
@@ -44,3 +56,6 @@ void Foundation::printFoundations() {
     std::cout << "Spades: " << farr[3].getRank() << farr[3].getCardSuit()<< std::endl;
 
 }
+
+
+

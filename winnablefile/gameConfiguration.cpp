@@ -11,6 +11,29 @@ gameConfiguration::gameConfiguration() {
     tableau = Tableau();
     stockWaste = StockWaste();
     moves = Moves();
+    configID = 0;
+    movesSoFar = 0;
+}
+
+gameConfiguration::gameConfiguration(const gameConfiguration &gameb) {
+    rules = gameb.rules;
+    foundation = gameb.foundation;
+    tableau = gameb.tableau;
+    stockWaste = gameb.stockWaste;
+    moves = gameb.moves;
+    configID = gameb.configID;
+    movesSoFar = gameb.movesSoFar;
+}
+
+gameConfiguration &gameConfiguration::operator=(const gameConfiguration &gameb) {
+    rules = gameb.rules;
+    foundation = gameb.foundation;
+    tableau = gameb.tableau;
+    stockWaste = gameb.stockWaste;
+    moves = gameb.moves;
+    configID = gameb.configID;
+    movesSoFar = gameb.movesSoFar;
+    return *this;
 }
 
 void gameConfiguration::setRuleCardTurn(bool c) {
@@ -62,3 +85,17 @@ void gameConfiguration::getStock() {
 void gameConfiguration::getMoves() {
     moves.printMoves();
 }
+
+long int gameConfiguration::getGameId() {
+    return configID;
+}
+
+void gameConfiguration::setGameId() {
+    configID = this->moves.buildGameConfigNumber();
+}
+
+
+
+
+
+

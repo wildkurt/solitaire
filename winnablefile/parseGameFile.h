@@ -19,6 +19,9 @@ private:
 public:
     parseGameFile();
     parseGameFile(std::string inputfile, gameConfiguration game);
+    parseGameFile(const parseGameFile& parser);
+    parseGameFile & operator=(const parseGameFile& parser);
+    ~parseGameFile()=default;
     gameConfiguration getGameFromfile();
 };
 

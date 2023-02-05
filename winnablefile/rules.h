@@ -19,6 +19,9 @@ private:
 public:
     Rules();
     Rules(bool cardTurn, bool limit, int numLimit);
+    Rules(const Rules &rules);
+    Rules &operator=(const Rules &rules);
+    ~Rules()=default;
     bool getTurn3Cards();
     bool getResetsLimited();
     int getResetLimit();

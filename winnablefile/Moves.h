@@ -14,10 +14,14 @@ class Moves{
 private:
     std::vector <Move> moves;
 public:
-    Moves();
+    Moves()= default;
+    Moves(const Moves &omoves);
+    Moves &operator=(const Moves &omoves);
+    ~Moves()=default;
     void addMove(Move move);
-    Move getMoves();
     void printMoves();
+    long int buildGameConfigNumber();
+    std::string moveString(char *from, char *to);
 };
 
 

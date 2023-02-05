@@ -21,6 +21,21 @@ Rules::Rules(bool cardTurn, bool limit, int numLimit) {
     resetsRemaining = 0;
 }
 
+Rules::Rules(const Rules &rules) {
+    turn3cards = rules.turn3cards;
+    resetsLimited = rules.resetsLimited;
+    resetLimit = rules.resetLimit;
+    resetsRemaining = rules.resetsRemaining;
+}
+
+Rules &Rules::operator=(const Rules &rules) {
+    turn3cards = rules.turn3cards;
+    resetsLimited = rules.resetsLimited;
+    resetLimit = rules.resetLimit;
+    resetsRemaining = rules.resetsRemaining;
+    return *this;
+}
+
 bool Rules::getTurn3Cards() {
     return turn3cards;
 }
@@ -52,3 +67,7 @@ void Rules::setRuleLimitNumber(int i) {
 void Rules::setRuleLimits(bool c) {
     resetsLimited = c;
 }
+
+
+
+

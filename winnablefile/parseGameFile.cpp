@@ -17,6 +17,18 @@ parseGameFile::parseGameFile(std::string inputfile, gameConfiguration game) {
     this->game = game;
 }
 
+parseGameFile::parseGameFile(const parseGameFile &parser) {
+    inputfile = parser.inputfile;
+    game = parser.game;
+}
+
+parseGameFile &parseGameFile::operator=(const parseGameFile &parser) {
+    inputfile = parser.inputfile;
+    game = parser.game;
+    return *this;
+}
+
+
 gameConfiguration parseGameFile::getGameFromfile() {
     std::ifstream inputGame{inputfile, std::ios_base::in};
     std::string buffer = "";
@@ -92,6 +104,7 @@ gameConfiguration parseGameFile::getGameFromfile() {
                 }
             }
         }
+        //Find the tableau
         if (buffer.find("TABLEAU:") != std::string::npos){
             int col = 7;
             bool isCovered = true;
@@ -148,9 +161,11 @@ gameConfiguration parseGameFile::getGameFromfile() {
                 for(int i = 0; i < buffer.length(); i++){
                     if(Move::isMove(buffer[i],buffer[i+3])){
                         game.addMoveToMoves(Move(buffer[i], buffer[i+3]));
+                        i+=4;
                     }
                     else if(Move::isStockMove(buffer[i])){
                         game.addMoveToMoves(Move(buffer[i], 'n'));
+                        i+=1;
                     }
                 }
             }while(getline(inputGame,buffer));
@@ -158,3 +173,7 @@ gameConfiguration parseGameFile::getGameFromfile() {
     }
     return game;
 }
+
+
+
+

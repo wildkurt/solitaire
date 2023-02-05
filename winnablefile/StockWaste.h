@@ -13,6 +13,9 @@ private:
     Card swarr[30];
 public:
     StockWaste();
+    StockWaste(const StockWaste &sw);
+    StockWaste &operator=(const StockWaste &sw);
+    ~StockWaste()=default;
     void addCardToStockWaste(Card card);
     bool isStockWasteInWinningCondition();
 

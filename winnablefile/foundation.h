@@ -12,6 +12,9 @@ private:
     Card farr[4];
 public:
     Foundation();
+    Foundation(const Foundation & fndtn);
+    Foundation &operator=(const Foundation & fndtn);
+    ~Foundation()=default;
     bool isSafeToMoveCard(Card card);
     void addCardToFoundation(Card card);
     void printFoundations();
