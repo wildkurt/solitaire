@@ -18,6 +18,9 @@ private:
     Card *colptr(int col);
 public:
     Tableau();
+    Tableau(const Tableau & tab);
+    Tableau &operator=(const Tableau &tab);
+    ~Tableau()=default;
     void addCardToTab(int col, Card card);
     bool areColumnCardsCovered();
 

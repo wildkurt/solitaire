@@ -17,6 +17,19 @@ Card::Card(char rank, char suit, bool covered) {
     this->covered = covered;
 }
 
+Card::Card(const Card &card) {
+    rank = card.rank;
+    suit = card.suit;
+    covered = card.covered;
+}
+
+Card &Card::operator=(const Card &card) {
+    rank = card.rank;
+    suit = card.suit;
+    covered = card.covered;
+    return *this;
+}
+
 char Card::getRank() {
     return rank;
 }
@@ -75,3 +88,6 @@ bool Card::isCardSuit(char c) {
     else
         return false;
 }
+
+
+

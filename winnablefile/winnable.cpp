@@ -101,12 +101,10 @@ int main(int argc, char *argv[]){
     //The files is valid, so need to parse the file to get the game configuration
     parser = parseGameFile(filename, game);
     game = parser.getGameFromfile();
-    game.getGameId();
+    game.setGameId();
     //Print game
     //printGame(game);
     //time to find the winning configuration
-    findWinning findwinninggame;
-    winninggame = findwinninggame.winningGameSearch(settings, game);
 }
 
 void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename){

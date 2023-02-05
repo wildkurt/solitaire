@@ -16,6 +16,18 @@ parseGameFile::parseGameFile(std::string inputfile, gameConfiguration game) {
     this->game = game;
 }
 
+parseGameFile::parseGameFile(const parseGameFile &parser) {
+    inputfile = parser.inputfile;
+    game = parser.game;
+}
+
+parseGameFile &parseGameFile::operator=(const parseGameFile &parser) {
+    inputfile = parser.inputfile;
+    game = parser.game;
+    return *this;
+}
+
+
 gameConfiguration parseGameFile::getGameFromfile() {
     std::ifstream inputGame{inputfile, std::ios_base::in};
     std::string buffer = "";
@@ -160,3 +172,7 @@ gameConfiguration parseGameFile::getGameFromfile() {
     }
     return game;
 }
+
+
+
+

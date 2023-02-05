@@ -15,6 +15,9 @@ private:
     bool useVerboseMode;
 public:
     SearchSettings(bool b, long i, bool b1, bool b2, bool b3);
+    SearchSettings(SearchSettings const& settings);
+    SearchSettings &operator=(SearchSettings const &settings);
+    ~SearchSettings()= default;
     bool getLimitedSequence();
     long int getnMoves();
     bool getUseHashTable();

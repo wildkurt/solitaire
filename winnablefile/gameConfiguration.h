@@ -19,12 +19,17 @@ private:
     Tableau tableau;
     StockWaste stockWaste;
     Moves moves;
+    long int movesSoFar;
     long int configID;
 public:
     gameConfiguration();
+    gameConfiguration(const gameConfiguration& gameb);
+    gameConfiguration& operator=(const gameConfiguration& gameb);
+    ~gameConfiguration()= default;
     void setRuleCardTurn(bool c);
     void setRuleResetLimit(bool c);
     void setRuleResetNumber(int n);
+    void setGameId();
     void addCardToFoundation(Card c);
     void addCardToTableau(int col, Card c);
     void addCardToStockWaste(Card c);
@@ -34,7 +39,9 @@ public:
     void getTableau();
     void getStock();
     void getMoves();
-    void getGameId();
+    long int getGameId();
+    void incrementMovesSoFar(){movesSoFar++;}
+    long int getMovesSoFar(){return movesSoFar;}
 };
 
 

@@ -5,8 +5,13 @@
 #include <iostream>
 #include "Moves.h"
 
-Moves::Moves() {
+Moves::Moves(const Moves &omoves) {
+    this->moves = omoves.moves;
+}
 
+Moves &Moves::operator=(const Moves &omoves) {
+    this->moves = omoves.moves;
+    return *this;
 }
 
 void Moves::addMove(Move move) {
@@ -73,3 +78,5 @@ std::string Moves::moveString(char *from, char *to) {
     }
     return temp;
 }
+
+

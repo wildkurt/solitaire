@@ -14,6 +14,31 @@ Tableau::Tableau() {
     }
 }
 
+Tableau::Tableau(const Tableau &tab) {
+    for(int i = 0; i < 27; i++){
+        col1[i] = tab.col1[i];
+        col2[i] = tab.col2[i];
+        col3[i] = tab.col3[i];
+        col4[i] = tab.col4[i];
+        col5[i] = tab.col5[i];
+        col6[i] = tab.col6[i];
+        col7[i] = tab.col7[i];
+    }
+}
+
+Tableau &Tableau::operator=(const Tableau &tab) {
+    for (int i = 0; i < 27; i++) {
+        col1[i] = tab.col1[i];
+        col2[i] = tab.col2[i];
+        col3[i] = tab.col3[i];
+        col4[i] = tab.col4[i];
+        col5[i] = tab.col5[i];
+        col6[i] = tab.col6[i];
+        col7[i] = tab.col7[i];
+    }
+    return *this;
+}
+
 void Tableau::addCardToTab(int col, Card card) {
     Card *ptr = colptr(col);
     while(ptr->getRank() != 0){
@@ -61,4 +86,7 @@ void Tableau::printTableaus() {
         std::cout << std::endl;
     }
 }
+
+
+
 

@@ -14,6 +14,9 @@ private:
 public:
     Card();
     Card(char rank, char suit, bool covered);
+    Card(const Card &card);
+    Card &operator=(const Card &card);
+    ~Card()=default;
     char getRank();
     char getCardSuit();
     void setRank(char c);
