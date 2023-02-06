@@ -36,6 +36,10 @@ Foundation &Foundation::operator=(const Foundation &fndtn) {
     return *this;
 }
 
+Card Foundation::getCard(int i) {
+    return farr[i];
+}
+
 bool Foundation::isSafeToMoveCard(Card card) {
     for(int i = 0; i < 4; i++){
         if(farr[i].getRankValue(farr[i].getRank())+1 < card.getRankValue(card.getRank()))
@@ -56,6 +60,8 @@ void Foundation::printFoundations() {
     std::cout << "Spades: " << farr[3].getRank() << farr[3].getCardSuit()<< std::endl;
 
 }
+
+
 
 
 

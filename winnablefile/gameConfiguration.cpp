@@ -11,7 +11,7 @@ gameConfiguration::gameConfiguration() {
     tableau = Tableau();
     stockWaste = StockWaste();
     moves = Moves();
-    configID = 0;
+    configID = "";
     movesSoFar = 0;
 }
 
@@ -64,14 +64,12 @@ void gameConfiguration::addMoveToMoves(Move m) {
     moves.addMove(m);
 }
 
-void gameConfiguration::getRules() {
-    std::cout << "Turn over 3 cards is: " << rules.getTurn3Cards() << std::endl;
-    std::cout << "Reset limit is: " << rules.getResetsLimited() << std::endl;
-    std::cout << "Reset number is: " << rules.getResetLimit() << std::endl;
+Rules gameConfiguration::getRules() {
+    return rules;
 }
 
-void gameConfiguration::getFoundation() {
-    foundation.printFoundations();
+Foundation gameConfiguration::getFoundation() {
+    return foundation;
 }
 
 void gameConfiguration::getTableau() {
@@ -86,12 +84,28 @@ void gameConfiguration::getMoves() {
     moves.printMoves();
 }
 
-long int gameConfiguration::getGameId() {
+std::string gameConfiguration::getGameId() {
     return configID;
 }
 
 void gameConfiguration::setGameId() {
     configID = this->moves.buildGameConfigNumber();
+}
+
+void gameConfiguration::accIncrmntWasteCount() {
+    stockWaste.incrementWasteCount();
+}
+
+void gameConfiguration::accIncrmntStockCount() {
+    stockWaste.incrementStockCount();
+}
+
+bool gameConfiguration::accStockInWinning() {
+    return stockWaste.isStockWasteInWinningCondition();
+}
+
+bool gameConfiguration::accTableauInWinning() {
+    return tableau.areColumnCardsCovered();
 }
 
 

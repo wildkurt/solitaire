@@ -20,7 +20,7 @@ private:
     StockWaste stockWaste;
     Moves moves;
     long int movesSoFar;
-    long int configID;
+    std::string configID;
 public:
     gameConfiguration();
     gameConfiguration(const gameConfiguration& gameb);
@@ -34,12 +34,16 @@ public:
     void addCardToTableau(int col, Card c);
     void addCardToStockWaste(Card c);
     void addMoveToMoves(Move m);
-    void getRules();
-    void getFoundation();
+    Rules getRules();
+    Foundation getFoundation();
     void getTableau();
     void getStock();
     void getMoves();
-    long int getGameId();
+    void accIncrmntWasteCount();
+    void accIncrmntStockCount();
+    bool accStockInWinning();
+    bool accTableauInWinning();
+    std::string getGameId();
     void incrementMovesSoFar(){movesSoFar++;}
     long int getMovesSoFar(){return movesSoFar;}
 };

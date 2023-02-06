@@ -16,9 +16,11 @@ private:
     char to[9]="1234567f";
     long int configCount = 0;
 public:
-    explicit findWinning(SearchSettings settings, gameConfiguration game);
+    findWinning(SearchSettings settings, gameConfiguration &game);
+    findWinning(const findWinning &wgame);
     findWinning& operator=(findWinning const& findb);
-    bool winningGameSearch();
+    ~findWinning()=default;
+    bool winningGameSearch(gameConfiguration game);
     void incrementConfigCount(){configCount++;}
     bool writeToAdvance(char rom, char tO, gameConfiguration configuration);
 };

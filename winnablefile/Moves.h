@@ -20,8 +20,7 @@ public:
     ~Moves()=default;
     void addMove(Move move);
     void printMoves();
-    long int buildGameConfigNumber();
-    std::string moveString(char *from, char *to);
+    std::string buildGameConfigNumber();
 };
 
 

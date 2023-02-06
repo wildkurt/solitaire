@@ -142,6 +142,10 @@ gameConfiguration parseGameFile::getGameFromfile() {
                    if(Card::isCardRank(buffer[index]) && Card::isCardSuit(buffer[index+1])){
                        Card temp(buffer[index],buffer[index+1], covered);
                        game.addCardToStockWaste(temp);
+                       if(covered == false)
+                           game.accIncrmntWasteCount();
+                       else
+                           game.accIncrmntStockCount();
                        index+=2;
                    }
                    else if(buffer[index] == '|'){
