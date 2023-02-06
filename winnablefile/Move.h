@@ -11,6 +11,8 @@ class Move{
 private:
     char from;
     char to;
+    std::string foam;
+    std::string toe;
 public:
     Move();
     Move(char from, char to);
@@ -19,6 +21,8 @@ public:
     ~Move()=default;
     char getFrom();
     char getTo();
+    static bool isMove(char &i, char &i1);
+    static bool isStockMove(char &i);
 };
 
 

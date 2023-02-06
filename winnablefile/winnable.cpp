@@ -105,6 +105,11 @@ int main(int argc, char *argv[]){
     //Print game
     //printGame(game);
     //time to find the winning configuration
+    findWinning fwObject(settings,game);
+    if(fwObject.winningGameSearch(game)){
+        //TODO
+        //Do stuff to say game is winnable
+    }
 }
 
 void printSettings(bool limitedSequences, int nMoves, bool useHashTable, bool useSafeMoves, bool useVerboseMode, std::string filename){

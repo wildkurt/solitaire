@@ -3,6 +3,13 @@
 //
 
 #include "SearchSettings.h"
+SearchSettings::SearchSettings() {
+    limitedSequences = false;
+    nMoves = -1;
+    useHashTable = false;
+    useSafeMoves = false;
+    useVerboseMode = false;
+}
 
 SearchSettings::SearchSettings(bool b, long i, bool b1, bool b2, bool b3) {
     limitedSequences = b;
@@ -47,6 +54,7 @@ bool SearchSettings::getUseSafeMoves() {
 bool SearchSettings::getVerboseMode() {
     return useVerboseMode;
 }
+
 
 
 

@@ -14,6 +14,7 @@ private:
     bool useSafeMoves;
     bool useVerboseMode;
 public:
+    SearchSettings();
     SearchSettings(bool b, long i, bool b1, bool b2, bool b3);
     SearchSettings(SearchSettings const& settings);
     SearchSettings &operator=(SearchSettings const &settings);

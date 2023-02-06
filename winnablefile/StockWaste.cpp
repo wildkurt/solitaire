@@ -9,18 +9,24 @@ StockWaste::StockWaste() {
     for(int i = 0; i < 30; i++){
         swarr[i] = Card();
     }
+    wasteCardCount = 0;
+    stockCardCount = 0;
 }
 
 StockWaste::StockWaste(const StockWaste &sw) {
     for(int i = 0; i < 30; i++){
         swarr[i] = sw.swarr[i];
     }
+    wasteCardCount = sw.wasteCardCount;
+    stockCardCount = sw.stockCardCount;
 }
 
 StockWaste &StockWaste::operator=(const StockWaste &sw) {
     for(int i = 0; i < 30; i++){
         swarr[i] = sw.swarr[i];
     }
+    wasteCardCount = sw.wasteCardCount;
+    stockCardCount = sw.stockCardCount;
     return *this;
 }
 
@@ -35,17 +41,10 @@ void StockWaste::addCardToStockWaste(Card card) {
 }
 
 bool StockWaste::isStockWasteInWinningCondition() {
-    int wasteCount = 0;
-    for(int i = 0; i < 30; i++){
-        if(swarr[i].isCovered())
-            return false;
-        if(swarr[i].getRank() != '|' && !swarr[i].isCovered()){
-            wasteCount++;
-            if(wasteCount > 1)
-                return false;
-        }
-    }
-    return true;
+    if(stockCardCount == 0 && wasteCardCount <= 1)
+        return true;
+    else
+        return false;
 }
 
 void StockWaste::printStock() {

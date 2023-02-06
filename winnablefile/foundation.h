@@ -15,6 +15,7 @@ public:
     Foundation(const Foundation & fndtn);
     Foundation &operator=(const Foundation & fndtn);
     ~Foundation()=default;
+    Card getCard(int i);
     bool isSafeToMoveCard(Card card);
     void addCardToFoundation(Card card);
     void printFoundations();
