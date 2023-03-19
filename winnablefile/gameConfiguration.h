@@ -1,51 +1,24 @@
 //
-// Created by wendellbest on 1/15/23.
+// Created by wendellbest on 3/18/23.
 //
 
 #ifndef SOLITAIRE_GAMECONFIGURATION_H
 #define SOLITAIRE_GAMECONFIGURATION_H
 
 
-#include "tableau.h"
 #include "rules.h"
-#include "foundation.h"
-#include "StockWaste.h"
-#include "Moves.h"
 
-class gameConfiguration{
+class GameConfiguration {
 private:
     Rules rules;
-    Foundation foundation;
-    Tableau tableau;
-    StockWaste stockWaste;
-    Moves moves;
-    long int movesSoFar;
-    std::string configID;
 public:
-    gameConfiguration();
-    gameConfiguration(const gameConfiguration& gameb);
-    gameConfiguration& operator=(const gameConfiguration& gameb);
-    ~gameConfiguration()= default;
-    void setRuleCardTurn(bool c);
-    void setRuleResetLimit(bool c);
-    void setRuleResetNumber(int n);
-    void setGameId();
-    void addCardToFoundation(Card c);
-    void addCardToTableau(int col, Card c);
-    void addCardToStockWaste(Card c);
-    void addMoveToMoves(Move m);
-    Rules getRules();
-    Foundation getFoundation();
-    void getTableau();
-    void getStock();
-    void getMoves();
-    void accIncrmntWasteCount();
-    void accIncrmntStockCount();
-    bool accStockInWinning();
-    bool accTableauInWinning();
-    std::string getGameId();
-    void incrementMovesSoFar(){movesSoFar++;}
-    long int getMovesSoFar(){return movesSoFar;}
+    GameConfiguration()= default;
+    bool getRuleCardTurnover(){return rules.getCardTurnover();}
+    bool getRuleLimitedWasteResets(){return rules.getLimitedWasteResets();}
+    int getRuleNumberofWasteResets(){return rules.getNumberOfWasteResets();}
+    void setRuleCardTurnover(bool c){return rules.setCardTurnover(c);}
+    void setRuleLimitedWasteResets(bool c){rules.setLimitedWasteResets(c);}
+    void setRuleNumberofWasteResets(int c){rules.setNumberOfWasteResets(c);}
 };
 
 

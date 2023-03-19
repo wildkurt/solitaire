@@ -1,32 +1,27 @@
 //
-// Created by wendellbest on 1/15/23.
+// Created by wendellbest on 3/18/23.
 //
 
 #ifndef SOLITAIRE_RULES_H
 #define SOLITAIRE_RULES_H
 
-/**Rules object*/
 
-class Rules{
+class Rules {
 private:
-    bool turn3cards; //default is one
-    bool resetsLimited; //default is unlimited
-    int resetLimit;
-    int resetsRemaining;
+    //true means turn three cards over
+    bool turn3cards;
+    //true, waste resets are limited
+    bool limitedWasteReset;
+    //number of allowed resets
+    int numberOfWasteResets;
 public:
     Rules();
-    Rules(bool cardTurn, bool limit, int numLimit);
-    Rules(const Rules &rules);
-    Rules &operator=(const Rules &rules);
-    ~Rules()=default;
-    bool getTurn3Cards();
-    bool getResetsLimited();
-    int getResetLimit();
-    int getRemainingResets();
-    void incrementReset();
-    void setRuleTurn(bool c);
-    void setRuleLimits(bool c);
-    void setRuleLimitNumber(int i);
+    void setCardTurnover(bool c){turn3cards = c;}
+    bool getCardTurnover(){return turn3cards;}
+    void setLimitedWasteResets(bool c){limitedWasteReset = c;}
+    bool getLimitedWasteResets(){return limitedWasteReset;}
+    void setNumberOfWasteResets(int c){numberOfWasteResets = c;}
+    int getNumberOfWasteResets(){return numberOfWasteResets;}
 };
 
 
