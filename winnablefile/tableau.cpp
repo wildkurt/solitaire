@@ -28,6 +28,7 @@ void Tableau::addCardToColumn(int c, Card d) {
 void Tableau::printTableau(std::ofstream *file) {
     int col = 7;
     Card *ptr = getColPointer(col);
+    *file << "TABLEAU:" << std::endl;
     while(col > 0){
         for(int i = 0; i< TABSIZE ; i++){
             if((ptr + i)->getRank() == '|')

@@ -13,6 +13,7 @@ void StockWaste::addCardToSW(Card c) {
 }
 
 void StockWaste::printStockWaste(std::ofstream *file) {
+    *file << "STOCK:" << std::endl;
     for(int i = 0; i < SWSIZE; i++){
         if(sw[i].getRank() != '0'){
             if(sw[i].getRank() == '|')
