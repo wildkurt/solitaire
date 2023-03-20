@@ -21,6 +21,7 @@ void SearchSettings::getSettingsFromCL(int number, char **arr) {
             variable = arr[i+1];
             numberOfLimitedMoves = stoi(variable);
             i++;
+            std::cout << "Testing entry" << std::endl;
         }
         else if(variable.find("-c") != std::string::npos)
             useHashtable = true;
