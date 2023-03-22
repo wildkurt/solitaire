@@ -1,30 +1,26 @@
 //
-// Created by wendellbest on 1/15/23.
+// Created by wendellbest on 3/19/23.
 //
 
 #ifndef SOLITAIRE_TABLEAU_H
 #define SOLITAIRE_TABLEAU_H
-#include "Card.h"
-/**The object for a tableau*/
-class Tableau{
-private:
-    Card col1[27];
-    Card col2[27];
-    Card col3[27];
-    Card col4[27];
-    Card col5[27];
-    Card col6[27];
-    Card col7[27];
-    Card *colptr(int col);
-public:
-    Tableau();
-    Tableau(const Tableau & tab);
-    Tableau &operator=(const Tableau &tab);
-    ~Tableau()=default;
-    void addCardToTab(int col, Card card);
-    bool areColumnCardsCovered();
 
-    void printTableaus();
+
+#include "card.h"
+#define TABSIZE 27
+class Tableau {
+private:
+    Card col7[TABSIZE];
+    Card col6[TABSIZE];
+    Card col5[TABSIZE];
+    Card col4[TABSIZE];
+    Card col3[TABSIZE];
+    Card col2[TABSIZE];
+    Card col1[TABSIZE];
+public:
+    Card * getColPointer(int c);
+    void addCardToColumn(int c, Card d);
+    void printTableau(std::ofstream *file);
 };
 
 

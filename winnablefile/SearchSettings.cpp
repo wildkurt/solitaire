@@ -1,61 +1,46 @@
 //
-// Created by wendellbest on 1/22/23.
+// Created by wendellbest on 3/18/23.
 //
 
+#include <iostream>
 #include "SearchSettings.h"
+
 SearchSettings::SearchSettings() {
-    limitedSequences = false;
-    nMoves = -1;
-    useHashTable = false;
+    limitedMoves = false;
+    numberOfLimitedMoves = 1000;
+    useHashtable = false;
     useSafeMoves = false;
     useVerboseMode = false;
 }
 
-SearchSettings::SearchSettings(bool b, long i, bool b1, bool b2, bool b3) {
-    limitedSequences = b;
-    nMoves = i;
-    useHashTable = b1;
-    useSafeMoves = b2;
-    useVerboseMode = b3;
+void SearchSettings::getSettingsFromCL(int number, char **arr) {
+    for(int i = 1; i < number ; i++){
+        std::string variable = arr[i];
+        if(variable.find("-m") != std::string::npos){
+            limitedMoves = true;
+            variable = arr[i+1];
+            numberOfLimitedMoves = stoi(variable);
+            i++;
+            std::cout << "Testing entry" << std::endl;
+        }
+        else if(variable.find("-c") != std::string::npos)
+            useHashtable = true;
+        else if(variable.find("-f") != std::string::npos)
+            useSafeMoves = true;
+        else if(variable.find("-v") != std::string::npos)
+            useVerboseMode = true;
+        else
+            filename = arr[i];
+    }
+    std::cout << std::endl;
 }
 
-SearchSettings::SearchSettings(SearchSettings const& settings) {
-    this->limitedSequences = settings.limitedSequences;
-    this->nMoves = settings.nMoves;
-    this->useVerboseMode = settings.useVerboseMode;
-    this->useSafeMoves = settings.useSafeMoves;
-    this->useHashTable = settings.useHashTable;
+void SearchSettings::printSettingsFromCL() {
+    std::cout << "limitedMoves: " << limitedMoves << std::endl;
+    std::cout << "numberOfLimitedMoves: " << numberOfLimitedMoves << std::endl;
+    std::cout << "useHashtable: " << useHashtable << std::endl;
+    std::cout << "useSafeMoves: " << useSafeMoves << std::endl;
+    std::cout << "useVerboseMode: " << useVerboseMode << std::endl;
+    std::cout << "filename: " << filename << std::endl;
 }
-
-SearchSettings &SearchSettings::operator=(const SearchSettings &settings) {
-    this->limitedSequences = settings.limitedSequences;
-    this->nMoves = settings.nMoves;
-    this->useVerboseMode = settings.useVerboseMode;
-    this->useSafeMoves = settings.useSafeMoves;
-    this->useHashTable = settings.useHashTable;
-    return *this;
-}
-bool SearchSettings::getLimitedSequence() {
-    return limitedSequences;
-}
-
-long int SearchSettings::getnMoves() {
-    return nMoves;
-}
-
-bool SearchSettings::getUseHashTable() {
-    return useHashTable;
-}
-
-bool SearchSettings::getUseSafeMoves() {
-    return useSafeMoves;
-}
-
-bool SearchSettings::getVerboseMode() {
-    return useVerboseMode;
-}
-
-
-
-
 

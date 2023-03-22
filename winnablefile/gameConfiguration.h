@@ -1,51 +1,43 @@
 //
-// Created by wendellbest on 1/15/23.
+// Created by wendellbest on 3/18/23.
 //
 
 #ifndef SOLITAIRE_GAMECONFIGURATION_H
 #define SOLITAIRE_GAMECONFIGURATION_H
 
 
-#include "tableau.h"
 #include "rules.h"
-#include "foundation.h"
-#include "StockWaste.h"
-#include "Moves.h"
+#include "foundations.h"
+#include "tableau.h"
+#include "stockWaste.h"
+#include "moves.h"
 
-class gameConfiguration{
+class GameConfiguration {
 private:
-    Foundation foundation;
+    Rules rules;
+    Foundations foundations;
     Tableau tableau;
     StockWaste stockWaste;
     Moves moves;
-    long int movesSoFar;
-    std::string configID;
+    Move currentMove;
 public:
-    Rules rules;
-    gameConfiguration();
-    gameConfiguration(const gameConfiguration& gameb);
-    gameConfiguration& operator=(const gameConfiguration& gameb);
-    ~gameConfiguration()= default;
-    void setRuleCardTurn(bool c);
-    void setRuleResetLimit(bool c);
-    void setRuleResetNumber(int n);
-    void setGameId();
-    void addCardToFoundation(Card c);
-    void addCardToTableau(int col, Card c);
-    void addCardToStockWaste(Card c);
-    void addMoveToMoves(Move m);
-    Rules getRules();
-    Foundation getFoundation();
-    void getTableau();
-    void getStock();
-    void getMoves();
-    void accIncrmntWasteCount();
-    void accIncrmntStockCount();
-    bool accStockInWinning();
-    bool accTableauInWinning();
-    std::string getGameId();
-    void incrementMovesSoFar(){movesSoFar++;}
-    long int getMovesSoFar(){return movesSoFar;}
+    GameConfiguration()= default;
+    GameConfiguration &operator=(const GameConfiguration &ngame);
+    bool getRuleCardTurnover(){return rules.getCardTurnover();}
+    bool getRuleLimitedWasteResets(){return rules.getLimitedWasteResets();}
+    int getRuleNumberofWasteResets(){return rules.getNumberOfWasteResets();}
+    void setRuleCardTurnover(bool c){return rules.setCardTurnover(c);}
+    void setRuleLimitedWasteResets(bool c){rules.setLimitedWasteResets(c);}
+    void setRuleNumberofWasteResets(int c){rules.setNumberOfWasteResets(c);}
+    void printRules(std::ofstream *file);
+    void addCardToFoundations(int b,Card c);
+    void printFoundations(std::ofstream *file){foundations.printFoundations(file);}
+    void addCardToTableau(int col, Card c){tableau.addCardToColumn(col,c);}
+    void printTableau(std::ofstream *file){tableau.printTableau(file);}
+    void addCardToStockWaste(Card c){stockWaste.addCardToSW(c);}
+    void printStockWaste(std::ofstream *file){stockWaste.printStockWaste(file);}
+    void addMove(Move c){moves.addMove(c);}
+    void printMove(std::ofstream *file){currentMove.printMove(file);}
 };
 
 

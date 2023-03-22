@@ -39,7 +39,7 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = /home/wendellbest/CLionProjects/Solitaire/cmake-build-debug/
+cmake_ninja_workdir = /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/
 # =============================================================================
 # Object build statements for EXECUTABLE target check
 
@@ -47,9 +47,9 @@ cmake_ninja_workdir = /home/wendellbest/CLionProjects/Solitaire/cmake-build-debu
 #############################################
 # Order-only phony target for check
 
-build cmake_object_order_depends_target_check: phony || CMakeFiles/check.dir
+build cmake_object_order_depends_target_check: phony || advance
 
-build CMakeFiles/check.dir/checkfile/check.c.o: C_COMPILER__check_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/check.c || cmake_object_order_depends_target_check
+build CMakeFiles/check.dir/checkfile/check.c.o: C_COMPILER__check_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/check.c || cmake_object_order_depends_target_check
   DEP_FILE = CMakeFiles/check.dir/checkfile/check.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/check.dir
@@ -57,7 +57,7 @@ build CMakeFiles/check.dir/checkfile/check.c.o: C_COMPILER__check_Debug /home/we
   TARGET_COMPILE_PDB = CMakeFiles/check.dir/
   TARGET_PDB = check.pdb
 
-build CMakeFiles/check.dir/checkfile/card.c.o: C_COMPILER__check_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/card.c || cmake_object_order_depends_target_check
+build CMakeFiles/check.dir/checkfile/card.c.o: C_COMPILER__check_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/card.c || cmake_object_order_depends_target_check
   DEP_FILE = CMakeFiles/check.dir/checkfile/card.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/check.dir
@@ -65,7 +65,7 @@ build CMakeFiles/check.dir/checkfile/card.c.o: C_COMPILER__check_Debug /home/wen
   TARGET_COMPILE_PDB = CMakeFiles/check.dir/
   TARGET_PDB = check.pdb
 
-build CMakeFiles/check.dir/checkfile/foundation.c.o: C_COMPILER__check_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/foundation.c || cmake_object_order_depends_target_check
+build CMakeFiles/check.dir/checkfile/foundation.c.o: C_COMPILER__check_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/foundation.c || cmake_object_order_depends_target_check
   DEP_FILE = CMakeFiles/check.dir/checkfile/foundation.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/check.dir
@@ -73,7 +73,7 @@ build CMakeFiles/check.dir/checkfile/foundation.c.o: C_COMPILER__check_Debug /ho
   TARGET_COMPILE_PDB = CMakeFiles/check.dir/
   TARGET_PDB = check.pdb
 
-build CMakeFiles/check.dir/checkfile/tableau.c.o: C_COMPILER__check_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/tableau.c || cmake_object_order_depends_target_check
+build CMakeFiles/check.dir/checkfile/tableau.c.o: C_COMPILER__check_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/tableau.c || cmake_object_order_depends_target_check
   DEP_FILE = CMakeFiles/check.dir/checkfile/tableau.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/check.dir
@@ -81,7 +81,7 @@ build CMakeFiles/check.dir/checkfile/tableau.c.o: C_COMPILER__check_Debug /home/
   TARGET_COMPILE_PDB = CMakeFiles/check.dir/
   TARGET_PDB = check.pdb
 
-build CMakeFiles/check.dir/checkfile/stockWaste.c.o: C_COMPILER__check_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/stockWaste.c || cmake_object_order_depends_target_check
+build CMakeFiles/check.dir/checkfile/stockWaste.c.o: C_COMPILER__check_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/stockWaste.c || cmake_object_order_depends_target_check
   DEP_FILE = CMakeFiles/check.dir/checkfile/stockWaste.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/check.dir
@@ -89,7 +89,7 @@ build CMakeFiles/check.dir/checkfile/stockWaste.c.o: C_COMPILER__check_Debug /ho
   TARGET_COMPILE_PDB = CMakeFiles/check.dir/
   TARGET_PDB = check.pdb
 
-build CMakeFiles/check.dir/checkfile/checkf.c.o: C_COMPILER__check_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/checkf.c || cmake_object_order_depends_target_check
+build CMakeFiles/check.dir/checkfile/checkf.c.o: C_COMPILER__check_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/checkf.c || cmake_object_order_depends_target_check
   DEP_FILE = CMakeFiles/check.dir/checkfile/checkf.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/check.dir
@@ -105,7 +105,7 @@ build CMakeFiles/check.dir/checkfile/checkf.c.o: C_COMPILER__check_Debug /home/w
 #############################################
 # Link the executable check
 
-build check: C_EXECUTABLE_LINKER__check_Debug CMakeFiles/check.dir/checkfile/check.c.o CMakeFiles/check.dir/checkfile/card.c.o CMakeFiles/check.dir/checkfile/foundation.c.o CMakeFiles/check.dir/checkfile/tableau.c.o CMakeFiles/check.dir/checkfile/stockWaste.c.o CMakeFiles/check.dir/checkfile/checkf.c.o
+build check: C_EXECUTABLE_LINKER__check_Debug CMakeFiles/check.dir/checkfile/check.c.o CMakeFiles/check.dir/checkfile/card.c.o CMakeFiles/check.dir/checkfile/foundation.c.o CMakeFiles/check.dir/checkfile/tableau.c.o CMakeFiles/check.dir/checkfile/stockWaste.c.o CMakeFiles/check.dir/checkfile/checkf.c.o || advance
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/check.dir
   POST_BUILD = :
@@ -123,7 +123,7 @@ build check: C_EXECUTABLE_LINKER__check_Debug CMakeFiles/check.dir/checkfile/che
 
 build cmake_object_order_depends_target_advance: phony || CMakeFiles/advance.dir
 
-build CMakeFiles/advance.dir/checkfile/card.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/card.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/checkfile/card.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/card.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/checkfile/card.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -131,7 +131,7 @@ build CMakeFiles/advance.dir/checkfile/card.c.o: C_COMPILER__advance_Debug /home
   TARGET_COMPILE_PDB = CMakeFiles/advance.dir/
   TARGET_PDB = advance.pdb
 
-build CMakeFiles/advance.dir/checkfile/foundation.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/foundation.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/checkfile/foundation.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/foundation.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/checkfile/foundation.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -139,7 +139,7 @@ build CMakeFiles/advance.dir/checkfile/foundation.c.o: C_COMPILER__advance_Debug
   TARGET_COMPILE_PDB = CMakeFiles/advance.dir/
   TARGET_PDB = advance.pdb
 
-build CMakeFiles/advance.dir/checkfile/tableau.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/tableau.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/checkfile/tableau.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/tableau.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/checkfile/tableau.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -147,7 +147,7 @@ build CMakeFiles/advance.dir/checkfile/tableau.c.o: C_COMPILER__advance_Debug /h
   TARGET_COMPILE_PDB = CMakeFiles/advance.dir/
   TARGET_PDB = advance.pdb
 
-build CMakeFiles/advance.dir/checkfile/stockWaste.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/stockWaste.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/checkfile/stockWaste.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/stockWaste.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/checkfile/stockWaste.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -155,7 +155,7 @@ build CMakeFiles/advance.dir/checkfile/stockWaste.c.o: C_COMPILER__advance_Debug
   TARGET_COMPILE_PDB = CMakeFiles/advance.dir/
   TARGET_PDB = advance.pdb
 
-build CMakeFiles/advance.dir/checkfile/checkf.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/checkfile/checkf.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/checkfile/checkf.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/checkfile/checkf.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/checkfile/checkf.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -163,7 +163,7 @@ build CMakeFiles/advance.dir/checkfile/checkf.c.o: C_COMPILER__advance_Debug /ho
   TARGET_COMPILE_PDB = CMakeFiles/advance.dir/
   TARGET_PDB = advance.pdb
 
-build CMakeFiles/advance.dir/advancefile/advance.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/advancefile/advance.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/advancefile/advance.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/advancefile/advance.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/advancefile/advance.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -171,7 +171,7 @@ build CMakeFiles/advance.dir/advancefile/advance.c.o: C_COMPILER__advance_Debug 
   TARGET_COMPILE_PDB = CMakeFiles/advance.dir/
   TARGET_PDB = advance.pdb
 
-build CMakeFiles/advance.dir/advancefile/moves.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/advancefile/moves.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/advancefile/moves.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/advancefile/moves.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/advancefile/moves.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -179,7 +179,7 @@ build CMakeFiles/advance.dir/advancefile/moves.c.o: C_COMPILER__advance_Debug /h
   TARGET_COMPILE_PDB = CMakeFiles/advance.dir/
   TARGET_PDB = advance.pdb
 
-build CMakeFiles/advance.dir/advancefile/printGame.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/advancefile/printGame.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/advancefile/printGame.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/advancefile/printGame.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/advancefile/printGame.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -187,7 +187,7 @@ build CMakeFiles/advance.dir/advancefile/printGame.c.o: C_COMPILER__advance_Debu
   TARGET_COMPILE_PDB = CMakeFiles/advance.dir/
   TARGET_PDB = advance.pdb
 
-build CMakeFiles/advance.dir/advancefile/printGameToFile.c.o: C_COMPILER__advance_Debug /home/wendellbest/CLionProjects/Solitaire/advancefile/printGameToFile.c || cmake_object_order_depends_target_advance
+build CMakeFiles/advance.dir/advancefile/printGameToFile.c.o: C_COMPILER__advance_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/advancefile/printGameToFile.c || cmake_object_order_depends_target_advance
   DEP_FILE = CMakeFiles/advance.dir/advancefile/printGameToFile.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
   OBJECT_DIR = CMakeFiles/advance.dir
@@ -219,99 +219,91 @@ build advance: C_EXECUTABLE_LINKER__advance_Debug CMakeFiles/advance.dir/checkfi
 #############################################
 # Order-only phony target for winnable
 
-build cmake_object_order_depends_target_winnable: phony || advance check
+build cmake_object_order_depends_target_winnable: phony || CMakeFiles/winnable.dir
 
-build CMakeFiles/winnable.dir/winnablefile/winnable.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/winnable.cpp || cmake_object_order_depends_target_winnable
+build CMakeFiles/winnable.dir/winnablefile/winnable.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/winnable.cpp || cmake_object_order_depends_target_winnable
   DEP_FILE = CMakeFiles/winnable.dir/winnablefile/winnable.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   OBJECT_DIR = CMakeFiles/winnable.dir
   OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
   TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
   TARGET_PDB = winnable.pdb
 
-build CMakeFiles/winnable.dir/winnablefile/parseGameFile.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/parseGameFile.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/parseGameFile.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
+build CMakeFiles/winnable.dir/winnablefile/parseFile.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/parseFile.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/parseFile.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   OBJECT_DIR = CMakeFiles/winnable.dir
   OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
   TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
   TARGET_PDB = winnable.pdb
 
-build CMakeFiles/winnable.dir/winnablefile/gameConfiguration.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/gameConfiguration.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/gameConfiguration.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/tableau.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/tableau.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/tableau.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/rules.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/rules.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/rules.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/foundation.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/foundation.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/foundation.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/StockWaste.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/StockWaste.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/StockWaste.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/Card.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/Card.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/Card.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/Moves.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/Moves.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/Moves.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/Move.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/Move.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/Move.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/findWinning.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/findWinning.cpp || cmake_object_order_depends_target_winnable
-  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/findWinning.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles/winnable.dir
-  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
-  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
-  TARGET_PDB = winnable.pdb
-
-build CMakeFiles/winnable.dir/winnablefile/SearchSettings.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/CLionProjects/Solitaire/winnablefile/SearchSettings.cpp || cmake_object_order_depends_target_winnable
+build CMakeFiles/winnable.dir/winnablefile/SearchSettings.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/SearchSettings.cpp || cmake_object_order_depends_target_winnable
   DEP_FILE = CMakeFiles/winnable.dir/winnablefile/SearchSettings.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  OBJECT_DIR = CMakeFiles/winnable.dir
+  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
+  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
+  TARGET_PDB = winnable.pdb
+
+build CMakeFiles/winnable.dir/winnablefile/gameConfiguration.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/gameConfiguration.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/gameConfiguration.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  OBJECT_DIR = CMakeFiles/winnable.dir
+  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
+  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
+  TARGET_PDB = winnable.pdb
+
+build CMakeFiles/winnable.dir/winnablefile/rules.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/rules.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/rules.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  OBJECT_DIR = CMakeFiles/winnable.dir
+  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
+  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
+  TARGET_PDB = winnable.pdb
+
+build CMakeFiles/winnable.dir/winnablefile/card.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/card.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/card.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  OBJECT_DIR = CMakeFiles/winnable.dir
+  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
+  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
+  TARGET_PDB = winnable.pdb
+
+build CMakeFiles/winnable.dir/winnablefile/foundations.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/foundations.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/foundations.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  OBJECT_DIR = CMakeFiles/winnable.dir
+  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
+  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
+  TARGET_PDB = winnable.pdb
+
+build CMakeFiles/winnable.dir/winnablefile/tableau.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/tableau.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/tableau.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  OBJECT_DIR = CMakeFiles/winnable.dir
+  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
+  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
+  TARGET_PDB = winnable.pdb
+
+build CMakeFiles/winnable.dir/winnablefile/stockWaste.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/stockWaste.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/stockWaste.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  OBJECT_DIR = CMakeFiles/winnable.dir
+  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
+  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
+  TARGET_PDB = winnable.pdb
+
+build CMakeFiles/winnable.dir/winnablefile/moves.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/moves.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/moves.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  OBJECT_DIR = CMakeFiles/winnable.dir
+  OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
+  TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
+  TARGET_PDB = winnable.pdb
+
+build CMakeFiles/winnable.dir/winnablefile/Move.cpp.o: CXX_COMPILER__winnable_Debug /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/winnablefile/Move.cpp || cmake_object_order_depends_target_winnable
+  DEP_FILE = CMakeFiles/winnable.dir/winnablefile/Move.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   OBJECT_DIR = CMakeFiles/winnable.dir
   OBJECT_FILE_DIR = CMakeFiles/winnable.dir/winnablefile
   TARGET_COMPILE_PDB = CMakeFiles/winnable.dir/
@@ -325,7 +317,7 @@ build CMakeFiles/winnable.dir/winnablefile/SearchSettings.cpp.o: CXX_COMPILER__w
 #############################################
 # Link the executable winnable
 
-build winnable: CXX_EXECUTABLE_LINKER__winnable_Debug CMakeFiles/winnable.dir/winnablefile/winnable.cpp.o CMakeFiles/winnable.dir/winnablefile/parseGameFile.cpp.o CMakeFiles/winnable.dir/winnablefile/gameConfiguration.cpp.o CMakeFiles/winnable.dir/winnablefile/tableau.cpp.o CMakeFiles/winnable.dir/winnablefile/rules.cpp.o CMakeFiles/winnable.dir/winnablefile/foundation.cpp.o CMakeFiles/winnable.dir/winnablefile/StockWaste.cpp.o CMakeFiles/winnable.dir/winnablefile/Card.cpp.o CMakeFiles/winnable.dir/winnablefile/Moves.cpp.o CMakeFiles/winnable.dir/winnablefile/Move.cpp.o CMakeFiles/winnable.dir/winnablefile/findWinning.cpp.o CMakeFiles/winnable.dir/winnablefile/SearchSettings.cpp.o || advance check
+build winnable: CXX_EXECUTABLE_LINKER__winnable_Debug CMakeFiles/winnable.dir/winnablefile/winnable.cpp.o CMakeFiles/winnable.dir/winnablefile/parseFile.cpp.o CMakeFiles/winnable.dir/winnablefile/SearchSettings.cpp.o CMakeFiles/winnable.dir/winnablefile/gameConfiguration.cpp.o CMakeFiles/winnable.dir/winnablefile/rules.cpp.o CMakeFiles/winnable.dir/winnablefile/card.cpp.o CMakeFiles/winnable.dir/winnablefile/foundations.cpp.o CMakeFiles/winnable.dir/winnablefile/tableau.cpp.o CMakeFiles/winnable.dir/winnablefile/stockWaste.cpp.o CMakeFiles/winnable.dir/winnablefile/moves.cpp.o CMakeFiles/winnable.dir/winnablefile/Move.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/winnable.dir
   POST_BUILD = :
@@ -339,7 +331,7 @@ build winnable: CXX_EXECUTABLE_LINKER__winnable_Debug CMakeFiles/winnable.dir/wi
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wendellbest/CLionProjects/Solitaire/cmake-build-debug && /snap/clion/229/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug && /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -350,7 +342,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wendellbest/CLionProjects/Solitaire/cmake-build-debug && /snap/clion/229/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/wendellbest/CLionProjects/Solitaire -B/home/wendellbest/CLionProjects/Solitaire/cmake-build-debug
+  COMMAND = cd /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug && /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire -B/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -366,7 +358,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 
 #############################################
-# Folder: /home/wendellbest/CLionProjects/Solitaire/cmake-build-debug
+# Folder: /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug
 
 build all: phony check advance winnable
 
@@ -377,14 +369,14 @@ build all: phony check advance winnable
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/wendellbest/CLionProjects/Solitaire/CMakeLists.txt /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCCompiler.cmake.in /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCCompilerABI.c /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCInformation.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXCompiler.cmake.in /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXCompilerABI.cpp /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCompilerIdDetection.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCXXCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompileFeatures.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompilerABI.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompilerId.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineSystem.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeFindBinUtils.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseImplicitIncludeInfo.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseImplicitLinkInfo.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseLibraryArchitecture.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystem.cmake.in /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCXXCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCompilerCommon.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ADSP-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ARMCC-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ARMClang-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/AppleClang-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Borland-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Cray-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GHS-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-FindBinUtils.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/HP-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IAR-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Intel-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/LCC-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/MSVC-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/NVHPC-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/PGI-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/PathScale-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SCO-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/TI-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Watcom-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XL-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/zOS-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Internal/FeatureTesting.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-Determine-CXX.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-CXX.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCCompiler.cmake.in /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCCompilerABI.c /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXCompiler.cmake.in /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXCompilerABI.cpp /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCompilerIdDetection.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCXXCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompileFeatures.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompilerABI.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompilerId.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineSystem.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeFindBinUtils.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseImplicitIncludeInfo.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseImplicitLinkInfo.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseLibraryArchitecture.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystem.cmake.in /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCXXCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCompilerCommon.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ADSP-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ARMCC-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ARMClang-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/AppleClang-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Borland-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Cray-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GHS-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-FindBinUtils.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/HP-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IAR-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Intel-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/LCC-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/MSVC-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/NVHPC-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/PGI-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/PathScale-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SCO-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/TI-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Watcom-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XL-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/zOS-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Internal/FeatureTesting.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-Determine-CXX.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-CXX.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/CMakeLists.txt CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/wendellbest/CLionProjects/Solitaire/CMakeLists.txt /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCCompiler.cmake.in /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCCompilerABI.c /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCInformation.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXCompiler.cmake.in /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXCompilerABI.cpp /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCompilerIdDetection.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCXXCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompileFeatures.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompilerABI.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompilerId.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineSystem.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeFindBinUtils.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseImplicitIncludeInfo.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseImplicitLinkInfo.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseLibraryArchitecture.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystem.cmake.in /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCXXCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCompilerCommon.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ADSP-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ARMCC-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ARMClang-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/AppleClang-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Borland-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Cray-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GHS-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-FindBinUtils.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/HP-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IAR-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Intel-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/LCC-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/MSVC-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/NVHPC-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/PGI-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/PathScale-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SCO-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/TI-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Watcom-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XL-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/zOS-C-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Internal/FeatureTesting.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-Determine-CXX.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-CXX.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux.cmake /snap/clion/229/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake: phony
+build /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCCompiler.cmake.in /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCCompilerABI.c /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXCompiler.cmake.in /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXCompilerABI.cpp /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeCompilerIdDetection.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCXXCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompileFeatures.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompilerABI.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineCompilerId.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeDetermineSystem.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeFindBinUtils.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseImplicitIncludeInfo.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseImplicitLinkInfo.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeParseLibraryArchitecture.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystem.cmake.in /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCXXCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/CMakeTestCompilerCommon.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ADSP-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ARMCC-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/ARMClang-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/AppleClang-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Borland-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Cray-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GHS-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-CXX.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU-FindBinUtils.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/HP-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IAR-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Intel-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/LCC-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/MSVC-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/NVHPC-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/PGI-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/PathScale-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SCO-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/TI-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/Watcom-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XL-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/zOS-C-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Internal/FeatureTesting.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-Determine-CXX.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU-CXX.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/Linux.cmake /home/wendellbest/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.8836.42/bin/cmake/linux/x64/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/CMakeLists.txt CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeCXXCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake: phony
 
 
 #############################################

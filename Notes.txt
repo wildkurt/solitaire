@@ -1,0 +1,29 @@
+Recursion things that need to happen:
+
+!. winningGameSearch gets a game configuration
+	a. check # of remaining moves
+	b. Check for force to foundations
+	c. Check for verbose
+	d. Check for hashmap
+2. Write game configuration to a file and append the next move.
+3. If Advance says valid, add move, else, try next move
+	a. Types of moves:
+		i.    w->1
+		ii.   w->2
+		iii.  w->3
+		iv.   w->4
+		v.    w->6
+		vi.   w->7
+		vii.  w->f
+		viii. 1->2, 1->3, 1->4, 1->5, 1->6, 1->7, 1->f
+		ix.   2->1, 2->3, 2->4, 2->5, 2->6, 2->7, 2->f
+		x.    3->2, 3->1, 3->4, 3->5, 3->6, 3->7, 3->f
+		xi.   4->2, 4->3, 4->1, 4->5, 4->6, 4->7, 4->f
+		xii.  5->2, 5->3, 5->4, 5->1, 5->6, 5->7, 5->f
+		xiii. 6->2, 6->3, 6->4, 6->5, 6->1, 6->7, 6->f
+		xiv.  7->2, 7->3, 7->4, 7->5, 7->6, 7->1, 7->f
+		xv.   .
+		xvi.  r
+		
+From: w, 1, 2, 3, 4, 5, 6, 7
+to:   f, 1, 2, 3, 4, 5, 6, 7
