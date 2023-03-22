@@ -10,6 +10,7 @@ typedef struct{
     long numberMovesToPlay;
     char writeToFile;
     char *filename;
+    char *outputFileName;
     char exchangeFormat;
 }GameConfiguration;
 

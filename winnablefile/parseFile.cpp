@@ -236,7 +236,8 @@ bool ParseFile::writeGameFile(std::string adinput) {
     game->printFoundations(&outputFile);
     game->printTableau(&outputFile);
     game->printStockWaste(&outputFile);
-    game->printMove(&outputFile);
+    //game->printMove(&outputFile);
+    outputFile << "MOVES:" << std::endl;
     return true;
 }
 

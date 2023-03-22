@@ -16,10 +16,10 @@
 #include "printGameToFile.h"
 
 int main(int args, char *argv[]){
-    GameConfiguration gameconfiguration ={'F', -1, 'F', 0, 'F'};
+    GameConfiguration gameconfiguration ={'F', -1, 'F', 0, 0,'F'};
     FILE *input;
     char *check = "./cmake-build-debug/check", *lim;
-    char *inputFileName = 0;
+    char *inputFileName = 0, *outputFileName = 0;
     int line = 0, movess = 0;
     char buffer[MAX_BUFFER] = {0};
     char nNumber[MAX_BUFFER] = {0};
@@ -57,8 +57,9 @@ int main(int args, char *argv[]){
                    while(isalnum(buffer[i]) || ispunct(buffer[i])){
                         outPutFile[j++] = buffer[i++];
                    }
-                    gameconfiguration.filename = calloc(strlen(outPutFile) + 1, sizeof(char));
-                    gameconfiguration.filename = strcpy(gameconfiguration.filename, outPutFile);
+                    outputFileName = calloc(strlen(outPutFile) + 1, sizeof(char));
+                    outputFileName = strcpy(gameconfiguration.outputFileName, outPutFile);
+                    gameconfiguration.outputFileName = outputFileName;
                 }
                 else if(buffer[i+1] == 'x'){
                     gameconfiguration.exchangeFormat = 'T';
@@ -88,8 +89,9 @@ int main(int args, char *argv[]){
             //Switch "-o file" indicates game configuration output to a file
             if (strcmp(argv[i], "-o") == 0) {
                 gameconfiguration.writeToFile = 'T';
-                gameconfiguration.filename = calloc(strlen(argv[i + 1]), sizeof(char));
-                gameconfiguration.filename = strcpy(gameconfiguration.filename, argv[i + 1]);
+                outputFileName = calloc(strlen(outPutFile) + 1, sizeof(char));
+                outputFileName = strcpy(gameconfiguration.outputFileName, outPutFile);
+                gameconfiguration.outputFileName = outputFileName;
                 i += 2;
             }
             //Switch "-x" game in exchange format
