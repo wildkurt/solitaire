@@ -1,0 +1,5 @@
+/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/CMakeFiles/check.dir
+/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/CMakeFiles/advance.dir
+/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/CMakeFiles/winnable.dir
+/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/CMakeFiles/rebuild_cache.dir
