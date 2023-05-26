@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>49</x>
+      <y>77</y>
+      <w>168</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Winnable&gt;&gt;
+main
+Written in C++
+--
+SearchSettings settings
+GameConfiguration game
+ParseFile parse
+--
+Responsibilities
+Starting point for the Winnable
+Program.
+
+Location for the SearchSettings 
+and Gameconfiguration objects.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>308</x>
+      <y>77</y>
+      <w>175</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>Class SearchSettings
+--
+- bool limitedMoves
+- int numberOfLimitedMoves
+- bool useHashtable
+- bool useSafeMoves
+- bool useVerboseMode
+--
++ SearchSettings()
++ getSettingsFromCL(int, char[])
++ getFilename</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>210</x>
+      <y>77</y>
+      <w>112</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>308</x>
+      <y>210</y>
+      <w>378</w>
+      <h>308</h>
+    </coordinates>
+    <panel_attributes>Class GameConfiguration
+--
+- Rules rules
+- Foundations foundations
+- Tableau tableau
+- StockWaste stockwaste
+- Moves moves
+- Move currentMove
+--
++ GameConfiguration()
++ GameConfiguration &amp;operator=(const GameConfiguration &amp;ngame)
++ setRuleCardTurnover(bool c)
++ setRuleLimitedWasteResets(bool c)
++ setRuleNumberofWasteResets(int c)
++ printRules()
++ addCardToFoundations(int b,Card c)
++ printFoundations(){foundations.printFoundations()
++ addCardToTableau(int col, Card c)
++ printTableau(){tableau.printTableau()
++ addCardToStockWaste(Card c)
++ printStockWaste(){stockWaste.printStockWaste()
++ addMove(Move c){moves.addMove(c)
++ printMove(std::ofstream *file)
+--
+This represents a snap shot of a Solitaire game board.
+This object will contain a game and all the moves that lead to its current
+configuration.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>210</x>
+      <y>91</y>
+      <w>112</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>140.0;180.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>308</x>
+      <y>553</y>
+      <w>315</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Class Parsefile
+--
+- SearchSettings settings
+- GameConfiguration *game
+- GameConfiguration ngame
+- string suits
+- string ranks
+--
++ ParseFile(GameConfiguration game)
++ ParseFile(SearchSettings set, GameConfiguration *game)
++ readGameFile()
++ readGameFile(std::string ninput)
++ writeGameFile(std::string adinput)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>210</x>
+      <y>91</y>
+      <w>112</w>
+      <h>483</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>140.0;670.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>35</y>
+      <w>147</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>Class Rules
+--
+- turn3cards
+- resetsLimited
+- resetLimit
+- resetsRemaining;
+--
++ Rules()
++ ~Rules()
++ setCardTurnover(bool c)
++ setResetsLimited(bool c)
++ printRules()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>679</x>
+      <y>35</y>
+      <w>105</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>189</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Class Foundations
+--
+- Card fndtn[]
+--
++ addCard(int b, Card c)
++ printFoundations()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>679</x>
+      <y>189</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>273</y>
+      <w>182</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Class Tableau
+--
+- Card col7[]
+- Card col6[]
+- Card col5[]
+- Card col4[]
+- Card col3[]
+- Card col2[]
+- Card col1[]
+--
++ Card *getColPointer(int c)
++ addCardToColumn(int c, Card d)
++ printTableau()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>679</x>
+      <y>203</y>
+      <w>105</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>427</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Class StockWaste
+--
+- Card sw[]
+--
++ addCardToSw(Card c)
++ printStockWaste()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>679</x>
+      <y>203</y>
+      <w>105</w>
+      <h>245</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>130.0;330.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1099</x>
+      <y>350</y>
+      <w>154</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>Class Card
+--
+- char rank
+- char suit
+- bool isCardCovered
+--
++ Card()
++ Card(char r, char s, bool c)
++ getRank()
++ getSuit()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>777</x>
+      <y>518</y>
+      <w>147</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Class Moves
+--
+- vector &lt;Move&gt; moves
+--
++ addMove(Move c)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>819</x>
+      <y>567</y>
+      <w>42</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;110.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>679</x>
+      <y>203</y>
+      <w>112</w>
+      <h>336</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>140.0;460.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>679</x>
+      <y>203</y>
+      <w>112</w>
+      <h>455</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>140.0;630.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>777</x>
+      <y>644</y>
+      <w>126</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Class Move
+--
+- char from
+- char to
+--
++ Move()
++ Move(char f, char t)
++ printMove()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>196</y>
+      <w>203</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>270.0;230.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>945</x>
+      <y>273</y>
+      <w>168</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>220.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>350</y>
+      <w>203</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>270.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>28</x>
+      <y>14</y>
+      <w>1246</w>
+      <h>728</h>
+    </coordinates>
+    <panel_attributes>Note..
+This is the initial Dependencies for when the program initializes. </panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
