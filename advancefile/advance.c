@@ -19,7 +19,6 @@ int main(int args, char *argv[]){
     GameConfiguration gameconfiguration ={'F', -1, 'F', 0, 0,'F'};
     FILE *input;
     char *check = "./cmake-build-debug/check", *lim;
-    char *inputFileName = 0, *outputFileName = 0;
     int line = 0, movess = 0;
     char buffer[MAX_BUFFER] = {0};
     char nNumber[MAX_BUFFER] = {0};
@@ -57,16 +56,15 @@ int main(int args, char *argv[]){
                    while(isalnum(buffer[i]) || ispunct(buffer[i])){
                         outPutFile[j++] = buffer[i++];
                    }
-                    outputFileName = calloc(strlen(outPutFile) + 1, sizeof(char));
-                    outputFileName = strcpy(gameconfiguration.outputFileName, outPutFile);
-                    gameconfiguration.outputFileName = outputFileName;
+                    gameconfiguration.outputFileName = calloc(strlen(outPutFile) + 1, sizeof(char));
+                    gameconfiguration.outputFileName = strcpy(gameconfiguration.outputFileName, outPutFile);
                 }
                 else if(buffer[i+1] == 'x'){
                     gameconfiguration.exchangeFormat = 'T';
                     i+=2;
                 }
             }
-            else{
+            else if(gameconfiguration.filename == 0 || gameconfiguration.writeToFile){
                 int j = 0;
                 while(isalnum(buffer[i]) || ispunct(buffer[i])){
                     fileName[j++] = buffer[i++];
@@ -87,28 +85,25 @@ int main(int args, char *argv[]){
                 i += 2;
             }
             //Switch "-o file" indicates game configuration output to a file
-            if (strcmp(argv[i], "-o") == 0) {
+            else if (strcmp(argv[i], "-o") == 0) {
                 gameconfiguration.writeToFile = 'T';
-                outputFileName = calloc(strlen(outPutFile) + 1, sizeof(char));
-                outputFileName = strcpy(gameconfiguration.outputFileName, outPutFile);
-                gameconfiguration.outputFileName = outputFileName;
-                i += 2;
+                gameconfiguration.outputFileName = calloc(strlen(argv[++i]),sizeof(char));
+                gameconfiguration.outputFileName = strcpy(gameconfiguration.outputFileName, argv[i]);
             }
             //Switch "-x" game in exchange format
-            if (strcmp(argv[i], "-x") == 0) {
+            else if (strcmp(argv[i], "-x") == 0) {
                 gameconfiguration.exchangeFormat = 'T';
-            } else if (strstr(argv[i], "advance") == 0) {
-                inputFileName = calloc(strlen(argv[i]) + 1, sizeof(char));
-                inputFileName = strcpy(inputFileName, argv[i]);
-                gameconfiguration.filename = inputFileName;
+            }
+            else if (strstr(argv[i], "advance") == 0 && gameconfiguration.writeToFile) {
+                gameconfiguration.filename = calloc(strlen(argv[i]) + 1, sizeof(char));
+                gameconfiguration.filename = strcpy(gameconfiguration.filename, argv[i]);
             }
         }
     }
-    printf("%s\n",gameconfiguration.filename);
     if(gameconfiguration.filename != (void *)0){
         input = fopen(gameconfiguration.filename,"r");
         if(input == (void *)0){
-            fprintf(stderr, "Unable to open %s\n", inputFileName);
+            fprintf(stderr, "Unable to open %s\n", gameconfiguration.filename);
             return 1;
         }
         unsigned long checkSize = strlen(check);

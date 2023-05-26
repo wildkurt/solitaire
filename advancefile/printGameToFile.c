@@ -11,7 +11,7 @@
 
 void printGameToFile(Rules *rules, GameConfiguration *gameconfiguration){
     FILE *output;
-    output = fopen(gameconfiguration->filename, "w");
+    output = fopen(gameconfiguration->outputFileName, "w");
     if(output == 0){
         fprintf(stderr,"Unable to write to %s\n", gameconfiguration->filename);
         exit(1);

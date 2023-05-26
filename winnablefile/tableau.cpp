@@ -25,19 +25,19 @@ void Tableau::addCardToColumn(int c, Card d) {
     *ptr = d;
 }
 
-void Tableau::printTableau(std::ofstream *file) {
+void Tableau::printTableau() {
     int col = 7;
     Card *ptr = getColPointer(col);
-    *file << "TABLEAU:" << std::endl;
+    std::cout << "TABLEAU:" << std::endl;
     while(col > 0){
         for(int i = 0; i< TABSIZE ; i++){
             if((ptr + i)->getRank() == '|')
-                *file << (ptr + i)->getRank() << " ";
+                std::cout << (ptr + i)->getRank() << " ";
             else if((ptr + i)->getRank() != '0')
-                *file << (ptr + i)->getRank() << (ptr + i)->getSuit() << " ";
+                std::cout << (ptr + i)->getRank() << (ptr + i)->getSuit() << " ";
         }
         col--;
         ptr = getColPointer(col);
-        *file << std::endl;
+        std::cout << std::endl;
     }
 }

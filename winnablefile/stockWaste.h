@@ -13,7 +13,7 @@ private:
     Card sw[SWSIZE];
 public:
     void addCardToSW(Card c);
-    void printStockWaste(std::ofstream *file);
+    void printStockWaste();
 };
 
 

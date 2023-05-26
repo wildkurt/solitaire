@@ -10,23 +10,16 @@
 class Rules{
 private:
     bool turn3cards; //default is one
-    bool resetsLimited; //default is unlimited
+    bool resetsLimited; //limited or unlimited waste resets
     int resetLimit;
     int resetsRemaining;
 public:
     Rules();
-    Rules(bool cardTurn, bool limit, int numLimit);
-    Rules(const Rules &rules);
-    Rules &operator=(const Rules &rules);
     ~Rules()=default;
-    bool getTurn3Cards();
-    bool getResetsLimited();
-    int getResetLimit();
-    int getRemainingResets();
-    void incrementReset();
-    void setRuleTurn(bool c);
-    void setRuleLimits(bool c);
-    void setRuleLimitNumber(int i);
+    void setCardTurnover(bool c);
+    void setResetsLimited(bool c);
+    void setResetLimit(int c);
+    void printRules();
 };
 
 

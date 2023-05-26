@@ -12,15 +12,15 @@ void StockWaste::addCardToSW(Card c) {
     *ptr=c;
 }
 
-void StockWaste::printStockWaste(std::ofstream *file) {
-    *file << "STOCK:" << std::endl;
+void StockWaste::printStockWaste() {
+    std::cout << "STOCK:" << std::endl;
     for(int i = 0; i < SWSIZE; i++){
         if(sw[i].getRank() != '0'){
             if(sw[i].getRank() == '|')
-                *file << sw[i].getRank() << " ";
+                std::cout << sw[i].getRank() << " ";
             else
-                *file << sw[i].getRank() << sw[i].getSuit() << " ";
+                std::cout << sw[i].getRank() << sw[i].getSuit() << " ";
         }
     }
-    *file << std::endl;
+    std::cout << std::endl;
 }

@@ -13,7 +13,7 @@ private:
     Card fndtn[4];
 public:
     void addCard(int b,Card c);
-    void printFoundations(std::ofstream *file);
+    void printFoundations();
 };
 
 

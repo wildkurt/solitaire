@@ -23,19 +23,16 @@ private:
 public:
     GameConfiguration()= default;
     GameConfiguration &operator=(const GameConfiguration &ngame);
-    bool getRuleCardTurnover(){return rules.getCardTurnover();}
-    bool getRuleLimitedWasteResets(){return rules.getLimitedWasteResets();}
-    int getRuleNumberofWasteResets(){return rules.getNumberOfWasteResets();}
     void setRuleCardTurnover(bool c){return rules.setCardTurnover(c);}
-    void setRuleLimitedWasteResets(bool c){rules.setLimitedWasteResets(c);}
-    void setRuleNumberofWasteResets(int c){rules.setNumberOfWasteResets(c);}
-    void printRules(std::ofstream *file);
+    void setRuleLimitedWasteResets(bool c){rules.setResetsLimited(c);}
+    void setRuleNumberofWasteResets(int c){rules.setResetLimit(c);}
+    void printRules(){rules.printRules();};
     void addCardToFoundations(int b,Card c);
-    void printFoundations(std::ofstream *file){foundations.printFoundations(file);}
+    void printFoundations(){foundations.printFoundations();}
     void addCardToTableau(int col, Card c){tableau.addCardToColumn(col,c);}
-    void printTableau(std::ofstream *file){tableau.printTableau(file);}
+    void printTableau(){tableau.printTableau();}
     void addCardToStockWaste(Card c){stockWaste.addCardToSW(c);}
-    void printStockWaste(std::ofstream *file){stockWaste.printStockWaste(file);}
+    void printStockWaste(){stockWaste.printStockWaste();}
     void addMove(Move c){moves.addMove(c);}
     void printMove(std::ofstream *file){currentMove.printMove(file);}
 };

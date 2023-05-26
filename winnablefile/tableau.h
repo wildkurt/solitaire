@@ -20,7 +20,7 @@ private:
 public:
     Card * getColPointer(int c);
     void addCardToColumn(int c, Card d);
-    void printTableau(std::ofstream *file);
+    void printTableau();
 };
 
 

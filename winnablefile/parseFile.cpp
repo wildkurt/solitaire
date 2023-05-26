@@ -117,7 +117,7 @@ bool ParseFile::readGameFile() {
             }
         }
         if (buffer.find("MOVES:") != std::string::npos) {
-            std::cout << "Found Moves" << std::endl;
+            //std::cout << "Found Moves" << std::endl;
         }
     }
     inputFile.close();
@@ -229,15 +229,7 @@ bool ParseFile::readGameFile(std::string ninput) {
 }
 
 bool ParseFile::writeGameFile(std::string adinput) {
-    std::ofstream outputFile(adinput,std::ios::out);
-    if(!outputFile.is_open())
-        return false;
-    game->printRules(&outputFile);
-    game->printFoundations(&outputFile);
-    game->printTableau(&outputFile);
-    game->printStockWaste(&outputFile);
-    //game->printMove(&outputFile);
-    outputFile << "MOVES:" << std::endl;
+
     return true;
 }
 

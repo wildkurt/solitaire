@@ -14,17 +14,6 @@ GameConfiguration &GameConfiguration::operator=(const GameConfiguration &ngame) 
     this->currentMove = ngame.currentMove;
     return *this;
 }
-void GameConfiguration::printRules(std::ofstream *file) {
-    *file << "RULES:" << std::endl;
-    if(getRuleCardTurnover())
-        *file << " turn 3" << std::endl;
-    else
-        *file << " turn 1" << std::endl;
-    if(getRuleLimitedWasteResets())
-        *file << " limit " << getRuleNumberofWasteResets() << std::endl;
-    else
-        *file << " unlimited" << std::endl;
-}
 
 void GameConfiguration::addCardToFoundations(int b,Card c) {
     foundations.addCard(b,c);

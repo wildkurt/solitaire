@@ -22,12 +22,6 @@ private:
 public:
     SearchSettings();
     void getSettingsFromCL(int number, char *arr[]);
-    void printSettingsFromCL();
-    bool getLimitedMoves(){return limitedMoves;}
-    int getNumberOfLimitedMoves(){return numberOfLimitedMoves;}
-    bool getUseHashtable(){return useHashtable;}
-    bool getUseSafeMoves(){return useSafeMoves;}
-    bool getUseVerbosMode(){return useVerboseMode;}
     std::string getFilename(){return filename;}
 };
 
