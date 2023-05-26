@@ -22,6 +22,8 @@ private:
 public:
     SearchSettings();
     void getSettingsFromCL(int number, char *arr[]);
+    bool getAreMovesLimited(){return limitedMoves;}
+    int getLimitedMovesNumber(){return numberOfLimitedMoves;}
     std::string getFilename(){return filename;}
 };
 

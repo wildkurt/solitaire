@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="14.3.0">
+<diagram program="umlet" version="15.1">
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
@@ -17,6 +17,74 @@
 --
 
 </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>660</x>
+      <y>20</y>
+      <w>390</w>
+      <h>590</h>
+    </coordinates>
+    <panel_attributes>Note..
+bg=blue
+SW-&gt;Col1
+SW-&gt;Col2
+SW-&gt;Col3
+SW-&gt;Col4
+SW-&gt;Col5
+SW-&gt;Col6
+SW-&gt;Col7
+SW-&gt;F
+
+Col1-&gt;Col2
+Col1-&gt;Col3
+Col1-&gt;Col4
+Col1-&gt;Col5
+Col1-&gt;Col6
+Col1-&gt;Col7
+Col1-&gt;F
+
+The above times 7
+
+. - turn over card in stock
+r -reset waste to stock
+
+59 Moves
+
+Advance Switches
+-m N max number of moves
+-o outout file
+-x exchange format
+
+Winnable Switches
+-m N limit to the number of moves (same as advance)
+-c hash table
+-f forced safe moves
+-v verbose mode
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1080</x>
+      <y>30</y>
+      <w>370</w>
+      <h>580</h>
+    </coordinates>
+    <panel_attributes>Note..
+bg=yellow
+Things to keep track of:
+How many moves have been made.
+Limit on moves.
+
+Waste resets are in the input file. So to set 
+the number is part of the file. Since Advance
+is checking moves, I think it should update the 
+number of resets since it will be creating
+a file for the next configuration. </panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
