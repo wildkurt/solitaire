@@ -84,7 +84,10 @@ Waste resets are in the input file. So to set
 the number is part of the file. Since Advance
 is checking moves, I think it should update the 
 number of resets since it will be creating
-a file for the next configuration. </panel_attributes>
+a file for the next configuration. 
+
+The output file is not declared on the 
+command line. </panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
