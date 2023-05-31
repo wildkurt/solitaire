@@ -161,6 +161,7 @@ int main(int args, char *argv[]){
     if(moves(input, &line, &movess, &rules, &gameconfiguration) == 0){
         return 1;
     }
+    gameconfiguration.numberMovesToPlay = gameconfiguration.numberMovesToPlay - movess;
     //printf("Processed %d moves, all valid\n", movess);
     printGame(&rules, &gameconfiguration, &movess);
     if(gameconfiguration.writeToFile == 'T'){
