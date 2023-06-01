@@ -10,19 +10,28 @@
 int main(int argc, char **argv){
     SearchSettings settings;
     GameConfiguration game;
-    std::string command = "/home/wendellbest/Documents/ProgrammingWork/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/advance ";
+    std::string command = "./cmake-build-debug/advance -x ";
     //std::string command = "/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/advance -x -o output.txt ";
+    int systemResult = 0;
+
     //get the settings
     settings.getSettingsFromCL(argc, argv);
     //use advance to check the file
     command.append(settings.getFilename());
-    if(settings.)
-    system(command.c_str());
+    if(settings.getAreMovesLimited()){
+        command.append("-m ");
+        command.append(std::to_string(settings.getLimitedMovesNumber()));
+    }
+    systemResult = system(command.c_str());
+
     //read the file
-    ParseFile parse(settings, &game);
-    parse.readGameFile();
-
-
+    if(systemResult==0) {
+        ParseFile parse(settings, &game);
+        parse.readGameFile();
+    }
+    else
+        return 1;
+    
     return 0;
 }
 
