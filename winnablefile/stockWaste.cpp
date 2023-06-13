@@ -10,6 +10,9 @@ void StockWaste::addCardToSW(Card c) {
     Card *ptr = sw;
     while((ptr)->getRank() != '0'){ptr++;}
     *ptr=c;
+    numberOfCards += 1;
+    if(c.checkIfCardIsCovered())
+        numberCovered += 1;
 }
 
 void StockWaste::printStockWaste() {
@@ -23,4 +26,12 @@ void StockWaste::printStockWaste() {
         }
     }
     std::cout << std::endl;
+}
+
+bool StockWaste::isSWinWinCond() {
+    //need to count cards and see if they are covered
+    if(numberCovered == 0 && numberOfCards <= 1)
+        return true;
+    else
+        return false;
 }
