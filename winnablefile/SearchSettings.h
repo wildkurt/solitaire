@@ -24,6 +24,9 @@ public:
     void getSettingsFromCL(int number, char *arr[]);
     bool getAreMovesLimited(){return limitedMoves;}
     int getLimitedMovesNumber(){return numberOfLimitedMoves;}
+    bool useAHashtable(){return useHashtable;}
+    bool doSafemoves(){return useSafeMoves;}
+    bool doVerboseMode(){return useVerboseMode;}
     std::string getFilename(){return filename;}
 };
 
