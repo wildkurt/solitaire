@@ -19,4 +19,13 @@ void GameConfiguration::addCardToFoundations(int b,Card c) {
     foundations.addCard(b,c);
 }
 
+bool GameConfiguration::gameInWinningConfiguration() {
+    if(stockWaste.isSWinWinCond() && !tableau.anyCoveredCards())
+        return true;
+    else
+        return false;
+}
 
+bool GameConfiguration::canSafeMovesBeDone() {
+    return false;
+}
