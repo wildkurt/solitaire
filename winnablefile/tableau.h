@@ -17,10 +17,13 @@ private:
     Card col3[TABSIZE];
     Card col2[TABSIZE];
     Card col1[TABSIZE];
+    int numberOfCovered;
+    
 public:
     Card * getColPointer(int c);
     void addCardToColumn(int c, Card d);
     void printTableau();
+    bool anyCoveredCards();
 };
 
 
