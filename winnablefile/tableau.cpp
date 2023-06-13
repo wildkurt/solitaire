@@ -23,6 +23,8 @@ void Tableau::addCardToColumn(int c, Card d) {
     Card *ptr = getColPointer(c);
     while(ptr->getRank()!='0'){ptr++;}
     *ptr = d;
+    if(d.checkIfCardIsCovered())
+        numberOfCovered += 1;
 }
 
 void Tableau::printTableau() {
@@ -40,4 +42,11 @@ void Tableau::printTableau() {
         ptr = getColPointer(col);
         std::cout << std::endl;
     }
+}
+
+bool Tableau::anyCoveredCards() {
+    if(numberOfCovered == 0)
+        return false;
+    else
+        return true;
 }
