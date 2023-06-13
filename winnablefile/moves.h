@@ -14,6 +14,7 @@ private:
     std::vector <Move> moves;
 public:
     void addMove(Move c);
+    int numberOfMoves(){return moves.size();}
 };
 
 
