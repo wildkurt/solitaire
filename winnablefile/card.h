@@ -16,6 +16,7 @@ public:
     Card(char r, char s, bool c);
     char getRank(){return rank;}
     char getSuit(){return suit;}
+    bool checkIfCardIsCovered(){return isCardCovered;}
 };
 
 
