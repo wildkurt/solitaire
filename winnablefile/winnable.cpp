@@ -6,12 +6,13 @@
 #include <cstdlib>
 #include "SearchSettings.h"
 #include "parseFile.h"
+#include "SearchManager.h"
 
 int main(int argc, char **argv){
     SearchSettings settings;
     GameConfiguration game;
-    std::string command = "./cmake-build-debug/advance -x ";
-    //std::string command = "/home/wendellbest/Documents/my-c-and-c-plus-plus-projects/Solitaire/cmake-build-debug/advance -x -o output.txt ";
+    //std::string command = "./cmake-build-debug/advance -x ";
+    std::string command = "./cmake-build-debug/advance -x -o output2.txt ";
     int systemResult = 0;
 
     //get the settings
@@ -23,7 +24,6 @@ int main(int argc, char **argv){
         command.append(std::to_string(settings.getLimitedMovesNumber()));
     }
     systemResult = system(command.c_str());
-
     //read the file
     if(systemResult==0) {
         ParseFile parse(settings, &game);
@@ -31,8 +31,12 @@ int main(int argc, char **argv){
     }
     else
         return 1;
-    
+    SearchManager search(&game, settings);
+    if(search.run()){
+        //do winning output
+    }
+    else{
+        //do losing output
+    }
     return 0;
 }
-
-
