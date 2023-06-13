@@ -15,7 +15,8 @@ private:
 public:
     Move();
     Move(char f, char t);
-    void printMove(std::ofstream *file);
+    char getFrom(){return from;}
+    char getTo(){return to;}
 };
 
 
