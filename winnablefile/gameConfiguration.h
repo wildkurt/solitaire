@@ -34,7 +34,8 @@ public:
     void addCardToStockWaste(Card c){stockWaste.addCardToSW(c);}
     void printStockWaste(){stockWaste.printStockWaste();}
     void addMove(Move c){moves.addMove(c);}
-    void printMove(std::ofstream *file){currentMove.printMove(file);}
+    bool gameInWinningConfiguration();
+    bool canSafeMovesBeDone();
 };
 
 
