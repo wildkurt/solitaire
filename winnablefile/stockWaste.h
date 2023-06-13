@@ -11,9 +11,12 @@
 class StockWaste {
 private:
     Card sw[SWSIZE];
+    int numberCovered;
+    int numberOfCards;
 public:
     void addCardToSW(Card c);
     void printStockWaste();
+    bool isSWinWinCond();
 };
 
 
