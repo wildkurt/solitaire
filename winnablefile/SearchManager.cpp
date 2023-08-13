@@ -40,6 +40,11 @@ bool SearchManager::recursiveSearch(GameConfiguration recGame) {
                  *  a. Number of moves, and determine if more moves remain
                  *  b. Number of configurations
                  *  c. remaining waste resets*/
+                Move temp (cardFrom[i], cardTo[j]);
+                recGame.addMove(temp);
+                if(settings.useAHashtable()){
+                    //TODO: make a hash and see if it already exists
+                }
             }
         }
     }
