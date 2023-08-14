@@ -14,6 +14,8 @@ private:
 public:
     void addCard(int b,Card c);
     void printFoundations();
+    void printFoundations(std::ofstream *file);
+    void getCardValues(Card pCard[4]);
 };
 
 

@@ -14,9 +14,12 @@ private:
 public:
     Card();
     Card(char r, char s, bool c);
+    Card& operator=(Card const *otr);
     char getRank(){return rank;}
     char getSuit(){return suit;}
     bool checkIfCardIsCovered(){return isCardCovered;}
+    char cardColorIs();
+    int cardRankValueIs();
 };
 
 

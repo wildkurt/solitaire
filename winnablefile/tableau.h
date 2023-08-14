@@ -24,6 +24,8 @@ public:
     void addCardToColumn(int c, Card d);
     void printTableau();
     bool anyCoveredCards();
+
+    void getTopCardValues(Card pCard[8]);
 };
 
 

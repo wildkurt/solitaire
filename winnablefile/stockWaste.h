@@ -17,6 +17,8 @@ public:
     void addCardToSW(Card c);
     void printStockWaste();
     bool isSWinWinCond();
+
+    void getWasteValue(Card pCard[8]);
 };
 
 

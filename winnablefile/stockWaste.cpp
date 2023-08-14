@@ -35,3 +35,17 @@ bool StockWaste::isSWinWinCond() {
     else
         return false;
 }
+
+void StockWaste::getWasteValue(Card *pCard) {
+    int index = 0;
+
+    while(true){
+        if(sw[index].getRank() == '|' && sw[index + 1].getRank() == '0')
+            break;
+        else if(sw[(index) + 1].getRank() == '|'){
+            pCard[0] = sw[index];
+            break;
+        }
+        index++;
+    }
+}

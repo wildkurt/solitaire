@@ -50,3 +50,13 @@ bool Tableau::anyCoveredCards() {
     else
         return true;
 }
+
+void Tableau::getTopCardValues(Card *pCard) {
+    Card *ptr = 0;
+    for(int i = 1; i < 8; i++){
+        ptr = getColPointer(i);
+        while(ptr->getRank() != '|'){ptr++;}
+        if((ptr+1)->getRank() != '0')
+            pCard[i] = (ptr+1);
+    }
+}

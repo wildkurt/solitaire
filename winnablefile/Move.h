@@ -15,8 +15,10 @@ private:
 public:
     Move();
     Move(char f, char t);
+    Move& operator=(Move const &move);
     char getFrom(){return from;}
     char getTo(){return to;}
+    int getMoveValue(char c);
 };
 
 

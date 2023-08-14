@@ -15,6 +15,7 @@ private:
 public:
     void addMove(Move c);
     int numberOfMoves(){return moves.size();}
+    int getHashOfMoves();
 };
 
 
