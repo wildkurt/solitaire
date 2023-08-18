@@ -16,6 +16,7 @@ private:
 public:
     void addCardToSW(Card c);
     void printStockWaste();
+    void printStockWaste(std::ofstream *ofstream);
     bool isSWinWinCond();
 
     void getWasteValue(Card pCard[8]);

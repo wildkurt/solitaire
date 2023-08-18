@@ -20,8 +20,7 @@ public:
     explicit ParseFile(GameConfiguration game);
     ParseFile(SearchSettings set, GameConfiguration *game);
     bool readGameFile();
-    bool readGameFile(std::string ninput);
-    bool writeGameFile(std::string adinput);
+    bool readGameFile(std::ifstream fileptr, GameConfiguration game);
 };
 
 #endif //SOLITAIRE_PARSEFILE_H

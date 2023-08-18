@@ -27,4 +27,14 @@ int Moves::getHashOfMoves() {
     return result;
 }
 
+void Moves::printMoves(std::ofstream *ofstream) {
+    std::vector<Move>::iterator itr = moves.begin();
+    for(;itr != moves.end();itr++){
+        if(itr->getFrom() == '|' || itr->getFrom() == '.' || itr->getFrom() == 'r')
+            *ofstream << itr->getFrom() << std::endl;
+        else
+            *ofstream << itr->getFrom() << "->" << itr->getTo() <<std::endl;
+    }
+}
+
 

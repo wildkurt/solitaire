@@ -16,6 +16,8 @@ public:
     void addMove(Move c);
     int numberOfMoves(){return moves.size();}
     int getHashOfMoves();
+
+    void printMoves(std::ofstream *ofstream);
 };
 
 

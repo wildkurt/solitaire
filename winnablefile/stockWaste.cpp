@@ -49,3 +49,17 @@ void StockWaste::getWasteValue(Card *pCard) {
         index++;
     }
 }
+
+void StockWaste::printStockWaste(std::ofstream *ofstream) {
+
+    *ofstream << "STOCK:" << std::endl;
+    for(auto & i : sw){
+        if(i.getRank() != '0'){
+            if(i.getRank() == '|')
+                *ofstream << i.getRank() << " ";
+            else
+                *ofstream << i.getRank() << i.getSuit() << " ";
+        }
+    }
+    *ofstream << std::endl;
+}

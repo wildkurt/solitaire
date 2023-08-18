@@ -124,12 +124,11 @@ bool ParseFile::readGameFile() {
     return true;
 }
 
-bool ParseFile::readGameFile(std::string ninput) {
-    std::ifstream inputFile(ninput);
+bool ParseFile::readGameFile(std::ifstream fileptr, GameConfiguration game) {
+
     std::string buffer;
-    if(!inputFile.is_open())
-        return false;
-    while (std::getline(inputFile, buffer)) {
+
+    while (std::getline(fileptr, buffer)) {
         if (buffer.find("RULES:") != std::string::npos) {
             if (buffer.find("turn 3") != std::string::npos) {
                 game->setRuleCardTurnover(true);
@@ -228,10 +227,6 @@ bool ParseFile::readGameFile(std::string ninput) {
     return true;
 }
 
-bool ParseFile::writeGameFile(std::string adinput) {
-
-    return true;
-}
 
 
 

@@ -45,6 +45,10 @@ public:
     void setCurrentWasteResets(){wasteResets++;}
     int getCurrentWasteResets(){return wasteResets;}
     int CanDoSafeMoves();
+
+    void printStockWast(std::ofstream *pOfstream);
+
+    void printMoves(std::ofstream *pOfstream);
 };
 
 

@@ -37,7 +37,11 @@ bool SearchManager::recursiveSearch(GameConfiguration recGame) {
     }
     //Updating number of configurations
     configurations++;
-
+    if(settings.doVerboseMode()){
+        if(configurations % 1000 == 0){
+            std::cout << "Checked " << configurations << " configurations." << std::endl;
+        }
+    }
     for(int i = 0; i < cardFrom.size(); i++){
         for(int j = 0; j < cardTo.size(); j++){
             //Don't check if from and to are the same index
@@ -111,10 +115,20 @@ bool SearchManager::testGameConfiguration(GameConfiguration configuration) {
      * 2. use popen in read mode to read input from advance
      * 3. If it is a good move, return true*/
     std::string filename = "inputFile.txt";
+    std::string advanceCommand = "./advance -x ";
+    advanceCommand.append(filename);
+    std::ifstream readAdvance;
     std::ofstream testFile;
+    GameConfiguration newConfig;
+
     testFile.open(filename);
     configuration.printRules(&testFile);
     configuration.printFoundations(&testFile);
+    configuration.printStockWast(&testFile);
+    configuration.printMoves(&testFile);
+
+    readAdvance = popen("./advance -x","r");
+
 
     return false;
 }

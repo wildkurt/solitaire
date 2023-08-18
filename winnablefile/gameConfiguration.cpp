@@ -67,3 +67,11 @@ int GameConfiguration::CanDoSafeMoves() {
     }
     return -1;
 }
+
+void GameConfiguration::printStockWast(std::ofstream *pOfstream) {
+    stockWaste.printStockWaste(pOfstream);
+}
+
+void GameConfiguration::printMoves(std::ofstream *pOfstream) {
+    moves.printMoves(*pOfstream);
+}
