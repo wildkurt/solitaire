@@ -1,42 +1,22 @@
 //
 // Created by wendellbest on 3/18/23.
 //
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
+
 #include "SearchSettings.h"
 #include "parseFile.h"
-#include "SearchManager.h"
 
 int main(int argc, char **argv){
     SearchSettings settings;
     GameConfiguration game;
-    //std::string command = "./cmake-build-debug/advance -x ";
-    std::string command = "./cmake-build-debug/advance -x -o output2.txt ";
-    int systemResult = 0;
 
     //get the settings
     settings.getSettingsFromCL(argc, argv);
-    //use advance to check the file
-    command.append(settings.getFilename());
-    if(settings.getAreMovesLimited()){
-        command.append("-m ");
-        command.append(std::to_string(settings.getLimitedMovesNumber()));
-    }
-    systemResult = system(command.c_str());
-    //read the file
-    if(systemResult==0) {
-        ParseFile parse(settings, &game);
-        parse.readGameFile();
-    }
+    //Check the file and retrieve the game if valid
+    if(game.checkGameFile(&settings))
+        game.getInputFile(&settings);
     else
         return 1;
-    SearchManager search(&game, settings);
-    if(search.run()){
-        //do winning output
-    }
-    else{
-        //do losing output
-    }
+    if(game.isWinnable(&settings)){}
+    else{}
     return 0;
 }

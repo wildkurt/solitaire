@@ -5,6 +5,9 @@
 #include <iostream>
 #include <fstream>
 #include "gameConfiguration.h"
+#include "parseFile.h"
+#include "SearchManager.h"
+
 GameConfiguration &GameConfiguration::operator=(const GameConfiguration &ngame) {
     this->rules = ngame.rules;
     this->foundations = ngame.foundations;
@@ -14,6 +17,42 @@ GameConfiguration &GameConfiguration::operator=(const GameConfiguration &ngame) 
     this->currentMove = ngame.currentMove;
     this->wasteResets = 0;
     return *this;
+}
+
+bool GameConfiguration::checkGameFile(SearchSettings *settings) {
+    FILE *checkFile;
+    std::string validCString = "Input file is valid";
+    std::string command = "./check ";
+    char buffer[50];
+
+    command.append(settings->getFilename());
+    checkFile = popen(command.c_str(), "r");
+
+    fgets(buffer, 50, checkFile);
+
+    pclose(checkFile);
+
+    std::string checkResult(buffer);
+
+    if(checkResult != validCString)
+        return false;
+    else{
+        std::cerr << checkResult << std::endl;
+        return true;
+    }
+}
+
+bool GameConfiguration::isWinnable(SearchSettings *settings) {
+    SearchManager dosearch;
+    if(dosearch.run(settings, this))
+        return true;
+    else
+        return false;
+}
+
+void GameConfiguration::getInputFile(SearchSettings *settings){
+    ParseFile parser(*settings, this);
+    parser.readGameFile();
 }
 
 void GameConfiguration::addCardToFoundations(int b,Card c) {
@@ -75,3 +114,7 @@ void GameConfiguration::printStockWast(std::ofstream *pOfstream) {
 void GameConfiguration::printMoves(std::ofstream *pOfstream) {
     moves.printMoves(*pOfstream);
 }
+
+
+
+

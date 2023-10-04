@@ -11,6 +11,7 @@
 #include "tableau.h"
 #include "stockWaste.h"
 #include "moves.h"
+#include "SearchSettings.h"
 
 class GameConfiguration {
 private:
@@ -21,9 +22,12 @@ private:
     Moves moves;
     Move currentMove;
     int wasteResets;
+    int configurationNumber;
 public:
     GameConfiguration()= default;
     GameConfiguration &operator=(const GameConfiguration &ngame);
+    bool checkGameFile(SearchSettings *settings);
+    void getInputFile(SearchSettings *settings);
     void setRuleCardTurnover(bool c){return rules.setCardTurnover(c);}
     void setRuleLimitedWasteResets(bool c){rules.setResetsLimited(c);}
     bool getRuleLimitedWasteResets(){return rules.getResetsLimited();}
@@ -45,10 +49,10 @@ public:
     void setCurrentWasteResets(){wasteResets++;}
     int getCurrentWasteResets(){return wasteResets;}
     int CanDoSafeMoves();
-
     void printStockWast(std::ofstream *pOfstream);
-
     void printMoves(std::ofstream *pOfstream);
+    bool isWinnable(SearchSettings *settings);
+    void setGameConfigurationVersion(int number){configurationNumber = number;}
 };
 
 

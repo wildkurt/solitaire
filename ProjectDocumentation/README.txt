@@ -50,3 +50,8 @@ Create the hash as follows-
 8*1 + 1*2 + 10*3 + 2*4 + 9*5 + 3*6 + 4*7 + 8*8 + 5*9
 8 + 2 + 30 + 8 + 45 + 18 + 28 + 64 + 45
 248
+
+Program Flow: Winnable gets a file, invokes Advance which calls on Check to see if the file is valid. Advance is able to
+write the exchange format of the file to standard output. Winnable can call advance using popen and give the file name
+then the advance output will be the exchange format. Checking new moves means that Winnable will need to write the
+file.
