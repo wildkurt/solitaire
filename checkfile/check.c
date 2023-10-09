@@ -3,7 +3,6 @@
 //
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 #include "check.h"
 #include "foundation.h"
 #include "tableau.h"
@@ -14,48 +13,47 @@
  * check the tableaus for a legal order. Foundations will be checked
  * for correct suits. It will then initiate a count of covered cards
  * and cards in the stock and waste*/
-Rules *readFile(char *file);
+void readFile(char *file, Rules *rules);
 
 int main(int args, char *argv[]){
-    Rules *rules;
+    Rules rules = {0,0,0,0};
+    int covered = 0, stock = 0, waste = 0;
     //This section is for getting the command line arguments and
     //opening a file pointer.
     if(args < 2){
-        rules = readFile("");
+        readFile("", &rules);
     }
     else{
-        rules = readFile(argv[1]);
+        readFile(argv[1], &rules);
     }
     /*This function checks for missing and/or duplicate cards.
      * It will work even if there are duplicate and missing cards
      * at the same time. Keeps everything below it from printing if
      * true(1)*/
-    if(missingDuplicateCards()){
-        return 1;
-    }
     //Checks to see if everything was found
-    if(found == 10){
+    if(rules.found == 10){
         printf("File is valid\n");
     }
     else{
-        fprintf(stderr, "File is invalid at line %d\n", line);
+        fprintf(stderr, "File is invalid at line %d\n", rules.line);
         return 1;
     }
     //Counts the covered, stock, and waste cards
+    if(missingDuplicateCards()){
+        return 1;
+    }
     countCards(&covered, &stock, &waste);
     printf("%d covered cards\n", covered);
     printf("%d stock cards\n", stock);
     printf("%d waste cards\n", waste);
     printf("\n");
-    fclose(input);
 
     return 0;
 }
 
-Rules *readFile(char *file){
+void readFile(char *file, Rules *rules){
     FILE *input;
     char buffer[MAX_BUFFER], readBuffer[MAX_BUFFER];
-    Rules *rules;
     char *lim;
     int found = 0, line = 0, index = 0 ;
 
@@ -63,14 +61,13 @@ Rules *readFile(char *file){
 
     if(input == 0){
         fprintf(stderr, "Unable to open %s", file);
-        exit(1);
     }
 
     while(fgets(buffer, MAX_BUFFER, input) != 0){
         line++;
         //Ignore hashes
         for(int i = 0; i < MAX_BUFFER; i++){
-            if(buffer[i] != '#'){
+            if(buffer[i] != '#' && buffer[i] != '\0'){
                 readBuffer[index++] = buffer[i];
             }
             else{
@@ -87,7 +84,8 @@ Rules *readFile(char *file){
         if(strstr(readBuffer, "turn 1") != 0){
             if(found < 1){ //1 if RULES: found
                 fprintf(stderr,"Rules not found line %d\n", line);
-                exit(1);
+                rules->line = line;
+                rules->found = found;
         }
         rules->turnOver = 1;
         found++;
@@ -95,8 +93,9 @@ Rules *readFile(char *file){
         if(strstr(readBuffer, "turn 3") != 0){
             if(found < 1){ //1 if RULES: found
                 fprintf(stderr,"Rules not found line %d\n", line);
-                exit(1);
-            }
+                rules->line = line;
+                rules->found = found;
+                            }
             rules->turnOver = 3;
             found++;
         }
@@ -104,7 +103,8 @@ Rules *readFile(char *file){
         if(strstr(readBuffer, "unlimited") != 0){
             if(found < 2){ //2 if turns found
                 fprintf(stderr,"Turn not found or incorrect line %d\n", line);
-                exit(1);
+                rules->line = line;
+                rules->found = found;
             }
             rules->limit = -1;
             found++;
@@ -115,7 +115,8 @@ Rules *readFile(char *file){
         if(lim != 0){
             if(found < 2){ //2 if turns found
                 fprintf(stderr,"Turn not found line %d\n", line);
-                exit(1);
+                rules->line = line;
+                rules->found = found;
             }
             int bob = 0;
             char string[10];
@@ -127,13 +128,15 @@ Rules *readFile(char *file){
         if(strstr(readBuffer, "FOUNDATIONS:") != 0){
             if(found < 3){ // 3 if limits found
                 fprintf(stderr,"Limit not found line %d\n", line);
-                exit(1);
+                rules->line = line;
+                rules->found = found;
             }
             found++;
             //This is where the foundations functions take over
             if(!findFoundations(readBuffer, input, &line)){
                 fprintf(stderr,"Foundations are incorrect or incomplete line %d\n", line);
-                exit(1);
+                rules->line = line;
+                rules->found = found;
             }
             //printFoundation();
             found++;
@@ -142,13 +145,15 @@ Rules *readFile(char *file){
         if(strstr(readBuffer, "TABLEAU:") != 0){
             if(found < 5){ // 5 if TABLEAU: and the tableaus found
                 fprintf(stderr,"Foundations not found line %d\n", line);
-                exit(1);
+                rules->line = line;
+                rules->found = found;
             }
             found++;
             if(!findTableau(readBuffer, input, &line)){
                 fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
                 printTableau();
-                exit(1);
+                rules->line = line;
+                rules->found = found;
             }
 
             found++;
@@ -157,12 +162,14 @@ Rules *readFile(char *file){
         if(strstr(readBuffer, "STOCK:") != 0){
             if(found < 7){
                 fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
-                exit(1);
+                rules->line = line;
+                rules->found = found;
             }
             found++;
             if(!findStockWaste(readBuffer, input, &line)){
                 fprintf(stderr, "Stock not found or stock is incorrect line %d\n",line);
-                exit(1);
+                rules->line = line;
+                rules->found = found;
             }
             //printStockWaste();
             found++;
@@ -175,4 +182,7 @@ Rules *readFile(char *file){
         memset(buffer,0,MAX_BUFFER);
         memset(readBuffer,0,MAX_BUFFER);
     }
+    rules->line = line;
+    rules->found = found;
+    fclose(input);
 }

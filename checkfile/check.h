@@ -10,6 +10,8 @@
 typedef struct{
     int turnOver; // how many cards can be turned over in stock at a time
     int limit; // How many times the stock/waste can be reset
+    int line;
+    int found;
 }Rules;
 
 void countCards(int *covered, int *stock, int *waste);
