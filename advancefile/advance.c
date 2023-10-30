@@ -18,7 +18,7 @@
 int main(int args, char *argv[]){
     GameConfiguration gameconfiguration ={'F', -1, 'F', 0, 0,'F'};
     FILE *input;
-    char *check = "./cmake-build-debug/check", *lim;
+    char *check = "./check", *lim;
     int line = 0, movess = 0;
     char buffer[MAX_BUFFER] = {0};
     char nNumber[MAX_BUFFER] = {0};
