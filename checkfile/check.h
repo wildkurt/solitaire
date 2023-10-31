@@ -17,5 +17,6 @@ typedef struct{
 void readFile(char *file, Rules *rules);
 void countCards(int *covered, int *stock, int *waste);
 int missingDuplicateCards();
+Rules findRules(char *file);
 
 #endif //SOLITAIRE_CHECK_H

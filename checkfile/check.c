@@ -22,20 +22,15 @@ int main(int args, char *argv[]){
     else{
         readFile(argv[1], &rules);
     }
-    /*This function checks for missing and/or duplicate cards.
-     * It will work even if there are duplicate and missing cards
-     * at the same time. Keeps everything below it from printing if
-     * true(1)*/
-    //Checks to see if everything was found
+    //Look for missing cards
+    if(missingDuplicateCards()){
+        return 1;
+    }
     if(rules.found == 10){
-        printf("File is valid\n");
+        printf("Input file is valid\n");
     }
     else{
         fprintf(stderr, "File is invalid at line %d\n", rules.line);
-        return 1;
-    }
-    //Counts the covered, stock, and waste cards
-    if(missingDuplicateCards()){
         return 1;
     }
     countCards(&covered, &stock, &waste);
