@@ -1,22 +1,17 @@
 //
 // Created by wende on 5/30/2022.
 //
-
+#include "rules.h"
 #ifndef SOLITAIRE_CHECK_H
 #define SOLITAIRE_CHECK_H
 
 #define MAX_BUFFER 200
 
-typedef struct{
-    int turnOver; // how many cards can be turned over in stock at a time
-    int limit; // How many times the stock/waste can be reset
-    int line;
-    int found;
-}Rules;
+
 
 void readFile(char *file, Rules *rules);
 void countCards(int *covered, int *stock, int *waste);
 int missingDuplicateCards();
-Rules findRules(char *file);
+
 
 #endif //SOLITAIRE_CHECK_H

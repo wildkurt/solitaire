@@ -3,6 +3,8 @@
 //
 #include <stdio.h>
 #include "check.h"
+#include "rules.h"
+
 /** The main program will open the file then parse it to find all
  * the required elements. During parsing, it calls functions that
  * will determine if there is a element present and will also
@@ -33,12 +35,13 @@ int main(int args, char *argv[]){
         fprintf(stderr, "File is invalid at line %d\n", rules.line);
         return 1;
     }
+
     countCards(&covered, &stock, &waste);
     printf("%d covered cards\n", covered);
     printf("%d stock cards\n", stock);
     printf("%d waste cards\n", waste);
     printf("\n");
-
+    //printRulesSTDOUT(rules);
     return 0;
 }
 
