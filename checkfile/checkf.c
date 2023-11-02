@@ -11,7 +11,7 @@
 
 void readFile(char *file, Rules *rules){
     FILE *input;
-    char buffer[MAX_BUFFER], readBuffer[MAX_BUFFER];
+    char buffer[MAX_BUFFER] = {0}, readBuffer[MAX_BUFFER]={0};
     char *lim;
     int found = 0, line = 0, index = 0 ;
     if(strlen(file)!=0)

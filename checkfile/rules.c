@@ -14,6 +14,10 @@ void findRules(char *file, Rules *rules){
 
     char buffer[MAX_BUFFER] = {0}, trimBuffer[MAX_BUFFER] = {0};
     inputFile = fopen(file,"r");
+    if(inputFile == 0){
+        fprintf(stderr, "%s not found", file);
+        exit(1);
+    }
 
     while(fgets(buffer, MAX_BUFFER, inputFile)){
         int index = 0;
