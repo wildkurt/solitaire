@@ -7,11 +7,8 @@
 
 #define MAX_BUFFER 200
 
-
-
 void readFile(char *file, Rules *rules);
 void countCards(int *covered, int *stock, int *waste);
 int missingDuplicateCards();
-
 
 #endif //SOLITAIRE_CHECK_H

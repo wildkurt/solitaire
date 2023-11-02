@@ -4,41 +4,50 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
 #include "check.h"
 #include "rules.h"
 
-Rules findRules(char *file){
+void findRules(char *file, Rules *rules){
     FILE *inputFile;
-    Rules temp = {0, 0, 0, 0};
+
     char buffer[MAX_BUFFER] = {0}, trimBuffer[MAX_BUFFER] = {0};
     inputFile = fopen(file,"r");
 
     while(fgets(buffer, MAX_BUFFER, inputFile)){
         int index = 0;
         for(int i = 0; i < MAX_BUFFER; i++){
-            if(buffer[i] != '#')
+            if(buffer[i] != '#' && buffer[i] != 0)
                 trimBuffer[index++] = buffer[i];
+            else
+                break;
         }
-        if(strcmp(trimBuffer, "turn 1") == 0){
-            temp.turnOver = 1;
-            temp.found++;
+        if(strstr(trimBuffer, "turn 1") != 0){
+            rules->turnOver = 1;
+            rules->found++;
         }
-        else if(strcmp(trimBuffer, "turn 3") == 0){
-            temp.turnOver = 3;
-            temp.found++;
+        else if(strstr(trimBuffer, "turn 3") != 0){
+            rules->turnOver = 3;
+            rules->found++;
         }
-        else if(strcmp(trimBuffer, "limit ") == 0){
-            scanf(buffer, "%s* %d", temp.limit);
-            temp.found++;
+        else if(strstr(trimBuffer, "limit ") != 0){
+            char charNumber[10] = {0};
+            int subIndex = strspn(trimBuffer, "limit "), index2 = 0;
+            while(isdigit(trimBuffer[subIndex])){
+                charNumber[index2++] = trimBuffer[subIndex++];
+            }
+            rules->limit = atoi(charNumber);
+            rules->found++;
         }
-        else if(strcmp(trimBuffer, "unlimited")){
-            temp.limit = -1;
-            temp.found++;
+        else if(strstr(trimBuffer, "unlimited")!= 0){
+            rules->limit = -1;
+            rules->found++;
         }
-        if(temp.found == 2)
+        if(rules->found == 2)
             break;
+        memset(trimBuffer,0,MAX_BUFFER);
     }
-    return temp;
 }
 
 void printRulesSTDOUT(Rules rules){

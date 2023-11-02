@@ -5,10 +5,7 @@
 #ifndef SOLITAIRE_ADVANCE_H
 #define SOLITAIRE_ADVANCE_H
 
-#include "../checkfile/check.h"
-#include "../checkfile/foundation.h"
-#include "../checkfile/tableau.h"
-#include "../checkfile/stockWaste.h"
+#include "../checkfile/rules.h"
 
 typedef struct{
     char moves;
@@ -25,4 +22,5 @@ typedef struct{
 
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags);
 int checkFile(char *filename);
+
 #endif //SOLITAIRE_ADVANCE_H

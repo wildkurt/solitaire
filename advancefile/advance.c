@@ -7,16 +7,17 @@
  * -x -the game configuration output will be in exchange format*/
 #include <stdio.h>
 #include <stdlib.h>
-#include "../checkfile/check.h"
 #include "advance.h"
 void printForDebugging(GameFlags *gameflags, Rules *rules);
 
 int main(int args, char *argv[]){
     //Get the program flags
-    GameFlags gameflags = {'f', -1, 'f', 0, 'f'};
+    GameFlags gameflags = {'f', -1, 'f', 0, 'f',0};
+    Rules rules = {0,0,0,0};
     GameConfiguration game;
+    game.rules = rules;
     getCommandLineFlags(args, argv, &gameflags);
-    game.rules = findRules(gameflags.inputFile);
+    findRules(gameflags.inputFile, &game.rules);
     //Must-read from a file or standard input
     printForDebugging(&gameflags, &game.rules);
     if(checkFile(gameflags.inputFile)){

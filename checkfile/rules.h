@@ -12,7 +12,7 @@ typedef struct{
     int found;
 }Rules;
 
-Rules findRules(char *file);
+void findRules(char *file, Rules *rules);
 void printRulesSTDOUT(Rules rules);
 
 #endif //SOLITAIRE_RULES_H
