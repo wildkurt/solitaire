@@ -5,28 +5,21 @@
 #include "tableau.h"
 #include <string.h>
 #include "check.h"
-#include <stdlib.h>
 
 /** This has all the functions that operate on tableau and
- * holds the tableaus themselves.*/
-Card t7[30];
-Card t6[30];
-Card t5[30];
-Card t4[30];
-Card t3[30];
-Card t2[30];
-Card t1[30];
+ * holds the tableau themselves.*/
+
 
 /** Allows a function to get a pointer from the desired tableau*/
-Card *setPointer( int col){
+Card *setPointer( int col, Tableau *tableau){
     switch(col){
-        case 7 : return t7;
-        case 6 : return t6;
-        case 5 : return t5;
-        case 4 : return t4;
-        case 3 : return t3;
-        case 2 : return t2;
-        case 1 : return t1;
+        case 7 : return tableau->t7;
+        case 6 : return tableau->t6;
+        case 5 : return tableau->t5;
+        case 4 : return tableau->t4;
+        case 3 : return tableau->t3;
+        case 2 : return tableau->t2;
+        case 1 : return tableau->t1;
         default: return 0;
     }
 }
@@ -36,11 +29,11 @@ Card *setPointer( int col){
  * reason I wrote this this way is to reduce duplicate code.
  * The only thing that changes is the tableau array so I just
  * needed to reset the pointer after checking the array*/
-int isTableauCorrect(){
+int isTableauCorrect(GameConfiguration *game){
     Card *ptr;
     int col = 7;
     while(col != 0){
-        ptr = setPointer(col);
+        ptr = setPointer(col, &game->tableau);
         //Move the pointer until reaching '|'
         while(isRank(ptr->rank)){
             ptr++;
@@ -63,19 +56,19 @@ int isTableauCorrect(){
     }
     return 1;
 }
-/** Finds the tableau columns. It is assume that the Tableaus are
+/** Finds the tableau columns. It is assume that the Tableau are
  * always on their own lines. Using memset to clear the buffer to
  * keep anything extra from being in the buffer. This also sets
  * the cards to covered if they are before the '|'. When all of
- * the columsn are found, the columsn are checked for correctness.*/
-int findTableau(char *buffer, FILE *input, int *line){
+ * the columns are found, the columns are checked for correctness.*/
+int findTableau(char *buffer, FILE *input, int *line, GameConfiguration *game){
     Card *ptr;
     int tabCol = 7, index;
     char covered;
 
     do{
         *line +=1;
-        ptr = setPointer(tabCol);
+        ptr = setPointer(tabCol, &game->tableau);
         index = 0;
         covered = 'T';
         if(buffer[0] == '#' || buffer[0] == '\0')
@@ -86,7 +79,7 @@ int findTableau(char *buffer, FILE *input, int *line){
             if(buffer[i]=='#')
                 break;
             /*The following code is for situations where the last line
-             * of text is the same as what was found. If using fgets just
+             * of text is the same as what was found. If using fgets() just
              * results in setting the file to the same line, then just need
              * to break the loop*/
             if(strstr(buffer,"TABLEAU:")!=0){
@@ -127,7 +120,7 @@ int findTableau(char *buffer, FILE *input, int *line){
         }
         memset(buffer,0,MAX_BUFFER);
     }while(fgets(buffer, MAX_BUFFER, input) != 0 && tabCol != 0);
-    if(isTableauCorrect() && tabCol == 0){
+    if(isTableauCorrect(game) && tabCol == 0){
         return 1;
     }
     else{
@@ -135,10 +128,10 @@ int findTableau(char *buffer, FILE *input, int *line){
     }
 }
 //Function for printing the tableau
-void printTableau(){
+void printTableau(GameConfiguration *game){
     Card *ptr;
     for(int i = 7; i >= 1; i--){
-        ptr = setPointer(i);
+        ptr = setPointer(i, &game->tableau);
         while(isRank(ptr->rank) || ptr->rank == '|'){
             if(ptr->suit == 0)
                 printf("%c ", ptr->rank);
@@ -150,10 +143,10 @@ void printTableau(){
     }
 }
 
-Card *getTopColCard(int col){
+Card *getTopColCard(int col, GameConfiguration *game){
     /*Case 1: Column is empty
      * Case 2: Column is not empty*/
-    Card *ptr = setPointer(col);
+    Card *ptr = setPointer(col, &game->tableau);
     if(ptr->rank == '|' && (ptr+1)->rank == '\0')
         return ptr;
     while((ptr + 1)->rank != '\0'){
@@ -162,11 +155,11 @@ Card *getTopColCard(int col){
     return ptr;
 }
 
-int addCardToColumn(Card *ptr, int col){
+int addCardToColumn(Card *ptr, int col, GameConfiguration *game){
     /* Case 1: The column is not empty
      * Case 2: The column is empty*/
     //assuming ptr is on the heap and not the stack
-    Card *tabptr = setPointer(col);
+    Card *tabptr = setPointer(col, &game->tableau);
     while(tabptr->rank != '\0'){
         tabptr++;
     }
@@ -176,11 +169,11 @@ int addCardToColumn(Card *ptr, int col){
     return 1;
 }
 
-void removeCardFromCol(int col){
+void removeCardFromCol(int col, GameConfiguration *game){
     /* Case 1: the top card has other face up cards below it
      * Case 2: the top card has a face down card below it
      * Case 3: the top card is the last card in the col*/
-    Card *ptr = setPointer(col);
+    Card *ptr = setPointer(col, &game->tableau);
     while(ptr->rank != '\0'){
         ptr++;
     }
@@ -205,14 +198,14 @@ void removeCardFromCol(int col){
     }
 }
 
-int moveColToCol(int src, int dst){
+int moveColToCol(int src, int dst, GameConfiguration *game){
     /* Case 1: the dst col is empty, src must be a King
      * Case 2: The card in src and dst are the top cards
      * Case 3: The card in src has more cards on top of it
      * and all of them need to be moved to other column.*/
     //Get pointers to the columns
-    Card *srcptr = setPointer(src);
-    Card *dstptr = setPointer(dst);
+    Card *srcptr = setPointer(src, &game->tableau);
+    Card *dstptr = setPointer(dst, &game->tableau);
     //increment the pointers to the '|' then increment by one
     while(srcptr->rank != '|'){
         srcptr++;
@@ -225,7 +218,7 @@ int moveColToCol(int src, int dst){
     }
     dstptr--;
     //src and dst pointers both at a face up card, need to find
-    //a card in src that is opposite suit and one rank higher then
+    //a card in src that is opposite suit and one rank higher than
     //transfer all cards to dst
 
     while(srcptr->rank != '\0'){
@@ -236,7 +229,7 @@ int moveColToCol(int src, int dst){
                 srcptr->suit = '\0';
                 srcptr->covered = '\0';
                 srcptr->stock = '\0';
-                if((srcptr-1)->rank == '|' && (srcptr-1) != setPointer(src)){
+                if((srcptr-1)->rank == '|' && (srcptr-1) != setPointer(src, &game->tableau)){
                     Card temp = *(srcptr-2);
                     *(srcptr-2) = *(srcptr-1);
                     *(srcptr-1) = temp;
@@ -252,7 +245,7 @@ int moveColToCol(int src, int dst){
                 srcptr->suit = '\0';
                 srcptr->covered = '\0';
                 srcptr->stock = '\0';
-                if((srcptr-1)->rank == '|' && (srcptr-2) != setPointer(src)){
+                if((srcptr-1)->rank == '|' && (srcptr-2) != setPointer(src, &game->tableau)){
                     Card temp = *(srcptr-2);
                     *(srcptr-2) = *(srcptr-1);
                     *(srcptr-1) = temp;

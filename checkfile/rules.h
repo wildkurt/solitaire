@@ -5,14 +5,16 @@
 #ifndef SOLITAIRE_RULES_H
 #define SOLITAIRE_RULES_H
 
-typedef struct{
+#include "gameconfiguration.h"
+
+typedef struct Rules{
     int turnOver; // how many cards can be turned over in stock at a time
     int limit; // How many times the stock/waste can be reset
     int line;
     int found;
 }Rules;
 
-void findRules(char *file, Rules *rules);
+int findRules(char *buffer, FILE *file, int *line, Rules *rules);
 void printRulesSTDOUT(Rules rules);
 
 #endif //SOLITAIRE_RULES_H

@@ -6,6 +6,8 @@
 #define SOLITAIRE_ADVANCE_H
 
 #include "../checkfile/rules.h"
+#include "../checkfile/foundation.h"
+#include "../checkfile/check.h"
 
 typedef struct{
     char moves;
@@ -16,11 +18,8 @@ typedef struct{
     char *inputFile;
 }GameFlags;
 
-typedef struct{
-    Rules rules;
-}GameConfiguration;
-
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags);
 int checkFile(char *filename);
+void readGameFile(GameFlags *gameflags, GameConfiguration *game);
 
 #endif //SOLITAIRE_ADVANCE_H

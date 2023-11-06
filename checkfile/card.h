@@ -4,7 +4,7 @@
 
 #ifndef SOLITAIRE_CARD_H
 #define SOLITAIRE_CARD_H
-typedef struct{
+typedef struct Card{
     char rank;
     char suit;
     char covered;

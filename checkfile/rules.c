@@ -7,49 +7,70 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "check.h"
-#include "rules.h"
 
-void findRules(char *file, Rules *rules){
-    FILE *inputFile;
+int findRules(char *buffer, FILE *file, int *line, Rules *rules){
 
-    char buffer[MAX_BUFFER] = {0}, trimBuffer[MAX_BUFFER] = {0};
-    inputFile = fopen(file,"r");
-    if(inputFile == 0){
-        fprintf(stderr, "%s not found", file);
-        exit(1);
-    }
+    char trimBuffer[MAX_BUFFER] = {0};
 
-    while(fgets(buffer, MAX_BUFFER, inputFile)){
+    while(fgets(buffer, MAX_BUFFER, file)){
         int index = 0;
+        *line++;
         for(int i = 0; i < MAX_BUFFER; i++){
             if(buffer[i] != '#' && buffer[i] != 0)
                 trimBuffer[index++] = buffer[i];
             else
                 break;
         }
+
         if(strstr(trimBuffer, "turn 1") != 0){
-            rules->turnOver = 1;
-            rules->found++;
+            if(rules->found < 1){
+                fprintf(stderr, "Rules not found line %d", *line);
+                return 0;
+            }
+            else{
+                rules->turnOver = 1;
+                rules->found++;
+            }
         }
         else if(strstr(trimBuffer, "turn 3") != 0){
-            rules->turnOver = 3;
-            rules->found++;
+            if(rules->found < 1){
+                fprintf(stderr, "Rules not found line %d", *line);
+                return 0;
+            }
+            else{
+                rules->turnOver = 3;
+                rules->found++;
+            }
+
         }
         else if(strstr(trimBuffer, "limit ") != 0){
             char charNumber[10] = {0};
-            int subIndex = strspn(trimBuffer, "limit "), index2 = 0;
-            while(isdigit(trimBuffer[subIndex])){
-                charNumber[index2++] = trimBuffer[subIndex++];
+            if(rules->found < 2){
+                fprintf(stderr,"Turn rule not found at line %d", *line);
+                return(0);
             }
-            rules->limit = atoi(charNumber);
-            rules->found++;
+            else{
+                int subIndex = strspn(trimBuffer, "limit "), index2 = 0;
+                while(isdigit(trimBuffer[subIndex])){
+                    charNumber[index2++] = trimBuffer[subIndex++];
+                }
+                rules->limit = atoi(charNumber);
+                rules->found++;
+            }
+
         }
         else if(strstr(trimBuffer, "unlimited")!= 0){
-            rules->limit = -1;
-            rules->found++;
+            if(rules->found < 2){
+                fprintf(stderr,"Turn rule not found at line %d", *line);
+                return(0);
+            }
+            else{
+                rules->limit = -1;
+                rules->found++;
+            }
         }
-        if(rules->found == 2)
-            break;
+        if(rules->found == 3)
+            return 1;
         memset(trimBuffer,0,MAX_BUFFER);
     }
 }

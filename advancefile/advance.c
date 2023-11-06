@@ -13,17 +13,14 @@ void printForDebugging(GameFlags *gameflags, Rules *rules);
 int main(int args, char *argv[]){
     //Get the program flags
     GameFlags gameflags = {'f', -1, 'f', 0, 'f',0};
-    Rules rules = {0,0,0,0};
-    GameConfiguration game;
-    game.rules = rules;
+    GameConfiguration game ={ .rules = {0,0,0,0}, .foundation = {0}};
     getCommandLineFlags(args, argv, &gameflags);
-    findRules(gameflags.inputFile, &game.rules);
     //Must-read from a file or standard input
-    printForDebugging(&gameflags, &game.rules);
+    //printForDebugging(&gameflags, &game.rules);
     if(checkFile(gameflags.inputFile)){
         exit(1);
     }
-
+    readGameFile(&gameflags, &game);
     return 0;
 }
 

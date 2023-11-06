@@ -7,8 +7,6 @@
 #include "check.h"
 #include <stdlib.h>
 
-Card sw[30];
-
 /** Similar to findTableau, but only need to file one array*/
 int findStockWaste(char *buffer, FILE *input, int *line){
     char covered = 'F', foundMoves ='F';

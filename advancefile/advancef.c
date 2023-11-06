@@ -51,3 +51,7 @@ int checkFile(char *filename){
     }
     return result;
 }
+
+void readGameFile(GameFlags *gameflags, GameConfiguration *game){
+    findRules(gameflags->inputFile, &game->rules);
+}
