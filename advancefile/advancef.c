@@ -53,5 +53,11 @@ int checkFile(char *filename){
 }
 
 void readGameFile(GameFlags *gameflags, GameConfiguration *game){
-    findRules(gameflags->inputFile, &game->rules);
+    char buffer[MAX_BUFFER];
+    FILE *readFile;
+    int line = 0;
+
+    readFile = fopen(gameflags->inputFile,"r");
+    findRules(buffer,readFile,&line, &game->rules);
+    findFoundations(buffer,readFile, &line, &game->foundation);
 }

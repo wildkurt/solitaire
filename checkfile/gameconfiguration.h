@@ -5,6 +5,7 @@
 #ifndef SOLITAIRE_GAMECONFIGURATION_H
 #define SOLITAIRE_GAMECONFIGURATION_H
 
+#define MAX_BUFFER 200
 
 #include "rules.h"
 #include "foundation.h"
@@ -18,4 +19,5 @@ typedef struct GameConfiguration{
     StockWaste stockwaste;
     int found;
 }GameConfiguration;
+
 #endif //SOLITAIRE_GAMECONFIGURATION_H

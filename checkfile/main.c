@@ -3,7 +3,7 @@
 //
 #include <stdio.h>
 #include "gameconfiguration.h"
-
+#include "check.h"
 
 /** The main program will open the file then parse it to find all
  * the required elements. During parsing, it calls functions that

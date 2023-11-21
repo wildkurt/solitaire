@@ -5,10 +5,9 @@
 #include "stockWaste.h"
 #include <string.h>
 #include "check.h"
-#include <stdlib.h>
 
 /** Similar to findTableau, but only need to file one array*/
-int findStockWaste(char *buffer, FILE *input, int *line, GameConfiguration *game){
+int findStockWaste(char *buffer, FILE *input, int *line, StockWaste *stockwaste){
     char covered = 'F', foundMoves ='F';
     int index = 0;
     do{
@@ -33,23 +32,23 @@ int findStockWaste(char *buffer, FILE *input, int *line, GameConfiguration *game
                 break;
             }
             if(buffer[i] == '|'){
-                game->stockwaste.sw[index].rank = buffer[i];
-                game->stockwaste.sw[index].suit = 0;
-                game->stockwaste.sw[index].covered = 'F';
-                game->stockwaste.sw[index].stock = 'F';
+                stockwaste->sw[index].rank = buffer[i];
+                stockwaste->sw[index].suit = 0;
+                stockwaste->sw[index].covered = 'F';
+                stockwaste->sw[index].stock = 'F';
                 covered = 'T';
                 index++;
             }
             if(isRank(buffer[i]) && isSuit(buffer[i+1])){
-                game->stockwaste.sw[index].rank = buffer[i];
-                game->stockwaste.sw[index].suit = buffer[i+1];
+                stockwaste->sw[index].rank = buffer[i];
+                stockwaste->sw[index].suit = buffer[i+1];
                 if(covered == 'F'){
-                    game->stockwaste.sw[index].covered = 'F';
-                    game->stockwaste.sw[index].stock = 'F';
+                    stockwaste->sw[index].covered = 'F';
+                    stockwaste->sw[index].stock = 'F';
                 }
                 else{
-                    game->stockwaste.sw[index].covered = 'T';
-                    game->stockwaste.sw[index].stock = 'T';
+                    stockwaste->sw[index].covered = 'T';
+                    stockwaste->sw[index].stock = 'T';
                 }
                 index++;
             }
@@ -60,7 +59,7 @@ int findStockWaste(char *buffer, FILE *input, int *line, GameConfiguration *game
     }while(fgets(buffer, MAX_BUFFER, input)!=0);
     return 1;
 }
-int doStockWasteCardTurnover(GameConfiguration *game){
+int doStockWasteCardTurnover(StockWaste *stockwaste, Rules *rules){
     /* Case 1: the stock/waste is empty
      * Case 2: All the cards are in the waste
      * Case 3: Rule turn 3, and less then three
@@ -69,10 +68,10 @@ int doStockWasteCardTurnover(GameConfiguration *game){
      * from waste. Waste is on the left, stock
      * on the right.*/
     //No cards in stock/waste
-    if(game->stockwaste.sw[0].rank == '|' && game->stockwaste.sw[1].rank == '\0'){
+    if(stockwaste->sw[0].rank == '|' && stockwaste->sw[1].rank == '\0'){
         return 0; //false, illegal move
     }
-    Card *ptr = game->stockwaste.sw;
+    Card *ptr = stockwaste->sw;
     while(ptr->rank != '|'){
         ptr++;
     }
@@ -81,7 +80,7 @@ int doStockWasteCardTurnover(GameConfiguration *game){
         return 0;
     }
     //Turn over one or three cards
-    int count = game->rules.turnOver;
+    int count = rules->turnOver;
     while(count > 0 && ptr->rank != '\0'){
         Card temp = *ptr;
         *ptr = *(ptr + 1);
@@ -93,21 +92,21 @@ int doStockWasteCardTurnover(GameConfiguration *game){
     return 1;
 }
 
-int doStockWasteReset(GameConfiguration *game){
+int doStockWasteReset(StockWaste *stockwaste, Rules *rules){
     /* Case 1: No cards in stock/waste
      * Case 2: No resets left
      * Case 3: Still stock cards left*/
     int count = 0;
     //No cards left
-    if(game->stockwaste.sw[0].rank == '|' && game->stockwaste.sw[1].rank == '\0'){
+    if(stockwaste->sw[0].rank == '|' && stockwaste->sw[1].rank == '\0'){
         return 0; //false, illegal move
     }
     //No resets left
-    if(game->rules.limit == 0){
+    if(rules->limit == 0){
         return 0; //no resets left
     }
     //Still cards in stock
-    Card *ptr = game->stockwaste.sw;
+    Card *ptr = stockwaste->sw;
     while(ptr->rank != '|'){
         ptr++;
         count++;
@@ -121,13 +120,13 @@ int doStockWasteReset(GameConfiguration *game){
         *ptr = temp;
         ptr--;
     }
-    if(game->rules.limit > 0)
-        game->rules.limit = game->rules.limit - 1;
+    if(rules->limit > 0)
+        rules->limit = rules->limit - 1;
     return 1;
 }
 //Just prints the cards in the stock waste.
-void printStockWaste(GameConfiguration *game){
-    Card *ptr = game->stockwaste.sw;
+void printStockWaste(StockWaste *stockwaste){
+    Card *ptr = stockwaste->sw;
     while(ptr->rank != '\0'){
         if(ptr->rank == '|')
             printf("%c ", ptr->rank);
@@ -138,19 +137,19 @@ void printStockWaste(GameConfiguration *game){
     printf("\n");
 }
 
-int stockWasteEmpty(GameConfiguration *game){
-    if(game->stockwaste.sw[0].rank == '|' && game->stockwaste.sw[1].rank == '\0')
+int stockWasteEmpty(StockWaste *stockwaste){
+    if(stockwaste->sw[0].rank == '|' && stockwaste->sw[1].rank == '\0')
         return 1;
     else
         return 0;
 }
 
-void printStockWasteTop(GameConfiguration *game){
-    Card *ptr = game->stockwaste.sw;
+void printStockWasteTop(StockWaste *stockwaste, Rules *rules){
+    Card *ptr = stockwaste->sw;
     while(ptr->rank != '|'){
         ptr++;
     }
-    if(game->rules.turnOver == 3){
+    if(rules->turnOver == 3){
         if((ptr-3)->rank != '\0')
             printf("%c%c ",(ptr-3)->rank, (ptr-3)->suit);
         if((ptr-2)->rank != '\0')
@@ -164,10 +163,10 @@ void printStockWasteTop(GameConfiguration *game){
     }
 }
 
-Card *stockWastePtr(GameConfiguration *game){return game->stockwaste.sw;}
+Card *stockWastePtr(StockWaste *stockwaste){return stockwaste->sw;}
 
-Card *getTopWasteCard(GameConfiguration *game){
-    Card *ptr = game->stockwaste.sw;
+Card *getTopWasteCard(StockWaste *stockwaste){
+    Card *ptr = stockwaste->sw;
     while((ptr+1)->rank != '|'){
         ptr++;
     }
