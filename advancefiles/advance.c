@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "advance.h"
-#include "gameconfiguration.h"
 
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags){
     for(int i = 0; i < args; i++){
@@ -34,7 +33,7 @@ void getCommandLineFlags(int args, char **argv, GameFlags *gameflags){
 
 int checkFile(char *filename){
     int result = 1;
-    char *command[MAX_BUFFER] = {0}, buffer[MAX_BUFFER];
+    char command[MAX_BUFFER] = {0}, buffer[MAX_BUFFER];
     FILE *runCheck;
 
     strcat(command,"./check ");
@@ -53,7 +52,7 @@ int checkFile(char *filename){
 }
 
 int readGameFile(GameFlags *gameflags, GameConfiguration *game){
-    char *buffer[MAX_BUFFER];
+    char buffer[MAX_BUFFER];
     int line;
     FILE *inputfile;
 

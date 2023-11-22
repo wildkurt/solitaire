@@ -5,6 +5,7 @@
 #ifndef SOLITAIRE_ADVANCE_H
 #define SOLITAIRE_ADVANCE_H
 
+#include "../commonfiles/gameconfiguration.h"
 typedef struct GameFlags{
     char moves;
     int numberMoves;
