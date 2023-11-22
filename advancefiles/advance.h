@@ -1,15 +1,11 @@
 //
-// Created by wendellbest on 5/31/22.
+// Created by wendellbest on 11/22/23.
 //
 
 #ifndef SOLITAIRE_ADVANCE_H
 #define SOLITAIRE_ADVANCE_H
 
-#include "../checkfile/rules.h"
-#include "../checkfile/foundation.h"
-#include "../checkfile/check.h"
-
-typedef struct{
+typedef struct GameFlags{
     char moves;
     int numberMoves;
     char outputfile;
@@ -20,6 +16,6 @@ typedef struct{
 
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags);
 int checkFile(char *filename);
-void readGameFile(GameFlags *gameflags, GameConfiguration *game);
+int readGameFile(GameFlags *gameflags, GameConfiguration *game);
 
 #endif //SOLITAIRE_ADVANCE_H

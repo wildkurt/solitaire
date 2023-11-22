@@ -1,23 +1,22 @@
 //
-// Created by wendellbest on 5/30/22.
+// Created by wendellbest on 11/22/23.
 //
 
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 #include "check.h"
 
-
-void readFile(char *file, GameConfiguration *game){
+void readFile(char *inputFile, GameConfiguration *game){
     FILE *input;
     char buffer[MAX_BUFFER] = {0}, readBuffer[MAX_BUFFER]={0};
     int line = 0, index = 0 ;
-    if(strlen(file)!=0)
-        input = fopen(file,"r");
+    if(strlen(inputFile)!=0)
+        input = fopen(inputFile,"r");
     else
         input = stdin;
 
     if(input == 0){
-        fprintf(stderr, "Unable to open %s", file);
+        fprintf(stderr, "Unable to open %s", inputFile);
     }
     //Reads line from file
     while(fgets(buffer, MAX_BUFFER, input) != 0){
@@ -48,7 +47,7 @@ void readFile(char *file, GameConfiguration *game){
             }
             game->found++;
             //This is where the foundations functions take over
-            if(!findFoundations(readBuffer, input, &line, game)){
+            if(!findFoundation(readBuffer, input, &line, &game->foundation)){
                 fprintf(stderr,"Foundations are incorrect or incomplete line %d\n", line);
                 return;
             }
@@ -61,7 +60,7 @@ void readFile(char *file, GameConfiguration *game){
                 return;
             }
             game->found++;
-            if(!findTableau(readBuffer, input, &line)){
+            if(!findTableau(readBuffer, input, &line, &game->tableau)){
                 fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
                 return;
             }
@@ -73,7 +72,7 @@ void readFile(char *file, GameConfiguration *game){
                 return;
             }
             game->found++;
-            if(!findStockWaste(readBuffer, input, &line)){
+            if(!findStockWaste(readBuffer, input, &line, &game->stockwaste)){
                 fprintf(stderr, "Stock not found or stock is incorrect line %d\n",line);
                 return;
             }
@@ -102,7 +101,7 @@ void countCards(int *covered, int *stock, int *waste, GameConfiguration *game){
         }
         col--;
     }
-    ptr = stockWastePtr();
+    ptr = stockWastePtr(&game->stockwaste);
     while(ptr->rank != '\0'){
         if(ptr->stock == 'T'){
             *stock = *stock + 1;
@@ -123,13 +122,14 @@ int indexSetter(char c){
         default: return -1;
     }
 }
+
 int missingDuplicateCards(GameConfiguration *game){
     int deck[52] = {0};
     //Total counts all the cards
     int missing = 0, duplicates = 0;
 
     //get a pointer to the foundations
-    Card *ptrfd = fdPtr(game);
+    Card *ptrfd = fdPtr(&game->foundation);
     for(int i = 0; i < 4; i++){
         if(ptrfd[i].rank == '_')
             continue;
@@ -151,7 +151,7 @@ int missingDuplicateCards(GameConfiguration *game){
         col--;
     }
     //count the cards in the stock
-    ptr = stockWastePtr();
+    ptr = stockWastePtr(&game->stockwaste);
     while(ptr->rank != '\0'){
         if(ptr->rank != '|')
             deck[rankValue(ptr->rank) + indexSetter(ptr->suit)] += 1;
@@ -197,4 +197,3 @@ int missingDuplicateCards(GameConfiguration *game){
     }
     return 1;
 }
-

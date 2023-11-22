@@ -1,12 +1,11 @@
 //
-// Created by wendellbest on 11/1/23.
+// Created by wendellbest on 11/22/23.
 //
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include "../checkfile/check.h"
+#include <string.h>
 #include "advance.h"
+#include "gameconfiguration.h"
 
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags){
     for(int i = 0; i < args; i++){
@@ -32,6 +31,7 @@ void getCommandLineFlags(int args, char **argv, GameFlags *gameflags){
         }
     }
 }
+
 int checkFile(char *filename){
     int result = 1;
     char *command[MAX_BUFFER] = {0}, buffer[MAX_BUFFER];
@@ -52,6 +52,20 @@ int checkFile(char *filename){
     return result;
 }
 
-void readGameFile(GameFlags *gameflags, GameConfiguration *game){
-    findRules(gameflags->inputFile, &game->rules);
+int readGameFile(GameFlags *gameflags, GameConfiguration *game){
+    char *buffer[MAX_BUFFER];
+    int line;
+    FILE *inputfile;
+
+    inputfile = fopen(gameflags->inputFile,"r");
+    if(inputfile == 0){
+        fprintf(stderr, "Unable to find file: %s\n", gameflags->inputFile);
+        return 0;
+    }
+    findRules(buffer, inputfile, &line, &game->rules);
+    findFoundation(buffer,inputfile,&line,&game->foundation);
+    findTableau(buffer, inputfile, &line, &game->tableau);
+    findStockWaste(buffer, inputfile, &line, &game->stockwaste);
+
+    return 1;
 }

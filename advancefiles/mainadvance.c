@@ -1,26 +1,27 @@
 //
-// Created by wendellbest on 5/31/22.
+// Created by wendellbest on 11/22/23.
 //
-/**Switches
- * -m N -the max number of moves to play
- * -o file -the file the game configuration needs to be written to
- * -x -the game configuration output will be in exchange format*/
-#include <stdio.h>
+
 #include <stdlib.h>
+#include "../commonfiles/gameconfiguration.h"
 #include "advance.h"
+
 void printForDebugging(GameFlags *gameflags, Rules *rules);
 
 int main(int args, char *argv[]){
-    //Get the program flags
-    GameFlags gameflags = {'f', -1, 'f', 0, 'f',0};
-    GameConfiguration game ={ .rules = {0,0,0,0}, .foundation = {0}};
+    GameFlags gameflags = {'f', -1, 'f', 0};
+    GameConfiguration game = {.rules = {0,0,0,0}, .foundation = {0},
+                              .tableau = {.t1 = {0}, .t2 = {0}, .t3 = {0}, .t4 = {0}, .t5 = {0}, .t6 = {0}, .t7 = {0}},
+                              .stockwaste = {0}, .found =0};
     getCommandLineFlags(args, argv, &gameflags);
-    //Must-read from a file or standard input
-    //printForDebugging(&gameflags, &game.rules);
     if(checkFile(gameflags.inputFile)){
         exit(1);
     }
-    readGameFile(&gameflags, &game);
+    if(!readGameFile(&gameflags, &game)){
+        exit(EXIT_FAILURE);
+    }
+    else
+        printForDebugging(&gameflags, &game.rules);
     return 0;
 }
 

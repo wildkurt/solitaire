@@ -2,8 +2,8 @@
 // Created by wende on 5/30/2022.
 //
 #include <stdio.h>
-#include "gameconfiguration.h"
-
+#include "../commonfiles/gameconfiguration.h"
+#include "check.h"
 
 /** The main program will open the file then parse it to find all
  * the required elements. During parsing, it calls functions that
@@ -24,8 +24,8 @@ int main(int args, char *argv[]){
         readFile(argv[1], &game);
     }
     if(game.found == 5){
-        printf( "Input file is valid");
-        countCards(&covered, &stock, &waste);
+        printf( "Input file is valid\n");
+        countCards(&covered, &stock, &waste, &game);
         printf("%d covered cards\n", covered);
         printf("%d stock cards\n", stock);
         printf("%d waste cards\n", waste);

@@ -1,8 +1,10 @@
 //
-// Created by wende on 5/30/2022.
+// Created by wendellbest on 11/22/23.
 //
 
 #include "card.h"
+
+//is the character a valid rank
 int isRank(char c){
     switch(c){
         case 'A' : return 1;
@@ -22,6 +24,7 @@ int isRank(char c){
     }
 }
 
+//Is the character a valid suit
 int isSuit(char c){
     switch(c){
         case 'c' : return 1;
@@ -32,6 +35,7 @@ int isSuit(char c){
     }
 }
 
+//Is the card red or black
 char isRedOrBlack(char c){
     switch(c){
         case 'c' : return 'b';
@@ -41,6 +45,7 @@ char isRedOrBlack(char c){
     }
 }
 
+//What is the value of the rank
 int rankValue(char c){
     switch(c){
         case 'A' : return 0;
@@ -59,7 +64,7 @@ int rankValue(char c){
         default: return 0;
     }
 }
-
+//what is the rank of the value
 char valueRank(int c){
     switch(c){
         case 0 : return 'A';

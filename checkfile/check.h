@@ -1,15 +1,13 @@
 //
-// Created by wende on 5/30/2022.
+// Created by wendellbest on 11/22/23.
 //
 
-#include "gameconfiguration.h"
-
 #ifndef SOLITAIRE_CHECK_H
+#define SOLITAIRE_CHECK_H
 
-#define MAX_BUFFER 200
+#include "../commonfiles/gameconfiguration.h"
 
-
-void readFile(char *file, GameConfiguration *game);
+void readFile(char *inputFile, GameConfiguration *game);
 void countCards(int *covered, int *stock, int *waste, GameConfiguration *game);
 int missingDuplicateCards(GameConfiguration *game);
 
