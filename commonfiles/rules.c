@@ -1,15 +1,13 @@
 //
-// Created by wendellbest on 11/1/23.
+// Created by wendellbest on 11/22/23.
 //
 
-#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "check.h"
+#include "rules.h"
 
 int findRules(char *buffer, FILE *file, int *line, Rules *rules){
-
     char trimBuffer[MAX_BUFFER] = {0};
 
     while(fgets(buffer, MAX_BUFFER, file)){
@@ -75,8 +73,8 @@ int findRules(char *buffer, FILE *file, int *line, Rules *rules){
     }
 }
 
-void printRulesSTDOUT(Rules rules){
+void printRulesSTDOUT(Rules *rules){
     printf("RULES:\n");
-    printf("Turn %d\n", rules.turnOver);
-    printf("Limit / Unlimited: %d\n", rules.limit);
+    printf("Turn %d\n", rules->turnOver);
+    printf("Limit / Unlimited: %d\n", rules->limit);
 }

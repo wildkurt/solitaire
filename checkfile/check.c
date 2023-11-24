@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "check.h"
 
+
 void readFile(char *file, GameConfiguration *game){
     FILE *input;
     char buffer[MAX_BUFFER] = {0}, readBuffer[MAX_BUFFER]={0};
@@ -47,7 +48,7 @@ void readFile(char *file, GameConfiguration *game){
             }
             game->found++;
             //This is where the foundations functions take over
-            if(!findFoundations(readBuffer, input, &line, &game->foundation)){
+            if(!findFoundations(readBuffer, input, &line, game)){
                 fprintf(stderr,"Foundations are incorrect or incomplete line %d\n", line);
                 return;
             }
@@ -60,7 +61,7 @@ void readFile(char *file, GameConfiguration *game){
                 return;
             }
             game->found++;
-            if(!findTableau(readBuffer, input, &line, &game->tableau)){
+            if(!findTableau(readBuffer, input, &line)){
                 fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
                 return;
             }
@@ -72,7 +73,7 @@ void readFile(char *file, GameConfiguration *game){
                 return;
             }
             game->found++;
-            if(!findStockWaste(readBuffer, input, &line, &game->stockwaste)){
+            if(!findStockWaste(readBuffer, input, &line)){
                 fprintf(stderr, "Stock not found or stock is incorrect line %d\n",line);
                 return;
             }

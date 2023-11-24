@@ -1,11 +1,9 @@
 //
-// Created by wendellbest on 11/1/23.
+// Created by wendellbest on 11/22/23.
 //
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include "../checkfile/check.h"
+#include <string.h>
 #include "advance.h"
 
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags){
@@ -32,9 +30,10 @@ void getCommandLineFlags(int args, char **argv, GameFlags *gameflags){
         }
     }
 }
+
 int checkFile(char *filename){
     int result = 1;
-    char *command[MAX_BUFFER] = {0}, buffer[MAX_BUFFER];
+    char command[MAX_BUFFER] = {0}, buffer[MAX_BUFFER];
     FILE *runCheck;
 
     strcat(command,"./check ");
@@ -52,12 +51,21 @@ int checkFile(char *filename){
     return result;
 }
 
-void readGameFile(GameFlags *gameflags, GameConfiguration *game){
+int readGameFile(GameFlags *gameflags, GameConfiguration *game){
     char buffer[MAX_BUFFER];
-    FILE *readFile;
-    int line = 0;
+    int line;
+    FILE *inputfile;
 
-    readFile = fopen(gameflags->inputFile,"r");
-    findRules(buffer,readFile,&line, &game->rules);
-    findFoundations(buffer,readFile, &line, &game->foundation);
+    inputfile = fopen(gameflags->inputFile,"r");
+    if(inputfile == 0){
+        fprintf(stderr, "Unable to find file: %s\n", gameflags->inputFile);
+        return 0;
+    }
+    game->rules.found++;
+    findRules(buffer, inputfile, &line, &game->rules);
+    findFoundation(buffer,inputfile,&line,&game->foundation);
+    findTableau(buffer, inputfile, &line, &game->tableau);
+    findStockWaste(buffer, inputfile, &line, &game->stockwaste);
+
+    return 1;
 }

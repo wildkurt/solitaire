@@ -3,7 +3,6 @@
 //
 
 #include "card.h"
-
 int isRank(char c){
     switch(c){
         case 'A' : return 1;

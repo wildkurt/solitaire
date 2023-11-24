@@ -1,25 +1,79 @@
 //
-// Created by wende on 5/30/2022.
+// Created by wendellbest on 11/22/23.
 //
 
-#include "tableau.h"
+#include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+#include "tableau.h"
 
-/** This has all the functions that operate on tableau and
- * holds the tableau themselves.*/
+int findTableau(char *buffer, FILE *input, int *line, Tableau *tableau){
+    Card *ptr;
+    int tabCol = 7, index;
+    char covered;
+    char tempBuffer[MAX_BUFFER]={0};
 
+    do{
+        ptr = setPointer(tabCol, tableau);
+        index = 0;
+        covered = 'T';
+        for(int i = 0; i < MAX_BUFFER; i++){
+            if(buffer[i] == '#' || buffer[i] =='\0')
+                break;
+            else if(isalnum(buffer[i]) || isspace(buffer[i]) || ispunct(buffer[i]))
+                tempBuffer[index++] = buffer[i];
+        }
+        index = 0;
+        if(tempBuffer[0] == '\0'){
+            memset(buffer,0,MAX_BUFFER);
+            continue;
+        }
+        if(strstr(tempBuffer,"TABLEAU:")!=0){
+            memset(buffer,0,MAX_BUFFER);
+            memset(tempBuffer, 0, MAX_BUFFER);
+            continue;
+        }
+        for(int i = 0; tempBuffer[i] != '\0' && i < MAX_BUFFER; i++){
+            /*The following code is for situations where the last line
+             * of text is the same as what was found. If using fgets() just
+             * results in setting the file to the same line, then just need
+             * to break the loop*/
 
-/** Allows a function to get a pointer from the desired tableau*/
-Card *setPointer( int col, Tableau *tableau){
-    switch(col){
-        case 7 : return tableau->t7;
-        case 6 : return tableau->t6;
-        case 5 : return tableau->t5;
-        case 4 : return tableau->t4;
-        case 3 : return tableau->t3;
-        case 2 : return tableau->t2;
-        case 1 : return tableau->t1;
-        default: return 0;
+            if(isRank(tempBuffer[i]) && isSuit(tempBuffer[i+1])){
+                ptr[index].rank = tempBuffer[i];
+                ptr[index].suit = tempBuffer[i+1];
+                if(covered == 'T'){
+                    ptr[index].covered = 'T';
+                }
+                else{
+                    ptr[index].covered ='F';
+                }
+                ptr[index].stock = 'F';
+                index++;
+            }
+            else if(tempBuffer[i] == '|'){
+                ptr[index].rank = tempBuffer[i];
+                ptr[index].suit = 0;
+                ptr[index].covered = 'F';
+                ptr[index].stock = 'F';
+                covered = 'F';
+                index++;
+            }
+        }
+        if(index != 0)
+            tabCol--;
+        if(strstr(tempBuffer,"STOCK:")!=0){
+            break;
+        }
+        *line +=1;
+        memset(buffer,0,MAX_BUFFER);
+        memset(tempBuffer, 0, MAX_BUFFER);
+    }while(fgets(buffer, MAX_BUFFER, input) != 0 && tabCol != 0);
+    if(isTableauCorrect(tableau) && tabCol  == 0){
+        return 1;
+    }
+    else{
+        return 0;
     }
 }
 
@@ -45,7 +99,7 @@ int isTableauCorrect(Tableau *tableau){
             if(isRedOrBlack(ptr->suit) == isRedOrBlack((ptr + 1)->suit)){
                 return 0;
             }
-            //Check that the cards are in descending order and only one less
+                //Check that the cards are in descending order and only one less
             else if(((rankValue(ptr->rank)) - 1) != rankValue((ptr+1)->rank)){
                 return 0;
             }
@@ -55,78 +109,20 @@ int isTableauCorrect(Tableau *tableau){
     }
     return 1;
 }
-/** Finds the tableau columns. It is assume that the Tableau are
- * always on their own lines. Using memset to clear the buffer to
- * keep anything extra from being in the buffer. This also sets
- * the cards to covered if they are before the '|'. When all of
- * the columns are found, the columns are checked for correctness.*/
-int findTableau(char *buffer, FILE *input, int *line, Tableau *tableau){
-    Card *ptr;
-    int tabCol = 7, index;
-    char covered;
 
-    do{
-        *line +=1;
-        ptr = setPointer(tabCol, tableau);
-        index = 0;
-        covered = 'T';
-        if(buffer[0] == '#' || buffer[0] == '\0')
-            continue;
-        if(strstr(buffer,"TABLEAU:")!=0)
-            fgets(buffer, MAX_BUFFER, input);
-        for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){
-            if(buffer[i]=='#')
-                break;
-            /*The following code is for situations where the last line
-             * of text is the same as what was found. If using fgets() just
-             * results in setting the file to the same line, then just need
-             * to break the loop*/
-            if(strstr(buffer,"TABLEAU:")!=0){
-                fgets(buffer, MAX_BUFFER, input);
-                if(strstr(buffer,"TABLEAU:")!=0)
-                    break;
-                i--;
-                continue;
-            }
-            if(isRank(buffer[i]) && isSuit(buffer[i+1])){
-                ptr[index].rank = buffer[i];
-                ptr[index].suit = buffer[i+1];
-                if(covered == 'T'){
-                    ptr[index].covered = 'T';
-                }
-                else{
-                    ptr[index].covered ='F';
-                }
-                ptr[index].stock = 'F';
-                index++;
-            }
-            else if(buffer[i] == '|'){
-                ptr[index].rank = buffer[i];
-                ptr[index].suit = 0;
-                ptr[index].covered = 'F';
-                ptr[index].stock = 'F';
-                covered = 'F';
-                index++;
-            }
-            if(strstr(buffer,"STOCK:")!=0){
-                fputs(buffer,input);
-                break;
-            }
-        }
-        tabCol--;
-        if(strstr(buffer,"STOCK:")!=0){
-            break;
-        }
-        memset(buffer,0,MAX_BUFFER);
-    }while(fgets(buffer, MAX_BUFFER, input) != 0 && tabCol != 0);
-    if(isTableauCorrect(tableau) && tabCol == 0){
-        return 1;
-    }
-    else{
-        return 0;
+Card *setPointer(int col, Tableau *tableau){
+    switch(col){
+        case 7 : return tableau->t7;
+        case 6 : return tableau->t6;
+        case 5 : return tableau->t5;
+        case 4 : return tableau->t4;
+        case 3 : return tableau->t3;
+        case 2 : return tableau->t2;
+        case 1 : return tableau->t1;
+        default: return 0;
     }
 }
-//Function for printing the tableau
+
 void printTableau(Tableau *tableau){
     Card *ptr;
     for(int i = 7; i >= 1; i--){
@@ -140,18 +136,6 @@ void printTableau(Tableau *tableau){
         }
         printf("\n");
     }
-}
-
-Card *getTopColCard(int col, Tableau *tableau){
-    /*Case 1: Column is empty
-     * Case 2: Column is not empty*/
-    Card *ptr = setPointer(col, tableau);
-    if(ptr->rank == '|' && (ptr+1)->rank == '\0')
-        return ptr;
-    while((ptr + 1)->rank != '\0'){
-        ptr++;
-    }
-    return ptr;
 }
 
 int addCardToColumn(Card *ptr, int col, Tableau *tableau){
@@ -168,7 +152,7 @@ int addCardToColumn(Card *ptr, int col, Tableau *tableau){
     return 1;
 }
 
-void removeCardFromCol(int col, Tableau *tableau){
+void removeCardFromColumn(int col, Tableau *tableau){
     /* Case 1: the top card has other face up cards below it
      * Case 2: the top card has a face down card below it
      * Case 3: the top card is the last card in the col*/
@@ -188,7 +172,7 @@ void removeCardFromCol(int col, Tableau *tableau){
         *(ptr-1) = temp;
         (ptr-1)->covered = 'F';
     }
-    //Card is the last or card below is face up
+        //Card is the last or card below is face up
     else{
         ptr->rank = '\0';
         ptr->suit = '\0';
@@ -199,9 +183,9 @@ void removeCardFromCol(int col, Tableau *tableau){
 
 int moveColToCol(int src, int dst, Tableau *tableau){
     /* Case 1: the dst col is empty, src must be a King
-     * Case 2: The card in src and dst are the top cards
-     * Case 3: The card in src has more cards on top of it
-     * and all of them need to be moved to other column.*/
+ * Case 2: The card in src and dst are the top cards
+ * Case 3: The card in src has more cards on top of it
+ * and all of them need to be moved to other column.*/
     //Get pointers to the columns
     Card *srcptr = setPointer(src, tableau);
     Card *dstptr = setPointer(dst, tableau);
