@@ -4,39 +4,44 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "tableau.h"
 
 int findTableau(char *buffer, FILE *input, int *line, Tableau *tableau){
     Card *ptr;
     int tabCol = 7, index;
     char covered;
+    char tempBuffer[MAX_BUFFER]={0};
 
     do{
-        *line +=1;
         ptr = setPointer(tabCol, tableau);
         index = 0;
         covered = 'T';
-        if(buffer[0] == '#' || buffer[0] == '\0')
-            continue;
-        if(strstr(buffer,"TABLEAU:")!=0)
-            fgets(buffer, MAX_BUFFER, input);
-        for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){
-            if(buffer[i]=='#')
+        for(int i = 0; i < MAX_BUFFER; i++){
+            if(buffer[i] == '#' || buffer[i] =='\0')
                 break;
+            else if(isalnum(buffer[i]) || isspace(buffer[i]) || ispunct(buffer[i]))
+                tempBuffer[index++] = buffer[i];
+        }
+        index = 0;
+        if(tempBuffer[0] == '\0'){
+            memset(buffer,0,MAX_BUFFER);
+            continue;
+        }
+        if(strstr(tempBuffer,"TABLEAU:")!=0){
+            memset(buffer,0,MAX_BUFFER);
+            memset(tempBuffer, 0, MAX_BUFFER);
+            continue;
+        }
+        for(int i = 0; tempBuffer[i] != '\0' && i < MAX_BUFFER; i++){
             /*The following code is for situations where the last line
              * of text is the same as what was found. If using fgets() just
              * results in setting the file to the same line, then just need
              * to break the loop*/
-            if(strstr(buffer,"TABLEAU:")!=0){
-                fgets(buffer, MAX_BUFFER, input);
-                if(strstr(buffer,"TABLEAU:")!=0)
-                    break;
-                i--;
-                continue;
-            }
-            if(isRank(buffer[i]) && isSuit(buffer[i+1])){
-                ptr[index].rank = buffer[i];
-                ptr[index].suit = buffer[i+1];
+
+            if(isRank(tempBuffer[i]) && isSuit(tempBuffer[i+1])){
+                ptr[index].rank = tempBuffer[i];
+                ptr[index].suit = tempBuffer[i+1];
                 if(covered == 'T'){
                     ptr[index].covered = 'T';
                 }
@@ -46,26 +51,25 @@ int findTableau(char *buffer, FILE *input, int *line, Tableau *tableau){
                 ptr[index].stock = 'F';
                 index++;
             }
-            else if(buffer[i] == '|'){
-                ptr[index].rank = buffer[i];
+            else if(tempBuffer[i] == '|'){
+                ptr[index].rank = tempBuffer[i];
                 ptr[index].suit = 0;
                 ptr[index].covered = 'F';
                 ptr[index].stock = 'F';
                 covered = 'F';
                 index++;
             }
-            if(strstr(buffer,"STOCK:")!=0){
-                fputs(buffer,input);
-                break;
-            }
         }
-        tabCol--;
-        if(strstr(buffer,"STOCK:")!=0){
+        if(index != 0)
+            tabCol--;
+        if(strstr(tempBuffer,"STOCK:")!=0){
             break;
         }
+        *line +=1;
         memset(buffer,0,MAX_BUFFER);
+        memset(tempBuffer, 0, MAX_BUFFER);
     }while(fgets(buffer, MAX_BUFFER, input) != 0 && tabCol != 0);
-    if(isTableauCorrect(tableau) && tabCol == 0){
+    if(isTableauCorrect(tableau) && tabCol  == 0){
         return 1;
     }
     else{

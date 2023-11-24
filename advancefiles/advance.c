@@ -61,6 +61,7 @@ int readGameFile(GameFlags *gameflags, GameConfiguration *game){
         fprintf(stderr, "Unable to find file: %s\n", gameflags->inputFile);
         return 0;
     }
+    game->rules.found++;
     findRules(buffer, inputfile, &line, &game->rules);
     findFoundation(buffer,inputfile,&line,&game->foundation);
     findTableau(buffer, inputfile, &line, &game->tableau);

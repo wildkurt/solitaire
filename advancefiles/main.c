@@ -6,7 +6,7 @@
 #include "../commonfiles/gameconfiguration.h"
 #include "advance.h"
 
-void printForDebugging(GameFlags *gameflags, Rules *rules);
+void printForDebugging(GameFlags *gameflags, GameConfiguration *game);
 
 int main(int args, char *argv[]){
     GameFlags gameflags = {'f', -1, 'f', 0};
@@ -21,11 +21,11 @@ int main(int args, char *argv[]){
         exit(EXIT_FAILURE);
     }
     else
-        printForDebugging(&gameflags, &game.rules);
+        printForDebugging(&gameflags, &game);
     return 0;
 }
 
-void printForDebugging(GameFlags *gameflags, Rules *rules){
+void printForDebugging(GameFlags *gameflags, GameConfiguration *game){
     printf("The game flags are:\n");
     printf("Moves: %c\n", gameflags->moves);
     printf("Number of moves: %d\n", gameflags->numberMoves);
@@ -33,6 +33,8 @@ void printForDebugging(GameFlags *gameflags, Rules *rules){
     printf("Output file name: %s\n", gameflags->outputfileName);
     printf("Exchange format: %c\n", gameflags->exchange);
     printf("Input file name: %s\n", gameflags->inputFile);
-    printf("Card turn overs: %d\n", rules->turnOver);
-    printf("Resets limit: %d\n", rules->limit);
+    printRulesSTDOUT(&game->rules);
+    printFoundation(&game->foundation);
+    printTableau(&game->tableau);
+    printStockWaste(&game->stockwaste);
 }
