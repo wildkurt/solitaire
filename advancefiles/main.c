@@ -13,7 +13,9 @@ int main(int args, char *argv[]){
     GameConfiguration game = {.rules = {0,0,0,0}, .foundation = {0},
                               .tableau = {.t1 = {0}, .t2 = {0}, .t3 = {0}, .t4 = {0}, .t5 = {0}, .t6 = {0}, .t7 = {0}},
                               .stockwaste = {0}, .found =0};
+
     getCommandLineFlags(args, argv, &gameflags);
+
     if(checkFile(gameflags.inputFile)){
         exit(1);
     }
