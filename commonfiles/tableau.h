@@ -18,7 +18,7 @@ typedef struct Tableau{
     Card t1[30];
 }Tableau;
 
-int findTableau(char *buffer, FILE *input, int *line, Tableau *tableu);
+int findTableau(char *buffer, char *readBuffer, FILE *input, int *line, Tableau *tableu);
 Card *setPointer(int col, Tableau *tableau);
 void printTableau(Tableau *tableau);
 int addCardToColumn(Card *ptr, int col, Tableau *tableau);

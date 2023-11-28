@@ -9,6 +9,7 @@
 #include "foundations.h"
 #include "tableau.h"
 #include "stockwaste.h"
+#include "moves.h"
 
 typedef struct GameConfiguration{
     Rules rules;
@@ -16,6 +17,8 @@ typedef struct GameConfiguration{
     Tableau tableau;
     StockWaste stockwaste;
     int found;
+    Moves moves;
+    int resetsDone;
 }GameConfiguration;
 
 #endif //SOLITAIRE_GAMECONFIGURATION_H

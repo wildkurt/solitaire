@@ -12,7 +12,7 @@ typedef struct Foundation{
     Card fd[4];
 }Foundation;
 
-int findFoundation(char *buffer, FILE *input, int *line, Foundation *foundation);
+int findFoundation(char *buffer, char *readBuffer, FILE *input, int *line, Foundation *foundation);
 void printFoundation(Foundation *foundation);
 Card *fdPtr(Foundation *foundation);
 int addCardToFoundation(Card *card, Foundation *foundation);

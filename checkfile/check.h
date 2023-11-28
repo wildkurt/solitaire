@@ -7,7 +7,7 @@
 
 #include "../commonfiles/gameconfiguration.h"
 
-void readFile(char *inputFile, GameConfiguration *game);
+void readFile(char *inputFile, GameConfiguration *game, int *line);
 void countCards(int *covered, int *stock, int *waste, GameConfiguration *game);
 int missingDuplicateCards(GameConfiguration *game);
 

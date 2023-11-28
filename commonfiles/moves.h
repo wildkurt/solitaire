@@ -5,6 +5,8 @@
 #ifndef SOLITAIRE_MOVES_H
 #define SOLITAIRE_MOVES_H
 
+#define MAX_BUFFER 200
+
 typedef struct Move{
     char from;
     char to;
@@ -15,9 +17,11 @@ typedef  struct Moves{
     Move moves[200];
 }Moves;
 
-int isValidMove(char from, char to);
-int isValidAction(char action);
-void addMoveToMoves(Move move);
+int getMovesFromFile(char *inputFile, Moves *moves);
+void addMoveToMoves(Move move, Moves *moves);
 void printMoves(Moves *moves);
+int validMoveFrom(char c);
+int validMoveTo(char c);
+int validAction(char c);
 
 #endif //SOLITAIRE_MOVES_H

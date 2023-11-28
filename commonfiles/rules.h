@@ -16,7 +16,7 @@ typedef struct Rules{
     int found;
 }Rules;
 
-int findRules(char *buffer, FILE *file, int *line, Rules *rules);
+int findRules(char *buffer, char *readBuffer, FILE *file, int *line, Rules *rules);
 void printRulesSTDOUT(Rules *rules);
 
 #endif //SOLITAIRE_RULES_H

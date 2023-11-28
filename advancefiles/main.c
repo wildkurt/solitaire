@@ -3,7 +3,6 @@
 //
 
 #include <stdlib.h>
-#include "../commonfiles/gameconfiguration.h"
 #include "advance.h"
 
 void printForDebugging(GameFlags *gameflags, GameConfiguration *game);
@@ -12,7 +11,8 @@ int main(int args, char *argv[]){
     GameFlags gameflags = {'f', -1, 'f', 0};
     GameConfiguration game = {.rules = {0,0,0,0}, .foundation = {0},
                               .tableau = {.t1 = {0}, .t2 = {0}, .t3 = {0}, .t4 = {0}, .t5 = {0}, .t6 = {0}, .t7 = {0}},
-                              .stockwaste = {0}, .found =0};
+                              .stockwaste = {0}, .found =0, .moves={0,0,0},
+                              .resetsDone = 0};
 
     getCommandLineFlags(args, argv, &gameflags);
 

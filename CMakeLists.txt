@@ -28,6 +28,6 @@ add_executable(advance
         advancefiles/advance.c
         advancefiles/advance.h
         ${COMMON_FILES}
-        advancefiles/moves.c
-        advancefiles/moves.h
+        commonfiles/moves.c
+        commonfiles/moves.h
 )

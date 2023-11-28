@@ -6,10 +6,10 @@
 #include <string.h>
 #include "check.h"
 
-void readFile(char *inputFile, GameConfiguration *game){
+void readFile(char *inputFile, GameConfiguration *game, int *line){
     FILE *input;
     char buffer[MAX_BUFFER] = {0}, readBuffer[MAX_BUFFER]={0};
-    int line = 0, index = 0 ;
+    int index = 0 ;
     if(strlen(inputFile)!=0)
         input = fopen(inputFile,"r");
     else
@@ -20,10 +20,10 @@ void readFile(char *inputFile, GameConfiguration *game){
     }
     //Reads line from file
     while(fgets(buffer, MAX_BUFFER, input) != 0){
-        line++;
+        (*line)++;
         //Ignore hashes
         for(int i = 0; i < MAX_BUFFER; i++){
-            if(buffer[i] != '#' && buffer[i] != '\0'){
+            if(buffer[i] != '#' && buffer[i] != '\n'){
                 readBuffer[index++] = buffer[i];
             }
             else{
@@ -35,20 +35,20 @@ void readFile(char *inputFile, GameConfiguration *game){
         if(strstr(readBuffer, "RULES:") != 0){
             game->found++;
             game->rules.found++;
-            if(!findRules(buffer, input, &line, &game->rules)){
+            if(!findRules(buffer, readBuffer, input, line, &game->rules)){
                 return;
             }
         }
         //Foundations
         if(strstr(readBuffer, "FOUNDATIONS:") != 0){
             if(game->found < 1){ // 1 if rules found
-                fprintf(stderr,"Error at line: %d\n", line);
+                fprintf(stderr,"Error at line: %d\n", *line);
                 return;
             }
             game->found++;
             //This is where the foundations functions take over
-            if(!findFoundation(readBuffer, input, &line, &game->foundation)){
-                fprintf(stderr,"Foundations are incorrect or incomplete line %d\n", line);
+            if(!findFoundation(buffer, readBuffer, input, line, &game->foundation)){
+                fprintf(stderr,"Foundations are incorrect or incomplete line %d\n", *line);
                 return;
             }
             //printFoundation();
@@ -56,24 +56,24 @@ void readFile(char *inputFile, GameConfiguration *game){
         //Tableau
         if(strstr(readBuffer, "TABLEAU:") != 0){
             if(game->found < 2){ // 2 if TABLEAU: and the tableaus found
-                fprintf(stderr,"Foundations not found line %d\n", line);
+                fprintf(stderr,"Foundations not found line %d\n", *line);
                 return;
             }
             game->found++;
-            if(!findTableau(readBuffer, input, &line, &game->tableau)){
-                fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
+            if(!findTableau(buffer, readBuffer, input, line, &game->tableau)){
+                fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",*line);
                 return;
             }
         }
         //STOCK:
         if(strstr(readBuffer, "STOCK:") != 0){
             if(game->found < 3){
-                fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",line);
+                fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",*line);
                 return;
             }
             game->found++;
-            if(!findStockWaste(readBuffer, input, &line, &game->stockwaste)){
-                fprintf(stderr, "Stock not found or stock is incorrect line %d\n",line);
+            if(!findStockWaste(readBuffer, input, line, &game->stockwaste)){
+                fprintf(stderr, "Stock not found or stock is incorrect line %d\n",*line);
                 return;
             }
             //printStockWaste();
