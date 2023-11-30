@@ -34,7 +34,7 @@ int findStockWaste(char *buffer, char *readBuffer, FILE *input, int *line, Stock
             }
         }
         else if(strstr(readBuffer,"MOVES:") != 0){
-            foundMoves = 'T';
+            break;
         }
         else{
             for(int i = 0; readBuffer[i]!='\0';i++){
@@ -54,7 +54,7 @@ int findStockWaste(char *buffer, char *readBuffer, FILE *input, int *line, Stock
             }
         }
         memset(buffer, 0, MAX_BUFFER);
-    }while(fgets(buffer, MAX_BUFFER, input)!=0 && foundMoves == 'F');
+    }while(fgets(buffer, MAX_BUFFER, input));
     return 1;
 }
 int doStockWasteCardTurnover(Rules *rules, StockWaste *stockWaste){

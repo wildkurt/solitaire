@@ -66,6 +66,9 @@ int readGameFile(GameFlags *gameflags, GameConfiguration *game){
     findFoundation(buffer, readBuffer,inputfile,&line,&game->foundation);
     findTableau(buffer, readBuffer, inputfile, &line, &game->tableau);
     findStockWaste(buffer, readBuffer, inputfile, &line, &game->stockwaste);
-
+    if(!getMovesFromFile(buffer, readBuffer, inputfile, &line, &game->moves)){
+        fprintf(stderr, "Did not find moves in game file line %d\n", line);
+        return 0;
+    }
     return 1;
 }

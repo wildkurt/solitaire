@@ -15,9 +15,14 @@ int main(int args, char *argv[]){
                               .resetsDone = 0};
 
     getCommandLineFlags(args, argv, &gameflags);
-
-    if(checkFile(gameflags.inputFile)){
+    if(gameflags.inputFile != 0){
+        if(checkFile(gameflags.inputFile)){
         exit(1);
+        }
+    }
+    else{
+        fprintf(stderr,"No game file provided\n");
+        exit(EXIT_FAILURE);
     }
     if(!readGameFile(&gameflags, &game)){
         exit(EXIT_FAILURE);

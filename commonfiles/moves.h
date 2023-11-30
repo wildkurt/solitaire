@@ -17,7 +17,7 @@ typedef  struct Moves{
     Move moves[200];
 }Moves;
 
-int getMovesFromFile(char *inputFile, Moves *moves);
+int getMovesFromFile(char *buffer, char *readBuffer, FILE *inputFile, int *line, Moves *moves);
 void addMoveToMoves(Move move, Moves *moves);
 void printMoves(Moves *moves);
 int validMoveFrom(char c);
