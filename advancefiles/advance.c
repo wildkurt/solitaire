@@ -52,7 +52,7 @@ int checkFile(char *filename){
 }
 
 int readGameFile(GameFlags *gameflags, GameConfiguration *game){
-    char buffer[MAX_BUFFER];
+    char buffer[MAX_BUFFER] = {0}, readBuffer[MAX_BUFFER] = {0};
     int line;
     FILE *inputfile;
 
@@ -62,10 +62,10 @@ int readGameFile(GameFlags *gameflags, GameConfiguration *game){
         return 0;
     }
     game->rules.found++;
-    findRules(buffer, inputfile, &line, &game->rules);
-    findFoundation(buffer,inputfile,&line,&game->foundation);
-    findTableau(buffer, inputfile, &line, &game->tableau);
-    findStockWaste(buffer, inputfile, &line, &game->stockwaste);
+    findRules(buffer, readBuffer,inputfile, &line, &game->rules);
+    findFoundation(buffer, readBuffer,inputfile,&line,&game->foundation);
+    findTableau(buffer, readBuffer, inputfile, &line, &game->tableau);
+    findStockWaste(buffer, readBuffer, inputfile, &line, &game->stockwaste);
 
     return 1;
 }

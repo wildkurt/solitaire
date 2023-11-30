@@ -13,7 +13,7 @@ typedef struct StockWaste{
     Card sw[60];
 }StockWaste;
 
-int findStockWaste(char *buffer, FILE *input, int *line, StockWaste *stockWaste);
+int findStockWaste(char *buffer, char *readBuffer, FILE *input, int *line, StockWaste *stockWaste);
 int doStockWasteCardTurnover(Rules *rules, StockWaste *stockWaste);
 int doStockWasteReset(StockWaste *stockWaste, Rules *rules);
 int stockWasteEmpty(StockWaste *stockWaste);

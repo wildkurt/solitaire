@@ -18,10 +18,11 @@ int findRules(char *buffer, char *readBuffer, FILE *file, int *line, Rules *rule
             else
                 break;
         }
-        if(strstr(readBuffer, "FOUNDATIONS:")){
-            fputs(buffer,file);
-            break;
+        if(rules->found == 3){
+            return 1;
         }
+        if(strstr(readBuffer,"FOUNDATIONS:") != 0)
+            break;
         if(strstr(readBuffer, "turn 1") != 0){
             if(rules->found < 1){
                 fprintf(stderr, "Rules not found line %d", *line);
@@ -71,9 +72,6 @@ int findRules(char *buffer, char *readBuffer, FILE *file, int *line, Rules *rule
         }
         memset(readBuffer,0,MAX_BUFFER);
     }
-    if(rules->found == 3)
-        return 1;
-    else
         return 0;
 }
 

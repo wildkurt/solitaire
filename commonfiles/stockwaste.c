@@ -6,56 +6,55 @@
 #include <string.h>
 #include "stockwaste.h"
 
-int findStockWaste(char *buffer, FILE *input, int *line, StockWaste *stockWaste){
+int findStockWaste(char *buffer, char *readBuffer, FILE *input, int *line, StockWaste *stockWaste){
     char covered = 'F', foundMoves ='F';
     int index = 0;
     do{
-        *line = *line + 1;
-        if(buffer[0] == '#' || buffer[0] == '\0')
-            continue;
-        for(int i = 0; buffer[i] != '\n' && i < MAX_BUFFER; i++){
-            if(buffer[i] =='#')
-                break;
-            if(strstr(buffer, "STOCK:") != 0){
-                fgets(buffer, MAX_BUFFER, input);
-                if(strstr(buffer, "MOVES") != 0)
-                    foundMoves = 'T';
-                if(strstr(buffer, "STOCK:") != 0)
-                    break;
-                i--;
-                continue;
-            }
-            if(strstr(buffer, "MOVES:") != 0){
-                fputs(buffer,input);
-                foundMoves = 'T';
-                break;
-            }
-            if(buffer[i] == '|'){
-                stockWaste->sw[index].rank = buffer[i];
-                stockWaste->sw[index].suit = 0;
-                stockWaste->sw[index].covered = 'F';
-                stockWaste->sw[index].stock = 'F';
-                covered = 'T';
-                index++;
-            }
-            if(isRank(buffer[i]) && isSuit(buffer[i+1])){
-                stockWaste->sw[index].rank = buffer[i];
-                stockWaste->sw[index].suit = buffer[i+1];
-                if(covered == 'F'){
-                    stockWaste->sw[index].covered = 'F';
-                    stockWaste->sw[index].stock = 'F';
+        (*line)++;
+        memset(readBuffer,0,MAX_BUFFER);
+        for(int i = 0; i < MAX_BUFFER && buffer[i] != '#' && buffer[i]!= '\n';i++){
+            readBuffer[i] = buffer[i];
+        }
+        //Search for cards after the STOCK: heading
+        if(strstr(readBuffer,"STOCK:")!=0){
+            for(int i = 0; readBuffer[i]!='\0';i++){
+                if(isRank(readBuffer[i]) && isSuit(readBuffer[i+1])){
+                    stockWaste->sw[index].rank = readBuffer[i];
+                    stockWaste->sw[index].suit = readBuffer[i+1];
+                    stockWaste->sw[index].covered = covered;
+                    index++;
                 }
-                else{
-                    stockWaste->sw[index].covered = 'T';
-                    stockWaste->sw[index].stock = 'T';
+                else if(readBuffer[i] == '|'){
+                    covered = 'T';
+                    stockWaste->sw[index].rank = readBuffer[i];
+                    stockWaste->sw[index].suit = 0;
+                    stockWaste->sw[index].covered = covered;
+                    index++;
                 }
-                index++;
             }
         }
-        if(foundMoves == 'T')
-            break;
+        else if(strstr(readBuffer,"MOVES:") != 0){
+            foundMoves = 'T';
+        }
+        else{
+            for(int i = 0; readBuffer[i]!='\0';i++){
+                if(isRank(readBuffer[i]) && isSuit(readBuffer[i+1])){
+                    stockWaste->sw[index].rank = readBuffer[i];
+                    stockWaste->sw[index].suit = readBuffer[i+1];
+                    stockWaste->sw[index].covered = covered;
+                    index++;
+                }
+                else if(readBuffer[i] == '|'){
+                    covered = 'T';
+                    stockWaste->sw[index].rank = readBuffer[i];
+                    stockWaste->sw[index].suit = 0;
+                    stockWaste->sw[index].covered = 0;
+                    index++;
+                }
+            }
+        }
         memset(buffer, 0, MAX_BUFFER);
-    }while(fgets(buffer, MAX_BUFFER, input)!=0);
+    }while(fgets(buffer, MAX_BUFFER, input)!=0 && foundMoves == 'F');
     return 1;
 }
 int doStockWasteCardTurnover(Rules *rules, StockWaste *stockWaste){

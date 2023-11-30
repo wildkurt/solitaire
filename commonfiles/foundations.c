@@ -15,7 +15,7 @@ int findFoundation(char *buffer, char *readBuffer, FILE *input, int *line, Found
         for(int i = 0; i < MAX_BUFFER && buffer[i] != '#' && buffer[i] != '\n';i++){
             readBuffer[index2++] = buffer[i];
         }
-        if(strstr(readBuffer, "TABLEAU:") != 0){
+        if(strstr(readBuffer, "TABLEAU:") != 0 || index == 4){
             break;
         }
         for(int i = 0; readBuffer[i] != '\0' && i < MAX_BUFFER; i++){

@@ -36,13 +36,15 @@ void readFile(char *inputFile, GameConfiguration *game, int *line){
             game->found++;
             game->rules.found++;
             if(!findRules(buffer, readBuffer, input, line, &game->rules)){
+                if(game->rules.found == 2)
+                    fprintf(stderr,"Limits not found line %d\n", *line);
                 return;
             }
         }
         //Foundations
         if(strstr(readBuffer, "FOUNDATIONS:") != 0){
             if(game->found < 1){ // 1 if rules found
-                fprintf(stderr,"Error at line: %d\n", *line);
+                fprintf(stderr,"Rules not found at line: %d\n", *line);
                 return;
             }
             game->found++;
@@ -72,7 +74,7 @@ void readFile(char *inputFile, GameConfiguration *game, int *line){
                 return;
             }
             game->found++;
-            if(!findStockWaste(readBuffer, input, line, &game->stockwaste)){
+            if(!findStockWaste(buffer, readBuffer, input, line, &game->stockwaste)){
                 fprintf(stderr, "Stock not found or stock is incorrect line %d\n",*line);
                 return;
             }
@@ -80,6 +82,10 @@ void readFile(char *inputFile, GameConfiguration *game, int *line){
         }
         //MOVES:
         if(strstr(readBuffer, "MOVES:") != 0){
+            if(game->found < 4){
+                fprintf(stderr,"Stock not found line %d\n", *line);
+                return;
+            }
             game->found++;
             return;
         }
@@ -103,11 +109,11 @@ void countCards(int *covered, int *stock, int *waste, GameConfiguration *game){
     }
     ptr = stockWastePtr(&game->stockwaste);
     while(ptr->rank != '\0'){
-        if(ptr->stock == 'T'){
+        if(ptr->covered == 'T'){
             *stock = *stock + 1;
             *covered = *covered + 1;
         }
-        else if(ptr->rank != '|')
+        else if(ptr->covered == 'F')
             *waste = *waste + 1;
         ptr++;
     }
