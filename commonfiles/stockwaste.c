@@ -174,9 +174,8 @@ void removeWasteCard(Card *ptr){
      * Case 3: there are other cards in the waste*
      * Should only have to remove one card even if draw three is a rule.
      * Assuming the card removal requested is the top card*/
-    //Putting card on the heap so it can be copied to array on the stack
-    while(ptr->rank != '\0'){
-        *ptr = *(ptr+1);
+    while(ptr->rank != 0){
+        *ptr = *(ptr + 1);
         ptr++;
     }
 }

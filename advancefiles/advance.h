@@ -19,5 +19,6 @@ typedef struct GameFlags{
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags);
 int checkFile(char *filename);
 int readGameFile(GameFlags *gameflags, GameConfiguration *game);
+int checkMoves(GameConfiguration *game);
 
 #endif //SOLITAIRE_ADVANCE_H

@@ -19,7 +19,7 @@ int getMovesFromFile(char * buffer, char *readBuffer, FILE *inputfilename, int *
     int movesIndex = 0;
     do{
         memset(readBuffer,0,MAX_BUFFER);
-        for(int i = 0; buffer[i] != '\n';i++){
+        for(int i = 0; buffer[i] != '\n' && buffer[i] != '\0';i++){
             readBuffer[i] = buffer[i];
         }
         if(strstr(readBuffer, "MOVES:")!=0){
@@ -63,28 +63,38 @@ int getMovesFromFile(char * buffer, char *readBuffer, FILE *inputfilename, int *
         return 0;
 }
 void addMoveToMoves(Move move, Moves *moves){}
-void printMoves(Moves *moves){}
+void printMoves(Moves *moves){
+    int i = 0;
+    while(moves->moves[i].from != 0 || moves->moves[i].action != 0){
+        if(moves->moves[i].from == 0)
+            printf("%c", moves->moves[i].action);
+        else
+            printf("%c->%c", moves->moves[i].from, moves->moves[i].to);
+        i++;
+        printf(" ");
+    }
+}
 int validMoveFrom(char c){
     char *fromMoves = "w1234567";
 
     if(strchr(fromMoves, c) == 0)
-        return 1;
-    else
         return 0;
+    else
+        return 1;
 }
 int validMoveTo(char c){
     char *toMoves = "1234567f";
 
     if(strchr(toMoves, c)==0)
-        return 1;
-    else
         return 0;
+    else
+        return 1;
 }
 int validAction(char c){
     char *actions ="r.";
 
     if(strchr(actions, c) == 0)
-        return 1;
-    else
         return 0;
+    else
+        return 1;
 }

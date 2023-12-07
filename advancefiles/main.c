@@ -44,4 +44,5 @@ void printForDebugging(GameFlags *gameflags, GameConfiguration *game){
     printFoundation(&game->foundation);
     printTableau(&game->tableau);
     printStockWaste(&game->stockwaste);
+    printMoves(&game->moves);
 }

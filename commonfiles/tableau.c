@@ -136,46 +136,29 @@ void printTableau(Tableau *tableau){
 }
 
 int addCardToColumn(Card *ptr, int col, Tableau *tableau){
-    /* Case 1: The column is not empty
-     * Case 2: The column is empty*/
-    //assuming ptr is on the heap and not the stack
+    /* Case 1: The column is empty, just a '|' for rank
+     *          a. Card can only have the rank of 'K'
+     * Case 2: The column is not empty
+     *          a. must check top card in column
+     *          b. Card must be one rank lower and opposite color*/
+    //get a pointer to the column, then check for empty column or find top card
     Card *tabptr = setPointer(col, tableau);
-    while(tabptr->rank != '\0'){
-        tabptr++;
-    }
-    if((tabptr - 1)->rank == '|' && ptr->rank != 'K')
-        return 0;
-    *tabptr = *ptr;
-    return 1;
-}
 
-void removeCardFromColumn(int col, Tableau *tableau){
-    /* Case 1: the top card has other face up cards below it
-     * Case 2: the top card has a face down card below it
-     * Case 3: the top card is the last card in the col*/
-    Card *ptr = setPointer(col, tableau);
-    while(ptr->rank != '\0'){
-        ptr++;
+    //Empty column, can only add K rank
+    if(tabptr->rank == '|' && (tabptr + 1)->rank == '\0'){
+        tabptr++;
+        *tabptr = *ptr;
+        return 0;
     }
-    ptr--;
-    //Card below is covered
-    if((ptr-2)->covered == 'T' && (ptr-1)->rank == '|'){
-        ptr->rank = '\0';
-        ptr->suit = '\0';
-        ptr->covered = '\0';
-        ptr->stock = '\0';
-        Card temp = *(ptr-2);
-        *(ptr -2) = *(ptr-1);
-        *(ptr-1) = temp;
-        (ptr-1)->covered = 'F';
+    //Column not empty, find top card
+    while((tabptr + 1)->rank != '\0'){tabptr++;}
+    if(isRedOrBlack(tabptr->suit) != isRedOrBlack(ptr->suit)){
+        if(rankValue(tabptr->rank) == ptr->rank+1){
+            *(++tabptr) = *ptr;
+            return 0;
+        }
     }
-        //Card is the last or card below is face up
-    else{
-        ptr->rank = '\0';
-        ptr->suit = '\0';
-        ptr->covered = '\0';
-        ptr->stock = '\0';
-    }
+    return 1;
 }
 
 int moveColToCol(int src, int dst, Tableau *tableau){
@@ -186,55 +169,36 @@ int moveColToCol(int src, int dst, Tableau *tableau){
     //Get pointers to the columns
     Card *srcptr = setPointer(src, tableau);
     Card *dstptr = setPointer(dst, tableau);
-    //increment the pointers to the '|' then increment by one
-    while(srcptr->rank != '|'){
-        srcptr++;
+    //increment the destination pointer to top card
+    while((dstptr + 1)->rank != 0){dstptr++;}
+    //Increment source pointer to first uncovered card
+    while(srcptr->rank != '|'){srcptr++;}
+    srcptr++;
+    //Find a card in source that can be put on destination card
+    while(srcptr->rank != 0){
+        if((isRedOrBlack(srcptr->suit) != isRedOrBlack(dstptr->suit))&&((rankValue(srcptr->rank) + 1) == rankValue(dstptr->rank)))
+            break;
     }
-    if(srcptr->rank != '\0'){
-        srcptr++;
-    }
-    while(dstptr->rank != '\0'){
-        dstptr++;
-    }
-    dstptr--;
-    //src and dst pointers both at a face up card, need to find
-    //a card in src that is opposite suit and one rank higher than
-    //transfer all cards to dst
-
-    while(srcptr->rank != '\0'){
-        if(isRedOrBlack(srcptr->suit) != isRedOrBlack(dstptr->suit) && rankValue(srcptr->rank) == rankValue(dstptr->rank) - 1){
-            while(srcptr->rank != '\0'){
-                *(++dstptr) = *srcptr;
-                srcptr->rank = '\0';
-                srcptr->suit = '\0';
-                srcptr->covered = '\0';
-                srcptr->stock = '\0';
-                if((srcptr-1)->rank == '|' && (srcptr-1) != setPointer(src, tableau)){
-                    Card temp = *(srcptr-2);
-                    *(srcptr-2) = *(srcptr-1);
-                    *(srcptr-1) = temp;
-                }
-                srcptr++;
-            }
-            return 1;
+    //if the srcptr is not at end of column, then can add the cards to destination
+    if(srcptr->rank != 0){
+        //increment destination pointer to next spot
+        while(srcptr->rank != 0){
+            *(dstptr++) = *(srcptr);
+            srcptr->rank = 0;
+            srcptr->suit = 0;
+            srcptr->covered = 0;
+            srcptr->stock = 0;
+            srcptr++;
         }
-        else if(dstptr->rank == '|' && srcptr->rank =='K'){
-            while(srcptr->rank != '\0'){
-                *(++dstptr) = *srcptr;
-                srcptr->rank = '\0';
-                srcptr->suit = '\0';
-                srcptr->covered = '\0';
-                srcptr->stock = '\0';
-                if((srcptr-1)->rank == '|' && (srcptr-2) != setPointer(src, tableau)){
-                    Card temp = *(srcptr-2);
-                    *(srcptr-2) = *(srcptr-1);
-                    *(srcptr-1) = temp;
-                }
-                srcptr++;
-            }
-            return 1;
-        }
-        srcptr++;
+        return 1;
     }
     return 0;
+}
+
+void removeCardsFromColumn(Card *ptr){
+    Card nullCard = {0,0,0,0};
+    while(ptr->rank != 0){
+        *ptr = nullCard;
+        ptr++;
+    }
 }

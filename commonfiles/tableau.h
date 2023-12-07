@@ -22,8 +22,8 @@ int findTableau(char *buffer, char *readBuffer, FILE *input, int *line, Tableau 
 Card *setPointer(int col, Tableau *tableau);
 void printTableau(Tableau *tableau);
 int addCardToColumn(Card *ptr, int col, Tableau *tableau);
-void removeCardFromColumn(int col, Tableau *tableau);
 int moveColToCol(int src, int dst, Tableau *tableau);
 int isTableauCorrect(Tableau *tableau);
+void removeCardsFromColumn(Card *ptr);
 
 #endif //SOLITAIRE_TABLEAU_H

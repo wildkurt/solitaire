@@ -72,3 +72,19 @@ int readGameFile(GameFlags *gameflags, GameConfiguration *game){
     }
     return 1;
 }
+
+int checkMoves(GameConfiguration *game){
+    /*Case 1. No moves exist
+     * Case 2. Moves exist*/
+    Move *ptr;
+    ptr = game->moves.moves;
+
+    while(ptr->from != 0 || ptr->action !=0){
+        //check for move or action
+        if(ptr->from != 0){
+            //Move from waste to columns
+            //Move column to column
+            //Move column to foundtaion
+        }
+    }
+}
