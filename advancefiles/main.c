@@ -28,7 +28,8 @@ int main(int args, char *argv[]){
         exit(EXIT_FAILURE);
     }
     else
-        printForDebugging(&gameflags, &game);
+        if(checkMoves(&game))
+            printForDebugging(&gameflags, &game);
     return 0;
 }
 

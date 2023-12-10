@@ -18,13 +18,12 @@ int findTableau(char *buffer, char *readBuffer, FILE *input, int *line, Tableau 
         covered = 'T';
         memset(readBuffer, 0, MAX_BUFFER);
 
-        for(int i = 0; i < MAX_BUFFER; i++){
-            if(buffer[i] == '#' || buffer[i] =='\0')
-                break;
-            else if(isalnum(buffer[i]) || isspace(buffer[i]) || ispunct(buffer[i]))
-                readBuffer[index++] = buffer[i];
+        for(int i = 0; i < MAX_BUFFER && buffer[i] != '#' && buffer[i] != '\n'; i++){
+           readBuffer[index++] = buffer[i];
         }
         index = 0;
+        if(strstr(readBuffer, "STOCK:") != 0)
+            break;
         if(strstr(readBuffer,"TABLEAU:")!=0){
             memset(buffer,0,MAX_BUFFER);
             memset(readBuffer, 0, MAX_BUFFER);
@@ -57,14 +56,11 @@ int findTableau(char *buffer, char *readBuffer, FILE *input, int *line, Tableau 
                 index++;
             }
         }
-        if(index != 0)
+        if(index >= 0)
             tabCol--;
-        if(strstr(readBuffer,"STOCK:")!=0){
-            break;
-        }
         *line +=1;
         memset(buffer,0,MAX_BUFFER);
-    }while(fgets(buffer, MAX_BUFFER, input) != 0 && tabCol != 0);
+    }while(fgets(buffer, MAX_BUFFER, input) != 0 && tabCol >= 0);
 
     if(isTableauCorrect(tableau) && tabCol  == 0){
         return 1;
