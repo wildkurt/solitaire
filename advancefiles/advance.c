@@ -37,9 +37,13 @@ int checkFile(char *filename){
     FILE *runCheck;
 
     strcat(command,"./check ");
-    strcat(command, filename);
+    if(strcmp(filename, "stdin") == 0)
+        runCheck = popen(command, "r");
+    else{
+        strcat(command, filename);
+        runCheck = popen(command,"r");
+    }
 
-    runCheck = popen(command,"r");
     while(fgets(buffer,MAX_BUFFER, runCheck) != 0){
         if(strcmp(buffer,"Input file is valid\n")==0){
             result = 0;
@@ -76,15 +80,98 @@ int readGameFile(GameFlags *gameflags, GameConfiguration *game){
 int checkMoves(GameConfiguration *game){
     /*Case 1. No moves exist
      * Case 2. Moves exist*/
+    int moveCounter = 0;
     Move *ptr;
     ptr = game->moves.moves;
 
     while(ptr->from != 0 || ptr->action !=0){
+        moveCounter++;
         //check for move or action
         if(ptr->from != 0){
-            //Move from waste to columns
-            //Move column to column
-            //Move column to foundtaion
+            if(ptr->from == 'w'){
+                Card *temp = getTopWasteCard(&game->stockwaste);
+                //Move from waste to foundation
+                if(ptr->to != 'f'){
+                    if(addCardToFoundation(temp, &game->foundation)){
+                        removeWasteCard(temp);
+                    }
+                    else{
+                        fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
+                        return 0;
+                    }
+                }
+                //Move from waste to columns
+                else{
+                    //get the top card in the tableau from the indicated column
+                    Card *tableauPtr = setPointerToTopCard(ptr->to - '0', &game->tableau);
+                    //get the top was card
+                    Card *wastePtr = getTopWasteCard(&game->stockwaste);
+                    //Compare the cards to see if the waste card can be placed in the column
+                    //Waste card must be opposite color and one rank lower
+                    if(rankValue(wastePtr->rank) + 1 == rankValue(tableauPtr->rank) && isRedOrBlack(wastePtr->suit) != isRedOrBlack(tableauPtr->suit)){
+                        //need to add the waste card to the tableau column
+                        *(++tableauPtr) = *wastePtr;
+                        removeWasteCard(wastePtr);
+                    }
+                    else{
+                        fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
+                        return 0;
+                    }
+                }
+            }
+            else{
+                //Move column to foundtaion
+                if(ptr->to == 'f'){
+                    //get a pointer to the top card in column
+                    Card *tableauPtr = setPointerToTopCard(ptr->from - '0', &game->tableau);
+                    if(!addCardToFoundation(tableauPtr, &game->foundation)){
+                        fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
+                        return 0;
+                    }
+                    else{
+                        removeCardsFromColumn(tableauPtr);
+                    }
+                }
+                //Move column to column
+                else{
+                    if(!moveColToCol(ptr->from - '0', ptr->to - '0', &game->tableau)){
+                        fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
+                        return 0;
+                    }
+                }
+            }
+
+        }
+        else if(ptr->action != 0){
+            //Reset waste
+            if(ptr->action == 'r'){
+                if(!doStockWasteReset(&game->stockwaste, &game->rules)){
+                    fprintf(stderr,"Move %d is illegal: %c\n", moveCounter, ptr->action);
+                    return 0;
+                }
+            }
+            //Turn over card
+            if(ptr->action == '.'){
+                if(!doStockWasteCardTurnover(&game->rules, &game->stockwaste)){
+                    fprintf(stderr,"Move %d is illegal: %c\n", moveCounter, ptr->action);
+                    return 0;
+                }
+            }
         }
     }
+    game->moves.totalMoves = moveCounter;
+    return 1;
+}
+
+void printTheGameToScreen(GameConfiguration *game){
+    printf("FOUNDATIONS:\n");
+    printFoundation(&game->foundation);
+    printf("TABLEAU:\n");
+    printTableauGameFormat(&game->tableau);
+    printf("Waste top\n");
+    Card *temp = getTopWasteCard(&game->stockwaste);
+    if(game->moves.totalMoves == 0)
+        printf("(empty)\n");
+    else
+        printf("%c%c\n", temp->rank, temp->suit);
 }

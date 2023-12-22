@@ -15,6 +15,7 @@ typedef struct Move{
 
 typedef  struct Moves{
     Move moves[200];
+    int totalMoves;
 }Moves;
 
 int getMovesFromFile(char *buffer, char *readBuffer, FILE *inputFile, int *line, Moves *moves);

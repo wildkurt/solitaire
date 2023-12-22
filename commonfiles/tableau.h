@@ -20,10 +20,11 @@ typedef struct Tableau{
 
 int findTableau(char *buffer, char *readBuffer, FILE *input, int *line, Tableau *tableu);
 Card *setPointer(int col, Tableau *tableau);
+Card *setPointerToTopCard(int col, Tableau *tableau);
 void printTableau(Tableau *tableau);
-int addCardToColumn(Card *ptr, int col, Tableau *tableau);
 int moveColToCol(int src, int dst, Tableau *tableau);
 int isTableauCorrect(Tableau *tableau);
 void removeCardsFromColumn(Card *ptr);
+void printTableauGameFormat(Tableau *tableau)
 
 #endif //SOLITAIRE_TABLEAU_H

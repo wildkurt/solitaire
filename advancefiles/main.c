@@ -8,28 +8,33 @@
 void printForDebugging(GameFlags *gameflags, GameConfiguration *game);
 
 int main(int args, char *argv[]){
-    GameFlags gameflags = {'f', -1, 'f', 0};
+    GameFlags gameflags = {'f', -1, 'f', 0, 'f', 0};
     GameConfiguration game = {.rules = {0,0,0,0}, .foundation = {0},
                               .tableau = {.t1 = {0}, .t2 = {0}, .t3 = {0}, .t4 = {0}, .t5 = {0}, .t6 = {0}, .t7 = {0}},
-                              .stockwaste = {0}, .found =0, .moves={0,0,0},
+                              .stockwaste = {0}, .found =0, .moves={{0,0,0}, .totalMoves = 0},
                               .resetsDone = 0};
-
+    //Command line flags
     getCommandLineFlags(args, argv, &gameflags);
+    //There is a given game file
     if(gameflags.inputFile != 0){
         if(checkFile(gameflags.inputFile)){
         exit(1);
         }
     }
     else{
-        fprintf(stderr,"No game file provided\n");
-        exit(EXIT_FAILURE);
+        checkFile("stdin");
     }
     if(!readGameFile(&gameflags, &game)){
         exit(EXIT_FAILURE);
     }
     else
-        if(checkMoves(&game))
-            printForDebugging(&gameflags, &game);
+        if(!checkMoves(&game)){
+            printTheGameToScreen(&game);
+        }
+        else{
+            printf("Processed %d moves, all valid\n", game.moves.totalMoves);
+            printTheGameToScreen(&game);
+        }
     return 0;
 }
 

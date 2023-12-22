@@ -116,6 +116,14 @@ Card *setPointer(int col, Tableau *tableau){
     }
 }
 
+Card *setPointerToTopCard(int col, Tableau *tableau){
+    Card *ptr = setPointer(col, tableau);
+    while((ptr + 1)->rank != 0){
+        ptr++;
+    }
+    return ptr;
+}
+
 void printTableau(Tableau *tableau){
     Card *ptr;
     for(int i = 7; i >= 1; i--){
@@ -131,32 +139,6 @@ void printTableau(Tableau *tableau){
     }
 }
 
-int addCardToColumn(Card *ptr, int col, Tableau *tableau){
-    /* Case 1: The column is empty, just a '|' for rank
-     *          a. Card can only have the rank of 'K'
-     * Case 2: The column is not empty
-     *          a. must check top card in column
-     *          b. Card must be one rank lower and opposite color*/
-    //get a pointer to the column, then check for empty column or find top card
-    Card *tabptr = setPointer(col, tableau);
-
-    //Empty column, can only add K rank
-    if(tabptr->rank == '|' && (tabptr + 1)->rank == '\0'){
-        tabptr++;
-        *tabptr = *ptr;
-        return 0;
-    }
-    //Column not empty, find top card
-    while((tabptr + 1)->rank != '\0'){tabptr++;}
-    if(isRedOrBlack(tabptr->suit) != isRedOrBlack(ptr->suit)){
-        if(rankValue(tabptr->rank) == ptr->rank+1){
-            *(++tabptr) = *ptr;
-            return 0;
-        }
-    }
-    return 1;
-}
-
 int moveColToCol(int src, int dst, Tableau *tableau){
     /* Case 1: the dst col is empty, src must be a King
  * Case 2: The card in src and dst are the top cards
@@ -164,16 +146,16 @@ int moveColToCol(int src, int dst, Tableau *tableau){
  * and all of them need to be moved to other column.*/
     //Get pointers to the columns
     Card *srcptr = setPointer(src, tableau);
-    Card *dstptr = setPointer(dst, tableau);
-    //increment the destination pointer to top card
-    while((dstptr + 1)->rank != 0){dstptr++;}
-    //Increment source pointer to first uncovered card
+    Card *dstptr = setPointerToTopCard(dst - '0', tableau);
+    //Increment source pointer to uncovered card divider
     while(srcptr->rank != '|'){srcptr++;}
+    //move to first uncovered card
     srcptr++;
     //Find a card in source that can be put on destination card
     while(srcptr->rank != 0){
         if((isRedOrBlack(srcptr->suit) != isRedOrBlack(dstptr->suit))&&((rankValue(srcptr->rank) + 1) == rankValue(dstptr->rank)))
             break;
+        srcptr++;
     }
     //if the srcptr is not at end of column, then can add the cards to destination
     if(srcptr->rank != 0){
@@ -196,5 +178,34 @@ void removeCardsFromColumn(Card *ptr){
     while(ptr->rank != 0){
         *ptr = nullCard;
         ptr++;
+    }
+}
+
+void printTableauGameFormat(Tableau *tableau){
+    //Loop through same index for all seven columns
+    for(int i = 0; i < 30; i++){
+        //if all seven columns at the specified location don't have cards, then stop
+        if (tableau->t1[i].rank == 0 && tableau->t2[i].rank == 0 && tableau->t3[i].rank == 0 &&
+            tableau->t4[i].rank == 0 && tableau->t5[i].rank == 0
+            && tableau->t6[i].rank == 0 && tableau->t7[i].rank == 0)
+            break;
+
+        //Print card from each column at same index on one line
+        for(int j = 1; j <= 7; j++) {
+            Card *ptr = setPointer(j, tableau);
+            //covered cards
+            if (ptr[i].covered == 't') {
+                printf("## ");
+            }
+            //uncovered cards
+            else if (ptr[i].rank != 0 && ptr[i].covered == 'f') {
+                printf("%c%c ", tableau->t1[i].rank, tableau->t1[i].suit);
+            }
+            //no cards
+            else {
+                printf(".. ");
+            }
+        }
+        printf("\n");
     }
 }

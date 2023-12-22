@@ -48,10 +48,12 @@ Card *fdPtr(Foundation *foundation){
 
 int addCardToFoundation(Card *card, Foundation *foundation){
     for(int i = 0; i < 4; i++){
+        //if there are already cards on the foundation
         if( foundation->fd[i].suit == card->suit && rankValue( foundation->fd[i].rank) + 1 == rankValue(card->rank)){
             foundation->fd[i] = *card;
             return 1;
         }
+        //if there isn't a card on the foundation yet
         else if( foundation->fd[i].rank == '_' && card->rank == 'A' &&  foundation->fd[i].suit == card->suit){
             foundation->fd[i] = *card;
             return 1;
