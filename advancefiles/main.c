@@ -3,26 +3,31 @@
 //
 
 #include <stdlib.h>
+#include <string.h>
 #include "advance.h"
 
 void printForDebugging(GameFlags *gameflags, GameConfiguration *game);
 
 int main(int args, char *argv[]){
     GameFlags gameflags = {'f', -1, 'f', 0, 'f', 0};
-    GameConfiguration game = {.rules = {0,0,0,0}, .foundation = {0},
-                              .tableau = {.t1 = {0}, .t2 = {0}, .t3 = {0}, .t4 = {0}, .t5 = {0}, .t6 = {0}, .t7 = {0}},
-                              .stockwaste = {0}, .found =0, .moves={{0,0,0}, .totalMoves = 0},
-                              .resetsDone = 0};
-    //Command line flags
+    GameConfiguration game = {.rules = {1,-1,1,0}, .foundation};
+    char *defaultInputFile = "AdvanceToCheck.txt";
+    //Command line flags read
     getCommandLineFlags(args, argv, &gameflags);
     //There is a given game file
     if(gameflags.inputFile != 0){
         if(checkFile(gameflags.inputFile)){
-        exit(1);
+            exit(1);
         }
     }
+    //No game file, create one and send to check
     else{
-        checkFile("stdin");
+        gameflags.inputFile = calloc(strlen(defaultInputFile) +1, sizeof(char));
+        strcpy(gameflags.inputFile, defaultInputFile);
+        writeSTDINtoFile(defaultInputFile);
+        if(checkFile(defaultInputFile)){
+            exit(1);
+        }
     }
     if(!readGameFile(&gameflags, &game)){
         exit(EXIT_FAILURE);

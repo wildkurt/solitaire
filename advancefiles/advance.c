@@ -8,26 +8,41 @@
 
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags){
     for(int i = 0; i < args; i++){
+        //How many moves are to be played
         if(strstr(argv[i], "-m") != NULL){
             gameflags->moves = 't';
             gameflags->numberMoves = atoi(argv[i+1]);
         }
+        //Write to an output file instead of STDOUT
         else if(strstr(argv[i], "-o") != NULL){
             gameflags->outputfile = 't';
             gameflags->outputfileName = calloc(strlen(argv[i+1]) + 1, sizeof(char));
             strcpy(gameflags->outputfileName, argv[i+1]);
         }
+        //Write game out in exchange format to STDOUT or file
         else if(strstr(argv[i], "-x") != NULL){
             gameflags->exchange = 't';
         }
+        //The case that the input file name is the first argument
         else if(i == 0 && (strstr(argv[i],"-") == NULL)){
             gameflags->inputFile = calloc(strlen(argv[i]+1),sizeof(char));
             strcpy(gameflags->inputFile, argv[i]);
         }
+        //The case that the file name is not first argument. Must check if the argument is the input file name or the
+        //output file name by determining if it is preceded by a "-o" or "-m" since both of these flags have arguments
         else if(i > 0 && (strstr(argv[i-1],"-o") == NULL && strstr(argv[i-1], "-m") == NULL)){
             gameflags->inputFile = calloc(strlen(argv[i]+1),sizeof(char));
             strcpy(gameflags->inputFile, argv[i]);
         }
+    }
+}
+//Always provide a file for check to read from
+void writeSTDINtoFile(char *defaultInputFile){
+    char buffer[MAX_BUFFER] = {0};
+    FILE *adToCh;
+    adToCh = fopen(defaultInputFile,"r");
+    while(fgets(buffer, MAX_BUFFER, stdin)!=0){
+        fputs(buffer, adToCh);
     }
 }
 
@@ -35,15 +50,13 @@ int checkFile(char *filename){
     int result = 1;
     char command[MAX_BUFFER] = {0}, buffer[MAX_BUFFER];
     FILE *runCheck;
-
+    //Add string for check
     strcat(command,"./check ");
-    if(strcmp(filename, "stdin") == 0)
-        runCheck = popen(command, "r");
-    else{
-        strcat(command, filename);
-        runCheck = popen(command,"r");
-    }
-
+    //Add filename to command
+    strcat(command, filename);
+    //Run command and create file descriptor to read check output
+    runCheck = popen(command,"r");
+    //See if Check reports file is valid. If valid return 0, if not, return 1 and out put the error
     while(fgets(buffer,MAX_BUFFER, runCheck) != 0){
         if(strcmp(buffer,"Input file is valid\n")==0){
             result = 0;
@@ -78,19 +91,20 @@ int readGameFile(GameFlags *gameflags, GameConfiguration *game){
 }
 
 int checkMoves(GameConfiguration *game){
-    /*Case 1. No moves exist
-     * Case 2. Moves exist*/
+    //If this function is invoked then there are moves to process
     int moveCounter = 0;
     Move *ptr;
     ptr = game->moves.moves;
 
     while(ptr->from != 0 || ptr->action !=0){
+        //Count the moves
         moveCounter++;
         //check for move or action
         if(ptr->from != 0){
+            //Move from waste
             if(ptr->from == 'w'){
                 Card *temp = getTopWasteCard(&game->stockwaste);
-                //Move from waste to foundation
+                //Move to foundation
                 if(ptr->to != 'f'){
                     if(addCardToFoundation(temp, &game->foundation)){
                         removeWasteCard(temp);
@@ -100,7 +114,7 @@ int checkMoves(GameConfiguration *game){
                         return 0;
                     }
                 }
-                //Move from waste to columns
+                //Move to columns
                 else{
                     //get the top card in the tableau from the indicated column
                     Card *tableauPtr = setPointerToTopCard(ptr->to - '0', &game->tableau);
@@ -119,8 +133,9 @@ int checkMoves(GameConfiguration *game){
                     }
                 }
             }
+            //Move from columns
             else{
-                //Move column to foundtaion
+                //Move to foundtaion
                 if(ptr->to == 'f'){
                     //get a pointer to the top card in column
                     Card *tableauPtr = setPointerToTopCard(ptr->from - '0', &game->tableau);
@@ -132,7 +147,7 @@ int checkMoves(GameConfiguration *game){
                         removeCardsFromColumn(tableauPtr);
                     }
                 }
-                //Move column to column
+                //Move to column
                 else{
                     if(!moveColToCol(ptr->from - '0', ptr->to - '0', &game->tableau)){
                         fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
@@ -142,7 +157,8 @@ int checkMoves(GameConfiguration *game){
             }
 
         }
-        else if(ptr->action != 0){
+        //Perform action
+        else{
             //Reset waste
             if(ptr->action == 'r'){
                 if(!doStockWasteReset(&game->stockwaste, &game->rules)){

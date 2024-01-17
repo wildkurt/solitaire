@@ -5,7 +5,6 @@
 #ifndef SOLITAIRE_STOCKWASTE_H
 #define SOLITAIRE_STOCKWASTE_H
 
-#include <bits/types/FILE.h>
 #include "card.h"
 #include "rules.h"
 

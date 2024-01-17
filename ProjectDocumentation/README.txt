@@ -55,3 +55,22 @@ Program Flow: Winnable gets a file, invokes Advance which calls on Check to see 
 write the exchange format of the file to standard output. Winnable can call advance using popen and give the file name
 then the advance output will be the exchange format. Checking new moves means that Winnable will need to write the
 file.
+
+Part of the requirements for Check, Advance, and Winnable is for them to read from a file or STDIN. If winnable is
+reading from stdin then in order for check to read Winnable would need to pipe it's input to check. Check does it's job,
+but then STDIN is empty. Sooooo:
+
+Run Check only: File or STDIN, can hold the contents of the file as long as the program is running.
+Run Advance: Can take a filename or stdin, but needs to run Check. Can have check set to read from STDIN, but that means
+Advance has nothing to parse. If a file name is provided, no issue, it is just passed to Check to read the file.
+I think if Advance reads from STDIN, then it will need to write the file out then give it to check as an argument.
+
+Winnable will need to work much like Advance.
+
+STDIN -> Winnable -> Winnable copies everything to a file -> file is given to advance as an argument -> which advance
+can give to check as an argument.
+
+Advance has the capability to write a configuration file, should it be the only one writing the file? Technically, when
+it reads a file it will essentially output it in exchange format without any comments and in a standard format. So if
+Winnable gets a STDIN then it can just pass to Advance. Advance can write the file out verbatim and pass to check then
+it can parse the file if it checks out as okay.

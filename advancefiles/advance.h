@@ -17,6 +17,7 @@ typedef struct GameFlags{
 }GameFlags;
 
 void getCommandLineFlags(int args, char **argv, GameFlags *gameflags);
+void writeSTDINtoFile(char *defaultInputFile);
 int checkFile(char *filename);
 int readGameFile(GameFlags *gameflags, GameConfiguration *game);
 int checkMoves(GameConfiguration *game);
