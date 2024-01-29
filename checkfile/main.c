@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+#include "../commonfiles/gameconfiguration.h"
 
 /** The main program will open the file then parse it to find all
  * the required elements. During parsing, it calls functions that
@@ -12,5 +13,6 @@
  * and cards in the stock and waste*/
 
 int main(int args, char *argv[]){
-
+    //Create a place to put the game
+    GameConfiguration game = {.rules ={.cardTurnover = 1, .wasteResets = -1}};
 }
