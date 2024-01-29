@@ -11,9 +11,15 @@ set(COMMON_FILES
         commonfiles/foundations.h
         commonfiles/Card.c
         commonfiles/Card.h
+        commonfiles/tableau.c
+        commonfiles/tableau.h
+        commonfiles/stockwaste.c
+        commonfiles/stockwaste.h
 
 )
 add_executable(check
         checkfile/main.c
         ${COMMON_FILES}
+        checkfile/check.c
+        checkfile/check.h
 )

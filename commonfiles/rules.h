@@ -12,4 +12,6 @@ typedef struct Rules{
     int cardTurnover;
 }Rules;
 
+int getRules(Rules rules, int *pInt, char *filename);
+
 #endif //SOLITAIRE_RULES_H

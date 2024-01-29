@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../commonfiles/gameconfiguration.h"
+#include "check.h"
 
 /** The main program will open the file then parse it to find all
  * the required elements. During parsing, it calls functions that
@@ -14,5 +15,11 @@
 
 int main(int args, char *argv[]){
     //Create a place to put the game
-    GameConfiguration game = {.rules ={.cardTurnover = 1, .wasteResets = -1}};
+    GameConfiguration game = {.rules ={.cardTurnover = 1, .wasteResets = -1}, .foundation = {.foundation = {0}},
+                              .tableau = {.tab1 = {0}, .tab2 = {0}, .tab3 = {0}, .tab4 = {0}, .tab5 = {0}, .tab6 = {0},
+                              .tab7 = {0}}, .stockwaste = {0}};
+    //get the game file
+    if(!getGameFile(&game, argv[1])){
+        exit(1);
+    }
 }

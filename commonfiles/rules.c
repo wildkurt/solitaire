@@ -3,3 +3,7 @@
 //
 
 #include "rules.h"
+
+int getRules(Rules rules, int *pInt, char *filename) {
+
+}

@@ -7,6 +7,8 @@
 
 #include "rules.h"
 #include "foundations.h"
+#include "tableau.h"
+#include "stockwaste.h"
 
 #define MAX_BUFFER 200
 
@@ -15,7 +17,6 @@ typedef struct GameConfiguration{
     Foundations foundation;
     Tableau tableau;
     StockWaste stockwaste;
-    Moves moves;
 } GameConfiguration;
 
 #endif //SOLITAIRE_GAMECONFIGURATION_H
