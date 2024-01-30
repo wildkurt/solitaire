@@ -5,6 +5,10 @@
 #ifndef SOLITAIRE_RULES_H
 #define SOLITAIRE_RULES_H
 
+#include <stdio.h>
+
+#define MAX_BUFFER 200
+
 typedef struct Rules{
     //How mantimes can the waste be reset, -1 if unlimited
     int wasteResets;
@@ -12,6 +16,6 @@ typedef struct Rules{
     int cardTurnover;
 }Rules;
 
-int getRules(Rules rules, int *pInt, char *filename);
+int getRules(Rules *rules, int *pInt, FILE *filelink, char *buffer);
 
 #endif //SOLITAIRE_RULES_H

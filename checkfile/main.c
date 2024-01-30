@@ -15,7 +15,7 @@
 
 int main(int args, char *argv[]){
     //Create a place to put the game
-    GameConfiguration game = {.rules ={.cardTurnover = 1, .wasteResets = -1}, .foundation = {.foundation = {0}},
+    GameConfiguration game = {.rules ={.cardTurnover = 0, .wasteResets = 0}, .foundation = {.foundation = {0}},
                               .tableau = {.tab1 = {0}, .tab2 = {0}, .tab3 = {0}, .tab4 = {0}, .tab5 = {0}, .tab6 = {0},
                               .tab7 = {0}}, .stockwaste = {0}};
     //get the game file
