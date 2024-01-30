@@ -3,6 +3,7 @@
 //
 
 #include <string.h>
+#include <stdlib.h>
 #include "rules.h"
 
 int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
@@ -26,10 +27,13 @@ int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
             found++;
             continue;
         }
+        //If turn is found
         if(strstr(cleanBuffer, "turn") != 0){
+            //if RULES: was not found then return error
             if(found != 1){
                 return 1;
             }
+            //Determine which turn it is
             else{
                 if(strstr(cleanBuffer, "turn 1") != 0){
                     found++;
@@ -41,12 +45,21 @@ int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
                 }
             }
         }
+        //look for waste resets
         if(strstr(cleanBuffer,"limit")!=0){
+            //if Rules or turn not found, error
             if(found != 2)
                 return 2;
             if(strstr(cleanBuffer,"unlimited") != 0){
                 found++;
                 rules->wasteResets = -1;
+            }
+            else{
+                //get the number of allowed resets
+                char *ptr = strstr(cleanBuffer,"limit ");
+                ptr+=6;
+                char *endPtr;
+                rules->wasteResets = strtol(ptr,&endPtr, 10);
             }
         }
         *line++;
