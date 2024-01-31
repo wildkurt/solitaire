@@ -22,4 +22,5 @@ int main(int args, char *argv[]){
     if(!getGameFile(&game, argv[1])){
         exit(1);
     }
+    printRules(&game.rules);
 }

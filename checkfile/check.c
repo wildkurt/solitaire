@@ -4,15 +4,36 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/time.h>
 #include "check.h"
 
 int getGameFile(GameConfiguration *game, char *filename){
     int result = 0, line = 1;
     FILE *filelink = 0;
     char buffer[MAX_BUFFER];
-
-    if(strlen(filename) <=0){
-        filelink = fopen(stdin,"r");
+    //No filename from command line
+    if(filename==0){
+        //Check to see if there is anything coming from stdin by checking if it is blocking for five seconds. If stdin
+        //unblocks, then there is input, if not, then nothing is being piped in
+        fd_set rfds;
+        struct timeval tv;
+        int retval;
+        //initialize rfds
+        FD_ZERO(&rfds);
+        //set rfds to stdin file descriptor (0 = stdin, 1 = stdout, 3 - stderr)
+        FD_SET(0,&rfds);
+        //Set the seconds and nanoseconds for tv
+        tv.tv_sec = 5;
+        tv.tv_usec = 0;
+        //See if stdin is unblocked, wait five seconds if not
+        retval = select(1, &rfds, NULL, NULL, &tv);
+        if(retval){
+            filelink = stdin;
+        }
+        else{
+            fprintf(stderr,"No input from stdin provided.\n");
+            return 0;
+        }
     }
     else{
         filelink = fopen(filename,"r");

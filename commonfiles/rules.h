@@ -17,5 +17,6 @@ typedef struct Rules{
 }Rules;
 
 int getRules(Rules *rules, int *pInt, FILE *filelink, char *buffer);
+void printRules(Rules *rules);
 
 #endif //SOLITAIRE_RULES_H

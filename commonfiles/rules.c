@@ -8,14 +8,14 @@
 
 int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
     //Buffer to strip # lines
-    char cleanBuffer[MAX_BUFFER];
+    char cleanBuffer[MAX_BUFFER]={0};
     // Indicates if section is found
     int found = 0;
 
     //Read each line from the file
     while(fgets(buffer,MAX_BUFFER, filename)){
         //Skip lines that start with # or ignore everything after #
-        for(int i = 0; buffer[i] != '#' && i < MAX_BUFFER; i++){
+        for(int i = 0; buffer[i] != '#' && buffer[i] != '\0' && i < MAX_BUFFER; i++){
             cleanBuffer[i] = buffer[i];
         }
         //Put the contents of the cleanbuffer into buffer and return to caller
@@ -25,7 +25,6 @@ int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
         //Look for RULES: header, card turn over, and waste resets
         if(strstr(cleanBuffer, "RULES:")!=0){
             found++;
-            continue;
         }
         //If turn is found
         if(strstr(cleanBuffer, "turn") != 0){
@@ -55,6 +54,7 @@ int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
                 rules->wasteResets = -1;
             }
             else{
+                found++;
                 //get the number of allowed resets
                 char *ptr = strstr(cleanBuffer,"limit ");
                 ptr+=6;
@@ -62,14 +62,27 @@ int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
                 rules->wasteResets = strtol(ptr,&endPtr, 10);
             }
         }
-        *line++;
+        (*line)++;
         memset(buffer,0,MAX_BUFFER);
         memset(cleanBuffer, 0, MAX_BUFFER);
     }
-    if(found != 3)
-        return 3;
+    switch(found){
+        case 0 : return 1;
+        case 1 : return 2;
+        case 2 : return 3;
+        default : break;
+    }
     //FOUNDATIONS: should be in the cleanBuffer minus any #. Copy to the buffer so next function can continue searching
     memset(buffer, 0 , MAX_BUFFER);
     strcpy(buffer, cleanBuffer);
     return 0;
+}
+
+void printRules(Rules *rules){
+    printf("RULES:\n");
+    printf("turn %d\n",rules->cardTurnover);
+    if(rules->wasteResets < 0)
+        printf("unlimited\n");
+    else
+        printf("limit %d\n", rules->wasteResets);
 }
