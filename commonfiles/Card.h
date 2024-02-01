@@ -8,6 +8,9 @@
 typedef struct Card{
     char rank;
     char suit;
+    char faceUp;
 }Card;
+
+int isRank(char c);
 
 #endif //SOLITAIRE_CARD_H

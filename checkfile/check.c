@@ -49,6 +49,20 @@ int getGameFile(GameConfiguration *game, char *filename){
         case 3 : fprintf(stderr,"Error near line %d: expecting 'limit N' or 'unlimited'", line); return 0;
         default : break;
     }
+    result = getFoundations(&game->foundation, &line, filelink, buffer);
+    switch(result){
+        case 1 : fprintf(stderr, "Error near line %d: expecting 'FOUNDATIONS:'", line); return 0;
+        case 2 : fprintf(stderr, "Error near line %d: Foundation suits are in incorrect order", line); return 0;
+        case 3 : fprintf(stderr, "Error near line %d: Foundations not found", line); return 0;
+        default : break;
+    }
+    result = getTableau(&game->tableau, &line, filelink, buffer);
+    switch(result){
+        case 1 : fprintf(stderr, "Error near line %d: expecting 'FOUNDATIONS:'", line); return 0;
+        case 2 : fprintf(stderr, "Error near line %d: Foundation suits are in incorrect order", line); return 0;
+        case 3 : fprintf(stderr, "Error near line %d: Foundations not found", line); return 0;
+        default : break;
+    }
     return 1;
 }
 
