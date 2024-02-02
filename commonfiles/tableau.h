@@ -22,5 +22,8 @@ typedef struct Tableau{
 
 int getTableau(Tableau *tableau, int *line, FILE *filelink, char *buffer);
 Card *getPointerToColumn(int column, Tableau *tableau);
+int checkIfColumnCorrect(Card *column);
+int redAndBlack(char suit1, char suit2);
+void printTableau(Tableau *tableau);
 
 #endif //SOLITAIRE_TABLEAU_H

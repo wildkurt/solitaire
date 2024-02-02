@@ -24,4 +24,5 @@ int main(int args, char *argv[]){
     }
     printRules(&game.rules);
     printFoundations(&game.foundation);
+    printTableau(&game.tableau);
 }

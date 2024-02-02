@@ -15,18 +15,44 @@
 int getTableau(Tableau *tableau, int *line, FILE *filelink, char *buffer){
     char cleanBuffer[MAX_BUFFER] = {0};
     int column = 7;
+    char faceup = 'f';
+
     while(fgets(buffer, MAX_BUFFER, filelink)) {
+        (*line)++;
         for(int i = 0; i < MAX_BUFFER && buffer[i] != '#' && buffer[i] != '\0'; i++){
             cleanBuffer[i] = buffer[i];
         }
-        Card *ptr = getPointerToColumn(column, tableau);
+        //Skip to the next line in file
         if(strstr(cleanBuffer, "TABLEAU:")!=0){
             continue;
         }
+        Card *ptr = getPointerToColumn(column, tableau);
         for(int i = 0; i < MAX_BUFFER && cleanBuffer[i] != '\0'; i++){
-
+            if(isRank(cleanBuffer[i]) && isSuit(cleanBuffer[i+1])){
+                ptr->rank = cleanBuffer[i];
+                ptr->suit = cleanBuffer[i+1];
+                ptr->faceUp = faceup;
+                ptr++;
+            }
+            if(cleanBuffer[i] == '|'){
+                faceup = 't';
+            }
         }
+        if(checkIfColumnCorrect(getPointerToColumn(column,tableau))){
+            return 1;
+        }
+        //Tests if the line contained a column or not. Every column will have a | even if empty
+        if(faceup == 't')
+            column--;
+        //Once column 1 is found, no need to go further
+        if(column == 0)
+            break;
+        faceup = 'f';
+        memset(buffer,0,MAX_BUFFER);
+        memset(cleanBuffer, 0, MAX_BUFFER);
     }
+    if(column > 0)
+        return 2;
     return 0;
 }
 
@@ -39,5 +65,47 @@ Card *getPointerToColumn(int column, Tableau *tableau){
         case 5 : return tableau->tab5;
         case 6 : return tableau->tab6;
         case 7 : return tableau->tab7;
+        default : return 0;
+    }
+}
+
+int checkIfColumnCorrect(Card *column){
+    //treat column like a pointer and move pointer to a face up card
+    while(column->faceUp == 'f')
+        column++;
+    //if the card after the current card is not empty and opposite colors, continue
+    while((column+1)->rank != 0 && redAndBlack(column->suit, (column+1)->suit)){};
+    //The above while loop stops is the next card is blank, or if the two cards are the same color
+    if((column+1)->rank == 0)
+        return 0;
+    else
+        return 1;
+}
+
+int redAndBlack(char suit1, char suit2){
+    //if the chars are the same
+    if(suit1 == suit2)
+        return 0;
+    if((suit1 == 'c' && suit2 == 's')||(suit1 == 's' && suit2 == 'c'))
+        return 0;
+    if((suit1 == 'd' && suit2 == 'h')||(suit1 == 'h' && suit2 == 'd'))
+        return 0;
+    return 1;
+}
+
+void printTableau(Tableau *tableau){
+    printf("TABLEAU:\n");
+    for(int i = 7; i >= 1; i--){
+        Card *ptr = getPointerToColumn(i,tableau);
+        if(ptr[0].rank == 0){
+            printf("|\n");
+            continue;
+        }
+        for(int j = 0; ptr[j].rank != 0; j++){
+            if(ptr[j].faceUp == 't')
+                printf("| ");
+            printf("%c%c ", ptr[j].rank, ptr[j].suit);
+        }
+        printf("\n");
     }
 }

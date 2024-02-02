@@ -22,3 +22,13 @@ int isRank(char c){
         default : return 0;
     }
 }
+
+int isSuit(char c){
+    switch (c){
+        case 'c' : return 1;
+        case 'd' : return 1;
+        case 'h' : return 1;
+        case 's' : return 1;
+        default : return 0;
+    }
+}

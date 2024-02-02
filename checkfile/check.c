@@ -58,11 +58,11 @@ int getGameFile(GameConfiguration *game, char *filename){
     }
     result = getTableau(&game->tableau, &line, filelink, buffer);
     switch(result){
-        case 1 : fprintf(stderr, "Error near line %d: expecting 'FOUNDATIONS:'", line); return 0;
-        case 2 : fprintf(stderr, "Error near line %d: Foundation suits are in incorrect order", line); return 0;
-        case 3 : fprintf(stderr, "Error near line %d: Foundations not found", line); return 0;
+        case 1 : fprintf(stderr, "Error near line %d: Tableau Column order incorrect", line); return 0;
+        case 2 : fprintf(stderr, "Error near line %d: Tableau is missing columns", line); return 0;
         default : break;
     }
+    fclose(filelink);
     return 1;
 }
 
