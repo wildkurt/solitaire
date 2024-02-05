@@ -16,5 +16,7 @@ typedef struct Foundations{
 
 int getFoundations(Foundations *foundation, int *line, FILE *filelink, char *buffer);
 void printFoundations(Foundations *foundation);
+void countFoundationCards(Foundations *foundation, Card *countingdeck);
+char valueToRank(int c);
 
 #endif //SOLITAIRE_FOUNDATIONS_H

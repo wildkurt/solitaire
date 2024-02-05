@@ -9,6 +9,7 @@ typedef struct Card{
     char rank;
     char suit;
     char faceUp;
+    int cardCount;
 }Card;
 
 int isRank(char c);

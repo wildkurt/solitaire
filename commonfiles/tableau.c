@@ -109,3 +109,32 @@ void printTableau(Tableau *tableau){
         printf("\n");
     }
 }
+
+void countTableauCards(Tableau *tableau, Card *countingdeck){
+    int column = 7;
+    Card *ptr;
+
+    while(column != 0){
+        ptr = getPointerToColumn(column, tableau);
+        while(ptr->rank != 0){
+            if(ptr->suit == 'c'){
+                ptr->cardCount++;
+                countingdeck[isRank(ptr->rank) - 1] = *ptr;
+            }
+            if(ptr->suit == 'd'){
+                ptr->cardCount++;
+                countingdeck[13 + isRank(ptr->rank) - 1] = *ptr;
+            }
+            if(ptr->suit == 'h'){
+                ptr->cardCount++;
+                countingdeck[26 + isRank(ptr->rank) - 1] = *ptr;
+            }
+            if(ptr->suit == 's'){
+                ptr->cardCount++;
+                countingdeck[39 + isRank(ptr->rank) - 1] = *ptr;
+            }
+            ptr++;
+        }
+        column--;
+    }
+}

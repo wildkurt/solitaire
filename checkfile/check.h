@@ -8,5 +8,6 @@
 #include "../commonfiles/gameconfiguration.h"
 
 int getGameFile(GameConfiguration *game, char *filename);
+int countCards(GameConfiguration *game, int *covered, int *stock, int *waste);
 
 #endif //SOLITAIRE_CHECK_H

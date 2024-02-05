@@ -25,5 +25,6 @@ Card *getPointerToColumn(int column, Tableau *tableau);
 int checkIfColumnCorrect(Card *column);
 int redAndBlack(char suit1, char suit2);
 void printTableau(Tableau *tableau);
+void countTableauCards(Tableau *tableau, Card *countingdeck);
 
 #endif //SOLITAIRE_TABLEAU_H

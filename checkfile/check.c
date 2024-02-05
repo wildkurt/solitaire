@@ -62,8 +62,20 @@ int getGameFile(GameConfiguration *game, char *filename){
         case 2 : fprintf(stderr, "Error near line %d: Tableau is missing columns", line); return 0;
         default : break;
     }
+    result = getStockWaste(&game->stockwaste, &line, filelink, buffer);
+    switch(result){
+        case 1 : fprintf(stderr, "Error near line %d: Stock not found", line); return 0;
+        default : break;
+    }
     fclose(filelink);
     return 1;
 }
 
+int countCards(GameConfiguration *game, int *covered, int *stock, int *waste){
+    Card countingdeck[52] = {0};
 
+    countFoundationCards(&game->foundation, countingdeck);
+    countTableauCards(&game->tableau, countingdeck);
+    countStockWasteCards(&game->stockwaste, countingdeck);
+    return 0;
+}
