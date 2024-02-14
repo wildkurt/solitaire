@@ -72,10 +72,62 @@ int getGameFile(GameConfiguration *game, char *filename){
 }
 
 int countCards(GameConfiguration *game, int *covered, int *stock, int *waste){
-    Card countingdeck[52] = {0};
+    Card countingdeck[52] = {0}, duplicateCards[52] = {0}, missingCards[52] = {0};
+    int dupIndex = 0, missIndex = 0;
 
     countFoundationCards(&game->foundation, countingdeck);
     countTableauCards(&game->tableau, countingdeck);
-    countStockWasteCards(&game->stockwaste, countingdeck);
+    countStockWasteCards(&game->stockwaste, countingdeck, stock, waste);
+
+    for(int i = 0; i < 52; i++){
+        if(countingdeck[i].faceUp == 'f')
+            (*covered)++;
+        if(countingdeck[i].cardCount > 1)
+            duplicateCards[dupIndex++] = countingdeck[i];
+        if(countingdeck[i].cardCount == 0){
+            Card temp;
+            char rank, suit;
+            if(i <= 12){
+                rank = getRank(i + 1);
+                suit = 'c';
+            }
+            else if(i > 12 && i <= 25){
+                rank = getRank(i + 1 - 13);
+                suit = 'd';
+            }
+            else if(i > 25 && i <= 38){
+                rank = getRank(i + 1 - 26);
+                suit = 'h';
+            }
+            else if(i > 38 && i <= 51){
+                rank = getRank(i + 1 - 39);
+                suit = 's';
+            }
+            temp.rank = rank;
+            temp.suit = suit;
+            temp.cardCount = 0;
+            temp.faceUp = 'f';
+            missingCards[missIndex++] = temp;
+        }
+    }
+
+    if(dupIndex > 0 || missIndex > 0){
+        if(dupIndex > 0){
+            fprintf(stderr, "Duplicated cards: ");
+            for(int i = 0; i < dupIndex; i++){
+                fprintf(stderr, "%c%c ", duplicateCards[i].rank, duplicateCards[i].suit);
+            }
+            fprintf(stderr,"\n");
+        }
+        if(missIndex > 0){
+            fprintf(stderr, "Missing cards: ");
+            for(int i = 0; i < missIndex; i++){
+                fprintf(stderr, "%c%c ", missingCards[i].rank, missingCards[i].suit);
+            }
+            fprintf(stderr,"\n");
+        }
+        return 1;
+    }
+
     return 0;
 }

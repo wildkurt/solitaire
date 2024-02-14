@@ -16,6 +16,6 @@ typedef struct StockWaste{
 
 int getStockWaste(StockWaste *stockwaste, int *line, FILE *filelink, char *buffer);
 void printStockWaste(StockWaste *stockWaste);
-void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck);
+void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck, int *stock, int *waste);
 
 #endif //SOLITAIRE_STOCKWASTE_H

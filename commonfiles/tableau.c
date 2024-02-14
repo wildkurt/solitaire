@@ -19,7 +19,7 @@ int getTableau(Tableau *tableau, int *line, FILE *filelink, char *buffer){
 
     while(fgets(buffer, MAX_BUFFER, filelink)) {
         (*line)++;
-        for(int i = 0; i < MAX_BUFFER && buffer[i] != '#' && buffer[i] != '\0'; i++){
+        for(int i = 0; i < MAX_BUFFER && buffer[i] != '#' && buffer[i] != '\n'; i++){
             cleanBuffer[i] = buffer[i];
         }
         //Skip to the next line in file
@@ -29,8 +29,8 @@ int getTableau(Tableau *tableau, int *line, FILE *filelink, char *buffer){
         Card *ptr = getPointerToColumn(column, tableau);
         for(int i = 0; i < MAX_BUFFER && cleanBuffer[i] != '\0'; i++){
             if(isRank(cleanBuffer[i]) && isSuit(cleanBuffer[i+1])){
-                ptr->rank = cleanBuffer[i];
-                ptr->suit = cleanBuffer[i+1];
+                ptr->rank = cleanBuffer[i++];
+                ptr->suit = cleanBuffer[i++];
                 ptr->faceUp = faceup;
                 ptr++;
             }
@@ -38,7 +38,8 @@ int getTableau(Tableau *tableau, int *line, FILE *filelink, char *buffer){
                 faceup = 't';
             }
         }
-        if(checkIfColumnCorrect(getPointerToColumn(column,tableau))){
+        Card *ptr2 = getPointerToColumn(column, tableau);
+        if(checkIfColumnCorrect(ptr2)){
             return 1;
         }
         //Tests if the line contained a column or not. Every column will have a | even if empty
@@ -71,26 +72,30 @@ Card *getPointerToColumn(int column, Tableau *tableau){
 
 int checkIfColumnCorrect(Card *column){
     //treat column like a pointer and move pointer to a face up card
+    if(column->rank == 0)
+        return 0;
     while(column->faceUp == 'f')
         column++;
     //if the card after the current card is not empty and opposite colors, continue
-    while((column+1)->rank != 0 && redAndBlack(column->suit, (column+1)->suit)){};
-    //The above while loop stops is the next card is blank, or if the two cards are the same color
-    if((column+1)->rank == 0)
-        return 0;
-    else
-        return 1;
+    while((column + 1)->rank != 0){
+        if(redAndBlack(column->rank, (column+1)->rank)){
+            return 1;
+        }
+        column++;
+    }
+
+    return 0;
 }
 
 int redAndBlack(char suit1, char suit2){
     //if the chars are the same
     if(suit1 == suit2)
-        return 0;
+        return 1;
     if((suit1 == 'c' && suit2 == 's')||(suit1 == 's' && suit2 == 'c'))
-        return 0;
+        return 1;
     if((suit1 == 'd' && suit2 == 'h')||(suit1 == 'h' && suit2 == 'd'))
-        return 0;
-    return 1;
+        return 1;
+    return 0;
 }
 
 void printTableau(Tableau *tableau){

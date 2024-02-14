@@ -23,10 +23,13 @@ int main(int args, char *argv[]){
     if(!getGameFile(&game, argv[1])){
         exit(1);
     }
-    else if(countCards(&game, &covered, &stock, &waste)){}
-    printRules(&game.rules);
-    printFoundations(&game.foundation);
+    else if(countCards(&game, &covered, &stock, &waste)){
+        exit(1);
+    }
+    printf("Input file is valid\n");
+    printf("%d covered cards\n", covered);
+    printf("%d stock cards\n", stock);
+    printf("%d waste cards\n", waste);
+
     printTableau(&game.tableau);
-    printStockWaste(&game.stockwaste);
-    printf("MOVES:\n");
 }

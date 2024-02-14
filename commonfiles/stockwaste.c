@@ -63,6 +63,37 @@ void printStockWaste(StockWaste *stockWaste){
     }
 }
 
-void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck){
-
+void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck, int *stock, int *waste){
+    for(int i = 0; stockwaste->sw[i].rank != 0; i++){
+        if(stockwaste->sw[i].faceUp =='t'){
+            (*waste)++;
+        }
+        else{
+            (*stock)++;
+        }
+        if(stockwaste->sw[i].suit == 'c'){
+            countingdeck[isRank(stockwaste->sw[i].rank) - 1].rank = stockwaste->sw[i].rank;
+            countingdeck[isRank(stockwaste->sw[i].rank) - 1].suit = stockwaste->sw[i].suit;
+            countingdeck[isRank(stockwaste->sw[i].rank) - 1].faceUp = stockwaste->sw[i].faceUp;
+            countingdeck[isRank(stockwaste->sw[i].rank) - 1].cardCount++;
+        }
+        if(stockwaste->sw[i].suit == 'd'){
+            countingdeck[13 + isRank(stockwaste->sw[i].rank) - 1].rank = stockwaste->sw[i].rank;
+            countingdeck[13 + isRank(stockwaste->sw[i].rank) - 1].suit = stockwaste->sw[i].suit;
+            countingdeck[13 + isRank(stockwaste->sw[i].rank) - 1].faceUp = stockwaste->sw[i].faceUp;
+            countingdeck[13 + isRank(stockwaste->sw[i].rank) - 1].cardCount++;
+        }
+        if(stockwaste->sw[i].suit == 'h'){
+            countingdeck[26 + isRank(stockwaste->sw[i].rank) - 1].rank = stockwaste->sw[i].rank;
+            countingdeck[26 + isRank(stockwaste->sw[i].rank) - 1].suit = stockwaste->sw[i].suit;
+            countingdeck[26 + isRank(stockwaste->sw[i].rank) - 1].faceUp = stockwaste->sw[i].faceUp;
+            countingdeck[26 + isRank(stockwaste->sw[i].rank) - 1].cardCount++;
+        }
+        if(stockwaste->sw[i].suit == 's'){
+            countingdeck[39 + isRank(stockwaste->sw[i].rank) - 1].rank = stockwaste->sw[i].rank;
+            countingdeck[39 + isRank(stockwaste->sw[i].rank) - 1].suit = stockwaste->sw[i].suit;
+            countingdeck[39 + isRank(stockwaste->sw[i].rank) - 1].faceUp = stockwaste->sw[i].faceUp;
+            countingdeck[39 + isRank(stockwaste->sw[i].rank) - 1].cardCount++;
+        }
+    }
 }
