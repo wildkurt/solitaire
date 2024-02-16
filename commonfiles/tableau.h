@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "Card.h"
 
-#define MAX_BUFFER 200
+#define MAX_BUFFER 400
 
 typedef struct Tableau{
     Card tab1[22];

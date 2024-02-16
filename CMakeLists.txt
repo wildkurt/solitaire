@@ -15,20 +15,22 @@ set(COMMON_FILES
         commonfiles/tableau.h
         commonfiles/stockwaste.c
         commonfiles/stockwaste.h
+)
+set(MOVE_FILES
         movefiles/moves.c
         movefiles/moves.h
-
 )
 add_executable(check
         checkfile/main.c
-        ${COMMON_FILES}
         checkfile/check.c
         checkfile/check.h
+        ${COMMON_FILES}
 )
 
 add_executable(advance
-    advancefiles/main.c
-        ${COMMON_FILES}
+        advancefiles/main.c
         advancefiles/advance.c
         advancefiles/advance.h
+        ${COMMON_FILES}
+        ${MOVE_FILES}
 )

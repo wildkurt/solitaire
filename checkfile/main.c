@@ -30,6 +30,4 @@ int main(int args, char *argv[]){
     printf("%d covered cards\n", covered);
     printf("%d stock cards\n", stock);
     printf("%d waste cards\n", waste);
-
-    printTableau(&game.tableau);
 }

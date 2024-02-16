@@ -85,7 +85,7 @@ void countFoundationCards(Foundations *foundation, Card *countingdeck){
     if(index != 0) {
         for (int i = index - 1; i >= 0; i--) {
             Card temp;
-            temp.rank = valueToRank(i + 1);
+            temp.rank = getRank(i + 1);
             temp.suit = 'c';
             temp.faceUp = 't';
             temp.cardCount++;
@@ -96,7 +96,7 @@ void countFoundationCards(Foundations *foundation, Card *countingdeck){
     if(index != 0) {
         for (int i = 13 + index - 1; i >= 13; i--) {
             Card temp;
-            temp.rank = valueToRank(i - 13 + 1);
+            temp.rank = getRank(i - 13 + 1);
             temp.suit = 'd';
             temp.faceUp = 't';
             countingdeck[i] = temp;
@@ -106,7 +106,7 @@ void countFoundationCards(Foundations *foundation, Card *countingdeck){
     if(index != 0){
         for(int i = 26 + index - -1; i >= 26; i--){
             Card temp;
-            temp.rank = valueToRank(i - 26 + 1);
+            temp.rank = getRank(i - 26 + 1);
             temp.suit = 'h';
             temp.faceUp = 't';
             countingdeck[i] = temp;
@@ -116,7 +116,7 @@ void countFoundationCards(Foundations *foundation, Card *countingdeck){
     if(index != 0){
         for(int i = 39 + index - -1; i >= 39; i--){
             Card temp;
-            temp.rank = valueToRank(i - 39 + 1);
+            temp.rank = getRank(i - 39 + 1);
             temp.suit = 's';
             temp.faceUp = 't';
             countingdeck[i] = temp;
@@ -124,21 +124,16 @@ void countFoundationCards(Foundations *foundation, Card *countingdeck){
     }
 }
 
-char valueToRank(int c){
-    switch(c){
-        case 1 : return 'A';
-        case 2 : return '2';
-        case 3 : return '3';
-        case 4 : return '4';
-        case 5 : return '5';
-        case 6 : return '6';
-        case 7 : return '7';
-        case 8 : return '8';
-        case 9 : return '9';
-        case 10 : return 'T';
-        case 11 : return 'J';
-        case 12 : return 'Q';
-        case 13 : return 'K';
-        default : return 0;
+int addCardToFoundations(Foundations *foundation, Card source){
+    for(int i = 0; i < 4; i++){
+        if(foundation->foundation[i].rank == '_' && source.rank == 'A' && foundation->foundation[i].suit == source.suit){
+            foundation->foundation[i] = source;
+            return 0;
+        }
+        else if(isRank(source.rank) - 1 == foundation->foundation[i].rank && source.suit == foundation->foundation[i].suit){
+            foundation->foundation[i] = source;
+            return 0;
+        }
     }
+    return 1;
 }

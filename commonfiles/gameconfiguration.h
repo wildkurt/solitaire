@@ -10,8 +10,6 @@
 #include "tableau.h"
 #include "stockwaste.h"
 
-#define MAX_BUFFER 200
-
 typedef struct GameConfiguration{
     Rules rules;
     Foundations foundation;

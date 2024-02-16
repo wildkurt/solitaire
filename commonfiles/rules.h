@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#define MAX_BUFFER 200
+#define MAX_BUFFER 400
 
 typedef struct Rules{
     //How mantimes can the waste be reset, -1 if unlimited

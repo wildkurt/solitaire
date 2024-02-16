@@ -5,10 +5,10 @@
 #ifndef SOLITAIRE_FOUNDATIONS_H
 #define SOLITAIRE_FOUNDATIONS_H
 
+#define MAX_BUFFER 400
+
 #include <stdio.h>
 #include "Card.h"
-
-#define MAX_BUFFER 200
 
 typedef struct Foundations{
     Card foundation[4];
@@ -17,6 +17,6 @@ typedef struct Foundations{
 int getFoundations(Foundations *foundation, int *line, FILE *filelink, char *buffer);
 void printFoundations(Foundations *foundation);
 void countFoundationCards(Foundations *foundation, Card *countingdeck);
-char valueToRank(int c);
+int addCardToFoundations(Foundations *foundation, Card source);
 
 #endif //SOLITAIRE_FOUNDATIONS_H

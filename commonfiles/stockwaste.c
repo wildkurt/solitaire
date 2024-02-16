@@ -97,3 +97,21 @@ void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck, int *stock
         }
     }
 }
+
+void getTopWasteCard(StockWaste *stockwaste, Card *card){
+    Card *ptr;
+
+    ptr = stockwaste->sw;
+
+    while(ptr->faceUp =='t'){
+        ptr++;
+    }
+    if(ptr->rank == 0)
+        return;
+    card->rank = (ptr-1)->rank;
+    card->suit = (ptr-1)->suit;
+    card->faceUp = (ptr-1)->faceUp;
+    card->cardCount = (ptr+1)->cardCount;
+}
+
+void removeCardFromWaste(StockWaste *stockwatse, Card *source){}

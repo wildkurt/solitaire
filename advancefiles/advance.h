@@ -5,6 +5,9 @@
 #ifndef SOLITAIRE_ADVANCE_H
 #define SOLITAIRE_ADVANCE_H
 
+#include "../commonfiles/gameconfiguration.h"
+#include "../movefiles/moves.h"
+
 typedef struct AdvanceArgs{
     char movesLimit;
     int numberToPlay;
@@ -16,4 +19,8 @@ typedef struct AdvanceArgs{
 
 void getCommandLineArguments(int args,char **argv, AdvanceArgs *arguments);
 void writeSTDINtoFile(AdvanceArgs *arguments);
+int checkGameFile(AdvanceArgs *arguments);
+void getTheGameConfiguration(AdvanceArgs *arguments, GameConfiguration *game, Moves *moveList);
+int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *movesList, int *moves);
+
 #endif //SOLITAIRE_ADVANCE_H
