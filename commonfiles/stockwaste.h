@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "Card.h"
+#include "rules.h"
 
 #define MAX_BUFFER 400
 
@@ -18,6 +19,6 @@ int getStockWaste(StockWaste *stockwaste, int *line, FILE *filelink, char *buffe
 void printStockWaste(StockWaste *stockWaste);
 void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck, int *stock, int *waste);
 void getTopWasteCard(StockWaste *stockwaste, Card *card);
-void removeCardFromWaste(StockWaste *stockwatse, Card *source);
+void removeCardFromWaste(StockWaste *stockwatse, Rules *rules, Card *source);
 
 #endif //SOLITAIRE_STOCKWASTE_H

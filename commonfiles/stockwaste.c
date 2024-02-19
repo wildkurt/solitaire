@@ -114,4 +114,43 @@ void getTopWasteCard(StockWaste *stockwaste, Card *card){
     card->cardCount = (ptr+1)->cardCount;
 }
 
-void removeCardFromWaste(StockWaste *stockwatse, Card *source){}
+void removeCardFromWaste(StockWaste *stockwaste, Rules *rules, Card *source){
+    //Assumed the waste isn't empty when function is called
+    //Case: Could be only card left, no stock cards
+    //Case: Only one waste card and the rest are stock
+    //Need to keep turn over rules in mind
+
+    Card *ptr = stockwaste->sw;
+
+    while(1){
+        if(ptr->rank == source->rank && ptr->suit == source->suit)
+            break;
+        ptr++;
+    }
+    //Only card in deck
+    if((ptr + 1)->rank == 0){
+        ptr->rank = 0;
+        ptr->suit = 0;
+        ptr->faceUp = 0;
+        ptr->cardCount = 0;
+    }
+    //Top waste card, but there is stock
+    if((ptr+1)->rank != 0){
+        //Only one waste card
+        if(ptr - 1 == NULL){
+            while(ptr->rank != 0){
+                *ptr = *(ptr + 1);
+                ptr++;
+            }
+            for(int i = 0; i < rules->cardTurnover; i++){
+                stockwaste->sw[i].faceUp = 't';
+            }
+        }
+        else{
+            while(ptr->rank != 0){
+                *ptr=*(ptr+1);
+                ptr++;
+            }
+        }
+    }
+}

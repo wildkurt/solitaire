@@ -114,7 +114,7 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
                     fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
                     return 1;
                 }
-                removeCardFromWaste(&game->stockwaste, &source);
+                removeCardFromWaste(&game->stockwaste, &game->rules, &source);
             }
         }
         //moving to foundation
