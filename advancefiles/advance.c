@@ -110,15 +110,22 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
             if(movesList->moves[i].to == 'f'){
                 Card source;
                 getTopWasteCard(&game->stockwaste, &source);
-                if(!addCardToFoundations(&game->foundation, source)){
+                if(addCardToFoundations(&game->foundation, source)){
                     fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
                     return 1;
                 }
                 removeCardFromWaste(&game->stockwaste, &game->rules, &source);
             }
+            else{
+                Card destination, source;
+                getTopTableauColumnCard(&game->tableau, movesList->moves[i].to, &destination);
+                getTopWasteCard(&game->stockwaste, &source);
+                if(!isSameColor(destination.suit, source.suit)){
+                    removeCardFromWaste(&game->stockwaste, &game->rules, &source);
+                    addCardToTableauColumn(&game->tableau, movesList->moves[i].to, &source);
+                }
+            }
         }
-        //moving to foundation
-        if(movesList->moves[i].to == 'f'){}
         //turn over cards in stock
         if(movesList->moves[i].actionn == '.'){}
         //reset the waste back to stock

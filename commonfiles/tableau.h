@@ -26,5 +26,7 @@ int checkIfColumnCorrect(Card *column);
 int redAndBlack(char suit1, char suit2);
 void printTableau(Tableau *tableau);
 void countTableauCards(Tableau *tableau, Card *countingdeck);
+void getTopTableauColumnCard(Tableau *tableau, char to, Card *destination);
+void addCardToTableauColumn(Tableau *tableau, char to, Card *source);
 
 #endif //SOLITAIRE_TABLEAU_H

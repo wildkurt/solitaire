@@ -47,4 +47,6 @@ int main(int args, char *argv[]){
     printf("Processed %d moves, all valid\n",moves);
 
     printMoves(&movesList);
+    printFoundations(&game.foundation);
+    printStockWaste(&game.stockwaste);
 }

@@ -2,6 +2,7 @@
 // Created by wendellbest on 1/29/24.
 //
 
+#include <string.h>
 #include "Card.h"
 
 int isRank(char c){
@@ -50,4 +51,10 @@ char getRank(int c){
         case 13 : return 'K';
         default : return 0;
     }
+}
+
+int isSameColor(char c, char d){
+    if(strchr("cs", c) && strchr("cs", d) ||  strchr("hd",c) && strchr("hd", d))
+        return 1;
+    return 0;
 }

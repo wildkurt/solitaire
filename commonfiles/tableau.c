@@ -143,3 +143,22 @@ void countTableauCards(Tableau *tableau, Card *countingdeck){
         column--;
     }
 }
+
+void getTopTableauColumnCard(Tableau *tableau, char to, Card *destination){
+    int columnNumber = to - '0';
+
+    Card *ptr = getPointerToColumn(columnNumber, tableau);
+
+    while((ptr+1)->rank != 0){ptr++;}
+
+    destination = ptr;
+}
+
+void addCardToTableauColumn(Tableau *tableau, char to, Card *source){
+    int columnNumber = to - '0';
+
+    Card *ptr = getPointerToColumn(columnNumber, tableau);
+    while(ptr->rank != 0){ptr++;}
+
+    ptr=source;
+}

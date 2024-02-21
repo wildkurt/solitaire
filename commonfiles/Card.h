@@ -15,5 +15,5 @@ typedef struct Card{
 int isRank(char c);
 int isSuit(char c);
 char getRank(int c);
-
+int isSameColor(char c, char d);
 #endif //SOLITAIRE_CARD_H
