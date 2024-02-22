@@ -28,5 +28,6 @@ void printTableau(Tableau *tableau);
 void countTableauCards(Tableau *tableau, Card *countingdeck);
 void getTopTableauColumnCard(Tableau *tableau, char to, Card *destination);
 void addCardToTableauColumn(Tableau *tableau, char to, Card *source);
+int moveCardFromColumnToColumn(Tableau  *tableau, char from, char to);
 
 #endif //SOLITAIRE_TABLEAU_H

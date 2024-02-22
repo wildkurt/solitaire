@@ -49,4 +49,5 @@ int main(int args, char *argv[]){
     printMoves(&movesList);
     printFoundations(&game.foundation);
     printStockWaste(&game.stockwaste);
+    printTableau(&game.tableau);
 }

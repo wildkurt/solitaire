@@ -107,7 +107,7 @@ void printTableau(Tableau *tableau){
             continue;
         }
         for(int j = 0; ptr[j].rank != 0; j++){
-            if(ptr[j].faceUp == 't')
+            if(ptr[j].faceUp == 't' && ptr[j-1].faceUp == 'f')
                 printf("| ");
             printf("%c%c ", ptr[j].rank, ptr[j].suit);
         }
@@ -149,16 +149,34 @@ void getTopTableauColumnCard(Tableau *tableau, char to, Card *destination){
 
     Card *ptr = getPointerToColumn(columnNumber, tableau);
 
-    while((ptr+1)->rank != 0){ptr++;}
+    while(ptr->rank != 0){ptr++;}
 
-    destination = ptr;
+    ptr--;
+
+    destination->rank = ptr->rank;
+    destination->suit = ptr->suit;
+    destination->faceUp = ptr->faceUp;
+    destination->cardCount = ptr->cardCount;
 }
 
 void addCardToTableauColumn(Tableau *tableau, char to, Card *source){
     int columnNumber = to - '0';
-
     Card *ptr = getPointerToColumn(columnNumber, tableau);
-    while(ptr->rank != 0){ptr++;}
+    int i = 0;
 
-    ptr=source;
+    for(; ptr[i].rank != 0; i++){}
+    ptr[i] = *source;
+}
+
+int moveCardFromColumnToColumn(Tableau  *tableau, char from, char to){
+    int fromNumber = from -'0', toNumber = to - '0', indexFrom = 0, indexTo = 0;
+    Card *fromPTR = getPointerToColumn(fromNumber, tableau);
+    Card *toPTR = getPointerToColumn(toNumber, tableau);
+
+    for(;fromPTR[indexFrom].rank != 0; indexFrom++){}
+
+    if(indexFrom > 0)
+        indexFrom--;
+
+
 }

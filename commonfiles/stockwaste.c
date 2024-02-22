@@ -119,38 +119,25 @@ void removeCardFromWaste(StockWaste *stockwaste, Rules *rules, Card *source){
     //Case: Could be only card left, no stock cards
     //Case: Only one waste card and the rest are stock
     //Need to keep turn over rules in mind
-
-    Card *ptr = stockwaste->sw;
-
-    while(1){
-        if(ptr->rank == source->rank && ptr->suit == source->suit)
+    int i = 0;
+    for(; stockwaste->sw[i].rank != 0; i++){
+        if(stockwaste->sw[i].rank == source->rank && stockwaste->sw[i].suit == source->suit)
             break;
-        ptr++;
     }
-    //Only card in deck
-    if((ptr + 1)->rank == 0){
-        ptr->rank = 0;
-        ptr->suit = 0;
-        ptr->faceUp = 0;
-        ptr->cardCount = 0;
+    if(i == 0 && stockwaste->sw[i+1].rank == 0){
+        Card temp = {0,0,0,0,};
+        stockwaste->sw[i] = temp;
     }
-    //Top waste card, but there is stock
-    if((ptr+1)->rank != 0){
-        //Only one waste card
-        if(ptr - 1 == NULL){
-            while(ptr->rank != 0){
-                *ptr = *(ptr + 1);
-                ptr++;
-            }
-            for(int i = 0; i < rules->cardTurnover; i++){
+    else if(i == 0 && stockwaste->sw[i+1].rank != 0 && stockwaste->sw[i+1].faceUp == 'f'){
+        for(;stockwaste->sw[i].rank != 0; i++){
+            stockwaste->sw[i] = stockwaste->sw[i+1];
+            if(i < rules->cardTurnover)
                 stockwaste->sw[i].faceUp = 't';
-            }
         }
-        else{
-            while(ptr->rank != 0){
-                *ptr=*(ptr+1);
-                ptr++;
-            }
+    }
+    else{
+        for(;stockwaste->sw[i].rank != 0 ;i++){
+            stockwaste->sw[i] = stockwaste->sw[i+1];
         }
     }
 }

@@ -97,6 +97,8 @@ void getTheGameConfiguration(AdvanceArgs *arguments, GameConfiguration *game, Mo
  * */
 int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *movesList, int *moves){
     int remainingWastResets = 0;
+    char *columns = "1234567";
+
     for(int i = 0; movesList->moves[i].from != 0 || movesList->moves[i].actionn != 0; i++){
         (*moves)++;
         //'w' can be a destination and 'f' can't be a source.
@@ -124,6 +126,20 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
                     removeCardFromWaste(&game->stockwaste, &game->rules, &source);
                     addCardToTableauColumn(&game->tableau, movesList->moves[i].to, &source);
                 }
+                else if(source.rank == 'K' && destination.rank == 0){
+                    removeCardFromWaste(&game->stockwaste, &game->rules, &source);
+                    addCardToTableauColumn(&game->tableau, movesList->moves[i].to, &source);
+                }
+                else{
+                    fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+                    return 1;
+                }
+            }
+        }
+        else if(strchr(columns, movesList->moves[i].from) && strchr(columns, movesList->moves[i].to)){
+            if(!moveCardFromColumnToColumn(&game->tableau, movesList->moves[i].from, movesList->moves[i].to)){
+                fprintf(stderr,"Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+                return 1;
             }
         }
         //turn over cards in stock
