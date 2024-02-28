@@ -234,3 +234,34 @@ void removeCardFromColumn(Tableau *tableau, char column, Card source){
         (colptr-1)->faceUp = 't';
     *colptr = temp;
 }
+void printHumanReadCard(Card card){
+    if(card.faceUp == 'f')
+        printf("## ");
+    else if(card.rank == 0)
+        printf("-- ");
+    else{
+        printf("%c%c ", card.rank, card.suit);
+    }
+}
+
+int noMoreCards(Card one, Card two, Card three, Card four, Card five, Card six, Card seven){
+    int result = 0;
+    result = one.rank + two.rank + three.rank + four.rank + five.rank + six.rank + seven.rank;
+    if(result == 0)
+        return 1;
+    return 0;
+}
+void printHumanReadTableau(Tableau *tableau){
+    for(int i = 0; i < 22; i++){
+        if(noMoreCards(tableau->tab1[i], tableau->tab2[i], tableau->tab3[i], tableau->tab4[i], tableau->tab5[i], tableau->tab6[i], tableau->tab7[i]))
+            break;
+        printHumanReadCard(tableau->tab1[i]);
+        printHumanReadCard(tableau->tab2[i]);
+        printHumanReadCard(tableau->tab3[i]);
+        printHumanReadCard(tableau->tab4[i]);
+        printHumanReadCard(tableau->tab5[i]);
+        printHumanReadCard(tableau->tab6[i]);
+        printHumanReadCard(tableau->tab7[i]);
+        printf("\n");
+    }
+}

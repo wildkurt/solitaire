@@ -44,11 +44,19 @@ int main(int args, char *argv[]){
         exit(1);
     }
 
-
     printf("Processed %d moves, all valid\n",moves);
 
-    //printMoves(&movesList);
-    printFoundations(&game.foundation);
-    printStockWaste(&game.stockwaste);
-    printTableau(&game.tableau);
+    if(arguments.exchangeFormat == 't'){
+        printRules(&game.rules);
+        printFoundations(&game.foundation);
+        printTableau(&game.tableau);
+        printStockWaste(&game.stockwaste);
+    }
+    else{
+        printFoundations(&game.foundation);
+        printf("TABLEAU:\n");
+        printHumanReadTableau(&game.tableau);
+        printf("Waste top\n");
+        printfHumanReadTopWaste(&game.stockwaste);
+    }
 }

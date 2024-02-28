@@ -22,5 +22,6 @@ void getTopWasteCard(StockWaste *stockwaste, Card *card);
 void removeCardFromWaste(StockWaste *stockwatse, Rules *rules, Card *source);
 int doStockWasteCardTurnover(StockWaste *stockWaste, Rules *rules);
 int resetWasteToStock(StockWaste *stockwaste);
+void printfHumanReadTopWaste(StockWaste *stockwaste);
 
 #endif //SOLITAIRE_STOCKWASTE_H

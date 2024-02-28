@@ -175,3 +175,10 @@ int resetWasteToStock(StockWaste *stockwaste){
     }while(swptr-- != startptr);
     return 1;
 }
+
+void printfHumanReadTopWaste(StockWaste *stockwaste){
+    for(int i = 0; stockwaste->sw[i].rank != 0; i++){
+        if(stockwaste->sw[i].faceUp == 't')
+            printf("%c%c ", stockwaste->sw[i].rank, stockwaste->sw[i].suit);
+    }
+}
