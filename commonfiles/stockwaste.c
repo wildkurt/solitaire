@@ -99,19 +99,19 @@ void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck, int *stock
 }
 
 void getTopWasteCard(StockWaste *stockwaste, Card *card){
-    Card *ptr;
+    Card *ptr, *startptr;
 
     ptr = stockwaste->sw;
-
+    startptr = stockwaste->sw;
     while(ptr->faceUp =='t'){
         ptr++;
     }
-    if(ptr->rank == 0)
+    if(ptr->rank == 0 && ptr == startptr)
         return;
     card->rank = (ptr-1)->rank;
     card->suit = (ptr-1)->suit;
     card->faceUp = (ptr-1)->faceUp;
-    card->cardCount = (ptr+1)->cardCount;
+    card->cardCount = (ptr-1)->cardCount;
 }
 
 void removeCardFromWaste(StockWaste *stockwaste, Rules *rules, Card *source){
@@ -154,4 +154,24 @@ int doStockWasteCardTurnover(StockWaste *stockWaste, Rules *rules){
         }
     }
     return 0;
+}
+
+int resetWasteToStock(StockWaste *stockwaste){
+    //Case 1: Stock/Waste is empty
+    //Case 2: Only one waste card, can be flipped whether it makes sense or not
+    //Case 3: There are stock cards left
+    //Case 4: All the cards are in the waste
+
+    Card *swptr = stockwaste->sw, *startptr = stockwaste->sw;
+    if(swptr->rank == 0)
+        return 0;
+    //Move to the end of the stock pile
+    while(swptr->rank != 0){swptr++;}
+    swptr--;
+    if(swptr->faceUp == 'f')
+        return 0;
+    do{
+        swptr->faceUp = 'f';
+    }while(swptr-- != startptr);
+    return 1;
 }

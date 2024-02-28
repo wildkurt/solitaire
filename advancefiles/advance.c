@@ -167,7 +167,19 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
             continue;
         }
         //reset the waste back to stock
-        if(movesList->moves[i].actionn == 'r'){}
+        if(movesList->moves[i].actionn == 'r'){
+            if(remainingWastResets == game->rules.wasteResets){
+                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+                return 1;
+            }
+            if(resetWasteToStock(&game->stockwaste)){
+                remainingWastResets++;
+            }
+            else{
+                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+                return 1;
+            }
+        }
     }
     return 0;
 }

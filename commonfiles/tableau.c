@@ -150,15 +150,15 @@ void getTopTableauColumnCard(Tableau *tableau, char to, Card *destination){
     int columnNumber = to - '0';
 
     Card *ptr = getPointerToColumn(columnNumber, tableau);
-
+    Card *startPtr = getPointerToColumn(columnNumber,tableau);
     while(ptr->rank != 0){ptr++;}
 
+    if(ptr == startPtr){
+        *destination = *ptr;
+        return;
+    }
     ptr--;
-
-    destination->rank = ptr->rank;
-    destination->suit = ptr->suit;
-    destination->faceUp = ptr->faceUp;
-    destination->cardCount = ptr->cardCount;
+    *destination = *ptr;
 }
 
 void addCardToTableauColumn(Tableau *tableau, char to, Card *source){
@@ -182,16 +182,21 @@ int moveCardFromColumnToColumn(Tableau  *tableau, char from, char to){
     while(toptr->rank != 0){toptr++;}
     //Get the top card in to column
     getTopTableauColumnCard(tableau, to, &destination);
-
     //pointer to from column
     Card *fromptr = getPointerToColumn(fromcolumn, tableau);
 
     //look for card that can be moved to "to" column.
     //Find the uncovered cards
     while(fromptr->faceUp == 'f'){fromptr++;}
+    //If the from card is a king and the to is empty column, then move
     //compare the uncovered from cards to the to top card.
     while(fromptr->rank != 0){
         if(!isSameColor(destination.suit, fromptr->suit) && isRank(destination.rank) - 1 == isRank(fromptr->rank)){
+            if((fromptr-1)->faceUp == 'f')
+                (fromptr-1)->faceUp = 't';
+            break;
+        }
+        if(toptr->rank == 0 && fromptr->rank == 'K'){
             if((fromptr-1)->faceUp == 'f')
                 (fromptr-1)->faceUp = 't';
             break;
@@ -220,11 +225,12 @@ void removeCardFromColumn(Tableau *tableau, char column, Card source){
 
     Card *colptr = getPointerToColumn(columnNumber, tableau);
 
-    while(1){
-        if(isRank(colptr->rank) + 1 == isRank(source.rank) && colptr->suit == source.suit)
+    while(colptr->rank != 0){
+        if(isRank(colptr->rank) == isRank(source.rank) && colptr->suit == source.suit)
             break;
         colptr++;
     }
-
+    if((colptr-1)->faceUp == 'f')
+        (colptr-1)->faceUp = 't';
     *colptr = temp;
 }
