@@ -20,5 +20,6 @@ void printStockWaste(StockWaste *stockWaste);
 void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck, int *stock, int *waste);
 void getTopWasteCard(StockWaste *stockwaste, Card *card);
 void removeCardFromWaste(StockWaste *stockwatse, Rules *rules, Card *source);
+int doStockWasteCardTurnover(StockWaste *stockWaste, Rules *rules);
 
 #endif //SOLITAIRE_STOCKWASTE_H

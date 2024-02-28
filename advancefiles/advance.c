@@ -100,6 +100,10 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
     char *columns = "1234567";
 
     for(int i = 0; movesList->moves[i].from != 0 || movesList->moves[i].actionn != 0; i++){
+        //In the event that the moves are limited to a certain number, the processing of moves will stop even if more remain
+        if(arguments->movesLimit == 't' && arguments->numberToPlay == *moves){
+            return 0;
+        }
         (*moves)++;
         //'w' can be a destination and 'f' can't be a source.
         if(movesList->moves[i].from == 'f' || movesList->moves[i].to == 'w'){
@@ -122,7 +126,7 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
                 Card destination, source;
                 getTopTableauColumnCard(&game->tableau, movesList->moves[i].to, &destination);
                 getTopWasteCard(&game->stockwaste, &source);
-                if(!isSameColor(destination.suit, source.suit)){
+                if(!isSameColor(destination.suit, source.suit) && isRank(destination.rank) - 1 == isRank(source.rank)){
                     removeCardFromWaste(&game->stockwaste, &game->rules, &source);
                     addCardToTableauColumn(&game->tableau, movesList->moves[i].to, &source);
                 }
@@ -135,15 +139,33 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
                     return 1;
                 }
             }
+            continue;
         }
-        else if(strchr(columns, movesList->moves[i].from) && strchr(columns, movesList->moves[i].to)){
+        else if(strchr(columns, movesList->moves[i].from) && strchr(columns, movesList->moves[i].to) && movesList->moves[i].from != 0){
             if(!moveCardFromColumnToColumn(&game->tableau, movesList->moves[i].from, movesList->moves[i].to)){
                 fprintf(stderr,"Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
                 return 1;
             }
+            continue;
+        }
+        else if(strchr(columns, movesList->moves[i].from) && movesList->moves[i].to == 'f'){
+            Card source;
+            getTopTableauColumnCard(&game->tableau, movesList->moves[i].from, &source);
+            if(addCardToFoundations(&game->foundation, source)){
+                fprintf(stderr, "Move %d is illegal: %c->%c\n",*moves, movesList->moves[i].from, movesList->moves[i].to);
+                return 1;
+            }
+            removeCardFromColumn(&game->tableau, movesList->moves[i].from, source);
+            continue;
         }
         //turn over cards in stock
-        if(movesList->moves[i].actionn == '.'){}
+        if(movesList->moves[i].actionn == '.'){
+            if(doStockWasteCardTurnover(&game->stockwaste, &game->rules)){
+                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+                return 1;
+            }
+            continue;
+        }
         //reset the waste back to stock
         if(movesList->moves[i].actionn == 'r'){}
     }

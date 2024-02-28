@@ -44,6 +44,7 @@ int main(int args, char *argv[]){
         exit(1);
     }
 
+
     printf("Processed %d moves, all valid\n",moves);
 
     printMoves(&movesList);

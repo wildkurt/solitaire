@@ -130,7 +130,7 @@ int addCardToFoundations(Foundations *foundation, Card source){
             foundation->foundation[i] = source;
             return 0;
         }
-        else if(isRank(source.rank) - 1 == foundation->foundation[i].rank && source.suit == foundation->foundation[i].suit){
+        else if(isRank(source.rank) - 1 == isRank(foundation->foundation[i].rank) && source.suit == foundation->foundation[i].suit){
             foundation->foundation[i] = source;
             return 0;
         }

@@ -141,3 +141,17 @@ void removeCardFromWaste(StockWaste *stockwaste, Rules *rules, Card *source){
         }
     }
 }
+
+int doStockWasteCardTurnover(StockWaste *stockWaste, Rules *rules){
+    Card *swptr = stockWaste->sw;
+
+    while(swptr->faceUp == 't'){swptr++;}
+    if(swptr->rank == 0)
+        return 1;
+    else{
+        for(int i = 0; swptr[i].rank != 0 && i < rules->cardTurnover;i++){
+            swptr[i].faceUp = 't';
+        }
+    }
+    return 0;
+}
