@@ -102,6 +102,7 @@ void printTableau(Tableau *tableau){
     printf("TABLEAU:\n");
     for(int i = 7; i >= 1; i--){
         Card *ptr = getPointerToColumn(i,tableau);
+        printf("\t");
         if(ptr[0].rank == 0){
             printf("|\n");
             continue;
@@ -271,8 +272,11 @@ void printTableauToFile(FILE *outputtofile, Tableau *tableau){
     fprintf(outputtofile, "TABLEAU:\n");
     for(int i = 7; i > 0; i--){
         colptr = getPointerToColumn(i, tableau);
+        fprintf(outputtofile,"\t");
         if(colptr->faceUp == 't')
             fprintf(outputtofile, "| ");
+        if(colptr->rank == 0)
+            fprintf(outputtofile, "|");
         while(colptr->rank != 0){
             if((colptr-1)->faceUp == 'f' && colptr->faceUp == 't')
                 fprintf(outputtofile, "| ");

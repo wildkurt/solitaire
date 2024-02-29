@@ -51,6 +51,7 @@ int main(int args, char *argv[]){
         printFoundations(&game.foundation);
         printTableau(&game.tableau);
         printStockWaste(&game.stockwaste);
+        printf("MOVES:\n");
     }
     else{
         printFoundations(&game.foundation);
@@ -67,7 +68,7 @@ int main(int args, char *argv[]){
         printFoundationToFile(outputtofile, &game.foundation);
         printTableauToFile(outputtofile,&game.tableau);
         printStockWasteToFile(outputtofile, &game.stockwaste);
-
+        fprintf(outputtofile,"MOVES:\n");
         fclose(outputtofile);
     }
 }

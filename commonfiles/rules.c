@@ -80,18 +80,18 @@ int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
 
 void printRules(Rules *rules){
     printf("RULES:\n");
-    printf("turn %d\n",rules->cardTurnover);
+    printf("\tturn %d\n",rules->cardTurnover);
     if(rules->wasteResets < 0)
-        printf("unlimited\n");
+        printf("\tunlimited\n");
     else
-        printf("limit %d\n", rules->wasteResets);
+        printf("\tlimit %d\n", rules->wasteResets);
 }
 
 void printRulesToFile(FILE *outputtofile, Rules *rules){
     fprintf(outputtofile, "RULES:\n");
-    fprintf(outputtofile, "turn %d\n", rules->cardTurnover);
+    fprintf(outputtofile, "\tturn %d\n", rules->cardTurnover);
     if(rules->wasteResets < 0)
-        fprintf(outputtofile,"unlimited\n");
+        fprintf(outputtofile,"\tunlimited\n");
     else
-        fprintf(outputtofile, "limit %d\n", rules->wasteResets);
+        fprintf(outputtofile, "\tlimit %d\n", rules->wasteResets);
 }

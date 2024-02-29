@@ -72,6 +72,7 @@ int getFoundations(Foundations *foundation, int *line, FILE *filelink, char *buf
 
 void printFoundations(Foundations *foundation){
     printf("FOUNDATIONS:\n");
+    printf("\t");
     for(int i = 0; i < 4; i++){
         printf("%c%c ", foundation->foundation[i].rank, foundation->foundation[i].suit);
     }
@@ -140,6 +141,7 @@ int addCardToFoundations(Foundations *foundation, Card source){
 
 void printFoundationToFile(FILE *outputtofile, Foundations *foundation){
     fprintf(outputtofile, "FOUNDATIONS:\n");
+    fprintf(outputtofile,"\t");
     for(int i = 0; i < 4; i++){
         fprintf(outputtofile,"%c%c ", foundation->foundation[i].rank, foundation->foundation[i].suit);
     }

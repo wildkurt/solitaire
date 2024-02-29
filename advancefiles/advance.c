@@ -18,7 +18,8 @@ void getCommandLineArguments(int args,char **argv, AdvanceArgs *arguments){
             int length = (int)strlen(argv[i+1]);
             arguments->outputfile = malloc((length + 1) * sizeof(char));
             strcpy(arguments->outputfile, argv[i+1]);
-            i+=2;
+            arguments->outputToFile = 't';
+            i+=1;
         }
         else if(strstr(argv[i], "-x")!=0){
             arguments->exchangeFormat = 't';

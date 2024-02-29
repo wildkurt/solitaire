@@ -47,6 +47,7 @@ int getStockWaste(StockWaste *stockwaste, int *line, FILE *filelink, char *buffe
 
 void printStockWaste(StockWaste *stockWaste){
     printf("STOCK:\n");
+    printf("\t");
     if(stockWaste->sw[0].rank == 0){
         printf("|\n");
     }
@@ -188,6 +189,8 @@ void printfHumanReadTopWaste(StockWaste *stockwaste){
 
 void printStockWasteToFile(FILE *outputtofile, StockWaste *stockwaste){
     Card *swptr = stockwaste->sw;
+    fprintf(outputtofile,"STOCK:\n");
+    fprintf(outputtofile,"\t");
     if(swptr->faceUp == 'f')
         fprintf(outputtofile,"| ");
     while(swptr->rank != 0){
@@ -196,4 +199,5 @@ void printStockWasteToFile(FILE *outputtofile, StockWaste *stockwaste){
         fprintf(outputtofile, "%c%c ", swptr->rank, swptr->suit);
         swptr++;
     }
+    fprintf(outputtofile,"\n");
 }
