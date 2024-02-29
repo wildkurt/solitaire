@@ -265,3 +265,21 @@ void printHumanReadTableau(Tableau *tableau){
         printf("\n");
     }
 }
+
+void printTableauToFile(FILE *outputtofile, Tableau *tableau){
+    Card *colptr;
+    fprintf(outputtofile, "TABLEAU:\n");
+    for(int i = 7; i > 0; i--){
+        colptr = getPointerToColumn(i, tableau);
+        if(colptr->faceUp == 't')
+            fprintf(outputtofile, "| ");
+        while(colptr->rank != 0){
+            if((colptr-1)->faceUp == 'f' && colptr->faceUp == 't')
+                fprintf(outputtofile, "| ");
+            fprintf(outputtofile, "%c%c ", colptr->rank, colptr->suit);
+            colptr++;
+        }
+        fprintf(outputtofile,"\n");
+    }
+
+}

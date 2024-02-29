@@ -86,3 +86,12 @@ void printRules(Rules *rules){
     else
         printf("limit %d\n", rules->wasteResets);
 }
+
+void printRulesToFile(FILE *outputtofile, Rules *rules){
+    fprintf(outputtofile, "RULES:\n");
+    fprintf(outputtofile, "turn %d\n", rules->cardTurnover);
+    if(rules->wasteResets < 0)
+        fprintf(outputtofile,"unlimited\n");
+    else
+        fprintf(outputtofile, "limit %d\n", rules->wasteResets);
+}

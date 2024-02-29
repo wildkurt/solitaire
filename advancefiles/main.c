@@ -59,4 +59,15 @@ int main(int args, char *argv[]){
         printf("Waste top\n");
         printfHumanReadTopWaste(&game.stockwaste);
     }
+    if(arguments.outputToFile == 't'){
+        FILE *outputtofile;
+
+        outputtofile = fopen(arguments.outputfile,"w");
+        printRulesToFile(outputtofile, &game.rules);
+        printFoundationToFile(outputtofile, &game.foundation);
+        printTableauToFile(outputtofile,&game.tableau);
+        printStockWasteToFile(outputtofile, &game.stockwaste);
+
+        fclose(outputtofile);
+    }
 }

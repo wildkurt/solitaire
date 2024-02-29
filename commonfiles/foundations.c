@@ -137,3 +137,11 @@ int addCardToFoundations(Foundations *foundation, Card source){
     }
     return 1;
 }
+
+void printFoundationToFile(FILE *outputtofile, Foundations *foundation){
+    fprintf(outputtofile, "FOUNDATIONS:\n");
+    for(int i = 0; i < 4; i++){
+        fprintf(outputtofile,"%c%c ", foundation->foundation[i].rank, foundation->foundation[i].suit);
+    }
+    fprintf(outputtofile,"\n");
+}

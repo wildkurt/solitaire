@@ -18,5 +18,6 @@ int getFoundations(Foundations *foundation, int *line, FILE *filelink, char *buf
 void printFoundations(Foundations *foundation);
 void countFoundationCards(Foundations *foundation, Card *countingdeck);
 int addCardToFoundations(Foundations *foundation, Card source);
+void printFoundationToFile(FILE *outputtofile, Foundations *foundation);
 
 #endif //SOLITAIRE_FOUNDATIONS_H

@@ -54,11 +54,14 @@ void printStockWaste(StockWaste *stockWaste){
         if(stockWaste->sw[0].faceUp == 'f'){
             printf("| ");
         }
-        for (int i = 0; stockWaste->sw[i].rank != 0; i++) {
+        int i = 0;
+        for (; stockWaste->sw[i].rank != 0; i++) {
             if(stockWaste->sw[i-1].faceUp =='t' && stockWaste->sw[i].faceUp == 'f')
                 printf("| ");
             printf("%c%c ", stockWaste->sw[i].rank, stockWaste->sw[i].suit);
         }
+        if(stockWaste->sw[i-1].faceUp == 't')
+            printf("|");
         printf("\n");
     }
 }
@@ -180,5 +183,17 @@ void printfHumanReadTopWaste(StockWaste *stockwaste){
     for(int i = 0; stockwaste->sw[i].rank != 0; i++){
         if(stockwaste->sw[i].faceUp == 't')
             printf("%c%c ", stockwaste->sw[i].rank, stockwaste->sw[i].suit);
+    }
+}
+
+void printStockWasteToFile(FILE *outputtofile, StockWaste *stockwaste){
+    Card *swptr = stockwaste->sw;
+    if(swptr->faceUp == 'f')
+        fprintf(outputtofile,"| ");
+    while(swptr->rank != 0){
+        if((swptr-1)->faceUp == 't' && (swptr)->faceUp == 'f')
+            fprintf(outputtofile, "| ");
+        fprintf(outputtofile, "%c%c ", swptr->rank, swptr->suit);
+        swptr++;
     }
 }

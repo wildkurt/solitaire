@@ -31,5 +31,6 @@ void addCardToTableauColumn(Tableau *tableau, char to, Card *source);
 int moveCardFromColumnToColumn(Tableau  *tableau, char from, char to);
 void removeCardFromColumn(Tableau *tableau, char column, Card source);
 void printHumanReadTableau(Tableau *tableau);
+void printTableauToFile(FILE *outputtofile, Tableau *tableau);
 
 #endif //SOLITAIRE_TABLEAU_H
