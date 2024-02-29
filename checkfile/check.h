@@ -1,5 +1,5 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 1/29/24.
 //
 
 #ifndef SOLITAIRE_CHECK_H
@@ -7,8 +7,7 @@
 
 #include "../commonfiles/gameconfiguration.h"
 
-void readFile(char *inputFile, GameConfiguration *game, int *line);
-void countCards(int *covered, int *stock, int *waste, GameConfiguration *game);
-int missingDuplicateCards(GameConfiguration *game);
+int getGameFile(GameConfiguration *game, char *filename);
+int countCards(GameConfiguration *game, int *covered, int *stock, int *waste);
 
 #endif //SOLITAIRE_CHECK_H

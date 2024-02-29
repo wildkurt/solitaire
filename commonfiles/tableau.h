@@ -1,30 +1,35 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 1/29/24.
 //
 
 #ifndef SOLITAIRE_TABLEAU_H
 #define SOLITAIRE_TABLEAU_H
 
-#include <bits/types/FILE.h>
-#include "card.h"
+#include <stdio.h>
+#include "Card.h"
+
+#define MAX_BUFFER 400
 
 typedef struct Tableau{
-    Card t7[30];
-    Card t6[30];
-    Card t5[30];
-    Card t4[30];
-    Card t3[30];
-    Card t2[30];
-    Card t1[30];
+    Card tab1[22];
+    Card tab2[22];
+    Card tab3[22];
+    Card tab4[22];
+    Card tab5[22];
+    Card tab6[22];
+    Card tab7[22];
 }Tableau;
 
-int findTableau(char *buffer, char *readBuffer, FILE *input, int *line, Tableau *tableu);
-Card *setPointer(int col, Tableau *tableau);
-Card *setPointerToTopCard(int col, Tableau *tableau);
+int getTableau(Tableau *tableau, int *line, FILE *filelink, char *buffer);
+Card *getPointerToColumn(int column, Tableau *tableau);
+int checkIfColumnCorrect(Card *column);
+int redAndBlack(char suit1, char suit2);
 void printTableau(Tableau *tableau);
-int moveColToCol(int src, int dst, Tableau *tableau);
-int isTableauCorrect(Tableau *tableau);
-void removeCardsFromColumn(Card *ptr);
-void printTableauGameFormat(Tableau *tableau)
+void countTableauCards(Tableau *tableau, Card *countingdeck);
+void getTopTableauColumnCard(Tableau *tableau, char to, Card *destination);
+void addCardToTableauColumn(Tableau *tableau, char to, Card *source);
+int moveCardFromColumnToColumn(Tableau  *tableau, char from, char to);
+void removeCardFromColumn(Tableau *tableau, char column, Card source);
+void printHumanReadTableau(Tableau *tableau);
 
 #endif //SOLITAIRE_TABLEAU_H

@@ -1,22 +1,22 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 1/29/24.
 //
 
 #ifndef SOLITAIRE_RULES_H
 #define SOLITAIRE_RULES_H
 
-#define MAX_BUFFER 200
-
 #include <stdio.h>
 
+#define MAX_BUFFER 400
+
 typedef struct Rules{
-    int turnOver;
-    int limit;
-    int line;
-    int found;
+    //How mantimes can the waste be reset, -1 if unlimited
+    int wasteResets;
+    //How many card can be turned over from stockpile
+    int cardTurnover;
 }Rules;
 
-int findRules(char *buffer, char *readBuffer, FILE *file, int *line, Rules *rules);
-void printRulesSTDOUT(Rules *rules);
+int getRules(Rules *rules, int *pInt, FILE *filelink, char *buffer);
+void printRules(Rules *rules);
 
 #endif //SOLITAIRE_RULES_H

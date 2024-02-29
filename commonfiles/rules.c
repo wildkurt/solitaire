@@ -1,82 +1,88 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 1/29/24.
 //
 
 #include <string.h>
-#include <ctype.h>
 #include <stdlib.h>
 #include "rules.h"
 
-int findRules(char *buffer, char *readBuffer, FILE *file, int *line, Rules *rules){
+int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
+    //Buffer to strip # lines
+    char cleanBuffer[MAX_BUFFER]={0};
+    // Indicates if section is found
+    int found = 0;
 
-    while(fgets(buffer, MAX_BUFFER, file)){
-        int index = 0;
-        (*line)++;
-        for(int i = 0; i < MAX_BUFFER; i++){
-            if(buffer[i] != '#' && buffer[i] != '\n')
-                readBuffer[index++] = buffer[i];
-            else
-                break;
+    //Read each line from the file
+    while(fgets(buffer,MAX_BUFFER, filename)){
+        //Skip lines that start with # or ignore everything after #
+        for(int i = 0; buffer[i] != '#' && buffer[i] != '\0' && i < MAX_BUFFER; i++){
+            cleanBuffer[i] = buffer[i];
         }
-        if(rules->found == 3){
-            return 1;
-        }
-        if(strstr(readBuffer,"FOUNDATIONS:") != 0)
+        //Put the contents of the cleanbuffer into buffer and return to caller
+        if(strstr(cleanBuffer,"FOUNDATIONS:") != 0){
             break;
-        if(strstr(readBuffer, "turn 1") != 0){
-            if(rules->found < 1){
-                fprintf(stderr, "Rules not found line %d", *line);
-                return 0;
-            }
-            else{
-                rules->turnOver = 1;
-                rules->found++;
-            }
         }
-        else if(strstr(readBuffer, "turn 3") != 0){
-            if(rules->found < 1){
-                fprintf(stderr, "Rules not found line %d", *line);
-                return 0;
-            }
-            else{
-                rules->turnOver = 3;
-                rules->found++;
-            }
-
+        //Look for RULES: header, card turn over, and waste resets
+        if(strstr(cleanBuffer, "RULES:")!=0){
+            found++;
         }
-        else if(strstr(readBuffer, "limit ") != 0){
-            char charNumber[10] = {0};
-            if(rules->found < 2){
-                fprintf(stderr,"Turn rule not found at line %d", *line);
-                return(0);
+        //If turn is found
+        if(strstr(cleanBuffer, "turn") != 0){
+            //if RULES: was not found then return error
+            if(found != 1){
+                return 1;
             }
+            //Determine which turn it is
             else{
-                int subIndex = strspn(readBuffer, "limit "), index2 = 0;
-                while(isdigit(readBuffer[subIndex])){
-                    charNumber[index2++] = readBuffer[subIndex++];
+                if(strstr(cleanBuffer, "turn 1") != 0){
+                    found++;
+                    rules->cardTurnover = 1;
                 }
-                rules->limit = atoi(charNumber);
-                rules->found++;
+                else if(strstr(cleanBuffer, "turn 3") != 0){
+                    found++;
+                    rules->cardTurnover = 3;
+                }
             }
-
         }
-        else if(strstr(readBuffer, "unlimited")!= 0){
-            if(rules->found < 2){
-                fprintf(stderr,"Turn rule not found at line %d", *line);
-                return(0);
+        //look for waste resets
+        if(strstr(cleanBuffer,"limit")!=0){
+            //if Rules or turn not found, error
+            if(found != 2)
+                return 2;
+            if(strstr(cleanBuffer,"unlimited") != 0){
+                found++;
+                rules->wasteResets = -1;
             }
             else{
-                rules->limit = -1;
-                rules->found++;
+                found++;
+                //get the number of allowed resets
+                char *ptr = strstr(cleanBuffer,"limit ");
+                ptr+=6;
+                char *endPtr;
+                rules->wasteResets = strtol(ptr,&endPtr, 10);
             }
         }
-        memset(readBuffer,0,MAX_BUFFER);
+        (*line)++;
+        memset(buffer,0,MAX_BUFFER);
+        memset(cleanBuffer, 0, MAX_BUFFER);
     }
-        return 0;
+    switch(found){
+        case 0 : return 1;
+        case 1 : return 2;
+        case 2 : return 3;
+        default : break;
+    }
+    //FOUNDATIONS: should be in the cleanBuffer minus any #. Copy to the buffer so next function can continue searching
+    memset(buffer, 0 , MAX_BUFFER);
+    strcpy(buffer, cleanBuffer);
+    return 0;
 }
 
-void printRulesSTDOUT(Rules *rules){
+void printRules(Rules *rules){
     printf("RULES:\n");
-    printf("Turn %d\n", rules->turnOver);
-    printf("Limit / Unlimited: %d\n", rules->limit);
+    printf("turn %d\n",rules->cardTurnover);
+    if(rules->wasteResets < 0)
+        printf("unlimited\n");
+    else
+        printf("limit %d\n", rules->wasteResets);
 }

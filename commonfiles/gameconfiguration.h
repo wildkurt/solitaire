@@ -1,5 +1,5 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 1/29/24.
 //
 
 #ifndef SOLITAIRE_GAMECONFIGURATION_H
@@ -9,16 +9,12 @@
 #include "foundations.h"
 #include "tableau.h"
 #include "stockwaste.h"
-#include "moves.h"
 
 typedef struct GameConfiguration{
     Rules rules;
-    Foundation foundation;
+    Foundations foundation;
     Tableau tableau;
     StockWaste stockwaste;
-    int found;
-    Moves moves;
-    int resetsDone;
-}GameConfiguration;
+} GameConfiguration;
 
 #endif //SOLITAIRE_GAMECONFIGURATION_H

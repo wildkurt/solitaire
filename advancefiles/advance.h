@@ -1,26 +1,26 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 2/14/24.
 //
 
 #ifndef SOLITAIRE_ADVANCE_H
 #define SOLITAIRE_ADVANCE_H
 
 #include "../commonfiles/gameconfiguration.h"
+#include "../movefiles/moves.h"
 
-typedef struct GameFlags{
-    char moves;
-    int numberMoves;
-    char outputfile;
-    char *outputfileName;
-    char exchange;
-    char *inputFile;
-}GameFlags;
+typedef struct AdvanceArgs{
+    char movesLimit;
+    int numberToPlay;
+    char outputToFile;
+    char *outputfile;
+    char exchangeFormat;
+    char *inputfile;
+} AdvanceArgs;
 
-void getCommandLineFlags(int args, char **argv, GameFlags *gameflags);
-void writeSTDINtoFile(char *defaultInputFile);
-int checkFile(char *filename);
-int readGameFile(GameFlags *gameflags, GameConfiguration *game);
-int checkMoves(GameConfiguration *game);
-void printTheGameToScreen(GameConfiguration *game);
+void getCommandLineArguments(int args,char **argv, AdvanceArgs *arguments);
+void writeSTDINtoFile(AdvanceArgs *arguments);
+int checkGameFile(AdvanceArgs *arguments);
+void getTheGameConfiguration(AdvanceArgs *arguments, GameConfiguration *game, Moves *moveList);
+int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *movesList, int *moves);
 
 #endif //SOLITAIRE_ADVANCE_H

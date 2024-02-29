@@ -1,59 +1,62 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 2/14/24.
 //
 
+/**Will use check to confirm file format is correct. Will need to read from a file or stdin.
+ * There are three command line switches:
+ * "-m N" which specifies how many moves will be played from the file, default is all movies.
+ * "-o file" specifies an output file for the game configuration after the moves have been made.
+ * "-x" indicates the output format to stdout, exchange or human readable
+ * The moves will be subject to the rules of solitaire.
+ * Symbols:
+ * "w" for the waste stack
+ * "1-7" for the columns
+ * "f" for the foundations
+ * "->" between two symbols indicates from and to
+ * "." turn over T cards (according to the RULES:)
+ * "r" reset the waste
+ * MOVES: will need to be checked for correct format and also validity of the move.*/
+#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "advance.h"
 
-void printForDebugging(GameFlags *gameflags, GameConfiguration *game);
-
 int main(int args, char *argv[]){
-    GameFlags gameflags = {'f', -1, 'f', 0, 'f', 0};
-    GameConfiguration game = {.rules = {1,-1,1,0}, .foundation};
-    char *defaultInputFile = "AdvanceToCheck.txt";
-    //Command line flags read
-    getCommandLineFlags(args, argv, &gameflags);
-    //There is a given game file
-    if(gameflags.inputFile != 0){
-        if(checkFile(gameflags.inputFile)){
-            exit(1);
-        }
-    }
-    //No game file, create one and send to check
-    else{
-        gameflags.inputFile = calloc(strlen(defaultInputFile) +1, sizeof(char));
-        strcpy(gameflags.inputFile, defaultInputFile);
-        writeSTDINtoFile(defaultInputFile);
-        if(checkFile(defaultInputFile)){
-            exit(1);
-        }
-    }
-    if(!readGameFile(&gameflags, &game)){
-        exit(EXIT_FAILURE);
-    }
-    else
-        if(!checkMoves(&game)){
-            printTheGameToScreen(&game);
-        }
-        else{
-            printf("Processed %d moves, all valid\n", game.moves.totalMoves);
-            printTheGameToScreen(&game);
-        }
-    return 0;
-}
+    int moves = 0;
+    AdvanceArgs arguments = {0,0,0,0,0,0};
+    GameConfiguration game = {.rules ={.cardTurnover = 0, .wasteResets = 0}, .foundation = {.foundation = {0}},
+            .tableau = {.tab1 = {0}, .tab2 = {0}, .tab3 = {0}, .tab4 = {0}, .tab5 = {0}, .tab6 = {0},
+                    .tab7 = {0}}, .stockwaste = {0}};
+    Moves movesList = {.moves = {0}};
 
-void printForDebugging(GameFlags *gameflags, GameConfiguration *game){
-    printf("The game flags are:\n");
-    printf("Moves: %c\n", gameflags->moves);
-    printf("Number of moves: %d\n", gameflags->numberMoves);
-    printf("Outputfile flag: %c\n", gameflags->outputfile);
-    printf("Output file name: %s\n", gameflags->outputfileName);
-    printf("Exchange format: %c\n", gameflags->exchange);
-    printf("Input file name: %s\n", gameflags->inputFile);
-    printRulesSTDOUT(&game->rules);
-    printFoundation(&game->foundation);
-    printTableau(&game->tableau);
-    printStockWaste(&game->stockwaste);
-    printMoves(&game->moves);
+    //Get the command line arguments if any, maybe reading from stdin
+    getCommandLineArguments(args,argv, &arguments);
+    //Handle case where input file is from stdin
+    if(arguments.inputfile == 0){
+        writeSTDINtoFile(&arguments);
+    }
+    //CHECK checks the file for correctness
+    if(checkGameFile(&arguments)){
+        exit(1);
+    }
+    // Get the file contents
+    getTheGameConfiguration(&arguments, &game, &movesList);
+    if(checkTheGameMoves(&arguments, &game, &movesList, &moves)){
+        exit(1);
+    }
+
+    printf("Processed %d moves, all valid\n",moves);
+
+    if(arguments.exchangeFormat == 't'){
+        printRules(&game.rules);
+        printFoundations(&game.foundation);
+        printTableau(&game.tableau);
+        printStockWaste(&game.stockwaste);
+    }
+    else{
+        printFoundations(&game.foundation);
+        printf("TABLEAU:\n");
+        printHumanReadTableau(&game.tableau);
+        printf("Waste top\n");
+        printfHumanReadTopWaste(&game.stockwaste);
+    }
 }

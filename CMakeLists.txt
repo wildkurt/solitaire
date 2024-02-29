@@ -3,20 +3,22 @@ project(Solitaire)
 set(CMAKE_STANDARD 14)
 
 set(COMMON_FILES
-        commonfiles/card.c
-        commonfiles/card.h
-        commonfiles/foundations.c
-        commonfiles/foundations.h
         commonfiles/gameconfiguration.c
         commonfiles/gameconfiguration.h
         commonfiles/rules.c
         commonfiles/rules.h
-        commonfiles/stockwaste.c
-        commonfiles/stockwaste.h
+        commonfiles/foundations.c
+        commonfiles/foundations.h
+        commonfiles/Card.c
+        commonfiles/Card.h
         commonfiles/tableau.c
         commonfiles/tableau.h
-        commonfiles/moves.c
-        commonfiles/moves.h
+        commonfiles/stockwaste.c
+        commonfiles/stockwaste.h
+)
+set(MOVE_FILES
+        movefiles/moves.c
+        movefiles/moves.h
 )
 add_executable(check
         checkfile/main.c
@@ -30,4 +32,5 @@ add_executable(advance
         advancefiles/advance.c
         advancefiles/advance.h
         ${COMMON_FILES}
+        ${MOVE_FILES}
 )

@@ -1,23 +1,19 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 1/29/24.
 //
 
 #ifndef SOLITAIRE_CARD_H
 #define SOLITAIRE_CARD_H
 
-#define MAX_BUFFER 200
-
 typedef struct Card{
     char rank;
     char suit;
-    char covered;
-    char stock;
+    char faceUp;
+    int cardCount;
 }Card;
 
 int isRank(char c);
 int isSuit(char c);
-char isRedOrBlack(char c);
-int rankValue(char c);
-char valueRank(int c);
-
+char getRank(int c);
+int isSameColor(char c, char d);
 #endif //SOLITAIRE_CARD_H

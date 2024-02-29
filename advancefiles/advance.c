@@ -1,193 +1,185 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 2/14/24.
 //
 
-#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "advance.h"
 
-void getCommandLineFlags(int args, char **argv, GameFlags *gameflags){
-    for(int i = 0; i < args; i++){
-        //How many moves are to be played
-        if(strstr(argv[i], "-m") != NULL){
-            gameflags->moves = 't';
-            gameflags->numberMoves = atoi(argv[i+1]);
+void getCommandLineArguments(int args,char **argv, AdvanceArgs *arguments){
+    for(int i = 1; i < args; i++){
+        if(strstr(argv[i],"-m")!=0){
+            arguments->movesLimit = 't';
+            arguments->numberToPlay = atoi(argv[i+1]);
+            i+=2;
         }
-        //Write to an output file instead of STDOUT
-        else if(strstr(argv[i], "-o") != NULL){
-            gameflags->outputfile = 't';
-            gameflags->outputfileName = calloc(strlen(argv[i+1]) + 1, sizeof(char));
-            strcpy(gameflags->outputfileName, argv[i+1]);
+        else if(strstr(argv[i],"-o")!=0){
+            int length = (int)strlen(argv[i+1]);
+            arguments->outputfile = malloc((length + 1) * sizeof(char));
+            strcpy(arguments->outputfile, argv[i+1]);
+            i+=2;
         }
-        //Write game out in exchange format to STDOUT or file
-        else if(strstr(argv[i], "-x") != NULL){
-            gameflags->exchange = 't';
+        else if(strstr(argv[i], "-x")!=0){
+            arguments->exchangeFormat = 't';
         }
-        //The case that the input file name is the first argument
-        else if(i == 0 && (strstr(argv[i],"-") == NULL)){
-            gameflags->inputFile = calloc(strlen(argv[i]+1),sizeof(char));
-            strcpy(gameflags->inputFile, argv[i]);
-        }
-        //The case that the file name is not first argument. Must check if the argument is the input file name or the
-        //output file name by determining if it is preceded by a "-o" or "-m" since both of these flags have arguments
-        else if(i > 0 && (strstr(argv[i-1],"-o") == NULL && strstr(argv[i-1], "-m") == NULL)){
-            gameflags->inputFile = calloc(strlen(argv[i]+1),sizeof(char));
-            strcpy(gameflags->inputFile, argv[i]);
-        }
-    }
-}
-//Always provide a file for check to read from
-void writeSTDINtoFile(char *defaultInputFile){
-    char buffer[MAX_BUFFER] = {0};
-    FILE *adToCh;
-    adToCh = fopen(defaultInputFile,"r");
-    while(fgets(buffer, MAX_BUFFER, stdin)!=0){
-        fputs(buffer, adToCh);
-    }
-}
-
-int checkFile(char *filename){
-    int result = 1;
-    char command[MAX_BUFFER] = {0}, buffer[MAX_BUFFER];
-    FILE *runCheck;
-    //Add string for check
-    strcat(command,"./check ");
-    //Add filename to command
-    strcat(command, filename);
-    //Run command and create file descriptor to read check output
-    runCheck = popen(command,"r");
-    //See if Check reports file is valid. If valid return 0, if not, return 1 and out put the error
-    while(fgets(buffer,MAX_BUFFER, runCheck) != 0){
-        if(strcmp(buffer,"Input file is valid\n")==0){
-            result = 0;
-            break;
-        }
-        else
-            fprintf(stderr, "%s", buffer);
-    }
-    return result;
-}
-
-int readGameFile(GameFlags *gameflags, GameConfiguration *game){
-    char buffer[MAX_BUFFER] = {0}, readBuffer[MAX_BUFFER] = {0};
-    int line;
-    FILE *inputfile;
-
-    inputfile = fopen(gameflags->inputFile,"r");
-    if(inputfile == 0){
-        fprintf(stderr, "Unable to find file: %s\n", gameflags->inputFile);
-        return 0;
-    }
-    game->rules.found++;
-    findRules(buffer, readBuffer,inputfile, &line, &game->rules);
-    findFoundation(buffer, readBuffer,inputfile,&line,&game->foundation);
-    findTableau(buffer, readBuffer, inputfile, &line, &game->tableau);
-    findStockWaste(buffer, readBuffer, inputfile, &line, &game->stockwaste);
-    if(!getMovesFromFile(buffer, readBuffer, inputfile, &line, &game->moves)){
-        fprintf(stderr, "Did not find moves in game file line %d\n", line);
-        return 0;
-    }
-    return 1;
-}
-
-int checkMoves(GameConfiguration *game){
-    //If this function is invoked then there are moves to process
-    int moveCounter = 0;
-    Move *ptr;
-    ptr = game->moves.moves;
-
-    while(ptr->from != 0 || ptr->action !=0){
-        //Count the moves
-        moveCounter++;
-        //check for move or action
-        if(ptr->from != 0){
-            //Move from waste
-            if(ptr->from == 'w'){
-                Card *temp = getTopWasteCard(&game->stockwaste);
-                //Move to foundation
-                if(ptr->to != 'f'){
-                    if(addCardToFoundation(temp, &game->foundation)){
-                        removeWasteCard(temp);
-                    }
-                    else{
-                        fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
-                        return 0;
-                    }
-                }
-                //Move to columns
-                else{
-                    //get the top card in the tableau from the indicated column
-                    Card *tableauPtr = setPointerToTopCard(ptr->to - '0', &game->tableau);
-                    //get the top was card
-                    Card *wastePtr = getTopWasteCard(&game->stockwaste);
-                    //Compare the cards to see if the waste card can be placed in the column
-                    //Waste card must be opposite color and one rank lower
-                    if(rankValue(wastePtr->rank) + 1 == rankValue(tableauPtr->rank) && isRedOrBlack(wastePtr->suit) != isRedOrBlack(tableauPtr->suit)){
-                        //need to add the waste card to the tableau column
-                        *(++tableauPtr) = *wastePtr;
-                        removeWasteCard(wastePtr);
-                    }
-                    else{
-                        fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
-                        return 0;
-                    }
-                }
-            }
-            //Move from columns
-            else{
-                //Move to foundtaion
-                if(ptr->to == 'f'){
-                    //get a pointer to the top card in column
-                    Card *tableauPtr = setPointerToTopCard(ptr->from - '0', &game->tableau);
-                    if(!addCardToFoundation(tableauPtr, &game->foundation)){
-                        fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
-                        return 0;
-                    }
-                    else{
-                        removeCardsFromColumn(tableauPtr);
-                    }
-                }
-                //Move to column
-                else{
-                    if(!moveColToCol(ptr->from - '0', ptr->to - '0', &game->tableau)){
-                        fprintf(stderr,"Move %d is illegal: %c->%c\n",moveCounter, ptr->from, ptr->to);
-                        return 0;
-                    }
-                }
-            }
-
-        }
-        //Perform action
         else{
-            //Reset waste
-            if(ptr->action == 'r'){
-                if(!doStockWasteReset(&game->stockwaste, &game->rules)){
-                    fprintf(stderr,"Move %d is illegal: %c\n", moveCounter, ptr->action);
-                    return 0;
-                }
-            }
-            //Turn over card
-            if(ptr->action == '.'){
-                if(!doStockWasteCardTurnover(&game->rules, &game->stockwaste)){
-                    fprintf(stderr,"Move %d is illegal: %c\n", moveCounter, ptr->action);
-                    return 0;
-                }
-            }
+            int length = (int)strlen(argv[i]);
+            arguments->inputfile = malloc((length + 1) * sizeof(char));
+            strcpy(arguments->inputfile, argv[i]);
         }
     }
-    game->moves.totalMoves = moveCounter;
+}
+/**In this function, the scenario is that a input file name was not provided. The issue this causes is that if a file
+ * is provided by STDIN stream to Advance then CHECK will end up consuming the stream buffer which means Advance won't
+ * have access to the game file. The solution is to write the raw data to a file and then pass the name of that file to
+ * CHECK so it can perform its function.*/
+void writeSTDINtoFile(AdvanceArgs *arguments){
+    char *advanceInputFile = "advanceInputFile.txt";
+    FILE *advanceFile = fopen(advanceInputFile,"w");
+    char buffer[MAX_BUFFER] = {0};
+
+    //Give the file name to arguments
+    arguments->inputfile = advanceInputFile;
+
+    //Copy stdin to a file
+    while(fgets(buffer, MAX_BUFFER, stdin )){
+        fputs(buffer, advanceFile);
+        memset(buffer, 0, MAX_BUFFER);
+    }
+
+    fclose(advanceFile);
+}
+
+int checkGameFile(AdvanceArgs *arguments){
+    char checkcommand[MAX_BUFFER] ={0};
+    char buffer[MAX_BUFFER] = {0};
+    strcat(checkcommand, "./check ");
+    strcat(checkcommand, arguments->inputfile);
+    FILE *runCheck;
+
+    runCheck = popen(checkcommand,"r");
+    while(fgets(buffer, MAX_BUFFER, runCheck)){
+        if(strstr(buffer,"Input file is valid\n") != 0)
+            return 0;
+        memset(buffer, 0, MAX_BUFFER);
+    }
     return 1;
 }
 
-void printTheGameToScreen(GameConfiguration *game){
-    printf("FOUNDATIONS:\n");
-    printFoundation(&game->foundation);
-    printf("TABLEAU:\n");
-    printTableauGameFormat(&game->tableau);
-    printf("Waste top\n");
-    Card *temp = getTopWasteCard(&game->stockwaste);
-    if(game->moves.totalMoves == 0)
-        printf("(empty)\n");
-    else
-        printf("%c%c\n", temp->rank, temp->suit);
+void getTheGameConfiguration(AdvanceArgs *arguments, GameConfiguration *game, Moves *moveList){
+    char buffer[MAX_BUFFER] = {0};
+    int line = 0;
+    FILE *inputFile;
+
+    inputFile = fopen(arguments->inputfile, "r");
+
+    getRules(&game->rules, &line, inputFile, buffer);
+    getFoundations(&game->foundation, &line, inputFile, buffer);
+    getTableau(&game->tableau, &line, inputFile, buffer);
+    getStockWaste(&game->stockwaste, &line, inputFile, buffer);
+    if(getMoves(moveList->moves, inputFile, buffer)){
+        exit(1);
+    }
+    fclose(inputFile);
+}
+/**Legal moves:
+ * Waste to any column or foundation
+ * column to any column and foundation
+ * Turn over cards if there are any to turn over in the stock.
+ * Reset the waste to stock if there are resets remaining and cards in the waste pile
+ *
+ * FOUNDATIONS: card needs to be one rank higher and same suit as one of the foundation cards.
+ * TABLEAU: can move one or more cards from one column to another, but the destination card must be one rank higher and
+ * a different color from the source column
+ * STOCK: Can turn over one or three cards. Can online reset if there are remaining resets. the visible card is the top
+ * card in the waste.
+ * */
+int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *movesList, int *moves){
+    int remainingWastResets = 0;
+    char *columns = "1234567";
+
+    for(int i = 0; movesList->moves[i].from != 0 || movesList->moves[i].actionn != 0; i++){
+        //In the event that the moves are limited to a certain number, the processing of moves will stop even if more remain
+        if(arguments->movesLimit == 't' && arguments->numberToPlay == *moves){
+            return 0;
+        }
+        (*moves)++;
+        //'w' can be a destination and 'f' can't be a source.
+        if(movesList->moves[i].from == 'f' || movesList->moves[i].to == 'w'){
+            fprintf(stderr,"Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+            return 1;
+        }
+        //Moving from waste
+        if(movesList->moves[i].from == 'w'){
+            // move to foundations
+            if(movesList->moves[i].to == 'f'){
+                Card source;
+                getTopWasteCard(&game->stockwaste, &source);
+                if(addCardToFoundations(&game->foundation, source)){
+                    fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+                    return 1;
+                }
+                removeCardFromWaste(&game->stockwaste, &game->rules, &source);
+            }
+            else{
+                Card destination, source;
+                getTopTableauColumnCard(&game->tableau, movesList->moves[i].to, &destination);
+                getTopWasteCard(&game->stockwaste, &source);
+                if(!isSameColor(destination.suit, source.suit) && isRank(destination.rank) - 1 == isRank(source.rank)){
+                    removeCardFromWaste(&game->stockwaste, &game->rules, &source);
+                    addCardToTableauColumn(&game->tableau, movesList->moves[i].to, &source);
+                }
+                else if(source.rank == 'K' && destination.rank == 0){
+                    removeCardFromWaste(&game->stockwaste, &game->rules, &source);
+                    addCardToTableauColumn(&game->tableau, movesList->moves[i].to, &source);
+                }
+                else{
+                    fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+                    return 1;
+                }
+            }
+            continue;
+        }
+        else if(strchr(columns, movesList->moves[i].from) && strchr(columns, movesList->moves[i].to) && movesList->moves[i].from != 0){
+            if(!moveCardFromColumnToColumn(&game->tableau, movesList->moves[i].from, movesList->moves[i].to)){
+                fprintf(stderr,"Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+                return 1;
+            }
+            continue;
+        }
+        else if(strchr(columns, movesList->moves[i].from) && movesList->moves[i].to == 'f'){
+            Card source;
+            getTopTableauColumnCard(&game->tableau, movesList->moves[i].from, &source);
+            if(addCardToFoundations(&game->foundation, source)){
+                fprintf(stderr, "Move %d is illegal: %c->%c\n",*moves, movesList->moves[i].from, movesList->moves[i].to);
+                return 1;
+            }
+            removeCardFromColumn(&game->tableau, movesList->moves[i].from, source);
+            continue;
+        }
+        //turn over cards in stock
+        if(movesList->moves[i].actionn == '.'){
+            if(doStockWasteCardTurnover(&game->stockwaste, &game->rules)){
+                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+                return 1;
+            }
+            continue;
+        }
+        //reset the waste back to stock
+        if(movesList->moves[i].actionn == 'r'){
+            if(remainingWastResets == game->rules.wasteResets){
+                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+                return 1;
+            }
+            if(resetWasteToStock(&game->stockwaste)){
+                remainingWastResets++;
+            }
+            else{
+                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+                return 1;
+            }
+        }
+    }
+    return 0;
 }

@@ -1,205 +1,133 @@
 //
-// Created by wendellbest on 11/22/23.
+// Created by wendellbest on 1/29/24.
 //
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/time.h>
 #include "check.h"
 
-void readFile(char *inputFile, GameConfiguration *game, int *line){
-    FILE *input;
-    char buffer[MAX_BUFFER] = {0}, readBuffer[MAX_BUFFER]={0};
-    int index = 0 ;
-    if(strlen(inputFile)!=0)
-        input = fopen(inputFile,"r");
-    else
-        input = stdin;
-
-    if(input == 0){
-        fprintf(stderr, "Unable to open %s", inputFile);
+int getGameFile(GameConfiguration *game, char *filename){
+    int result = 0, line = 1;
+    FILE *filelink = 0;
+    char buffer[MAX_BUFFER];
+    //No filename from command line
+    if(filename==0){
+        //Check to see if there is anything coming from stdin by checking if it is blocking for five seconds. If stdin
+        //unblocks, then there is input, if not, then nothing is being piped in
+        fd_set rfds;
+        struct timeval tv;
+        int retval;
+        //initialize rfds
+        FD_ZERO(&rfds);
+        //set rfds to stdin file descriptor (0 = stdin, 1 = stdout, 3 - stderr)
+        FD_SET(0,&rfds);
+        //Set the seconds and nanoseconds for tv
+        tv.tv_sec = 5;
+        tv.tv_usec = 0;
+        //See if stdin is unblocked, wait five seconds if not
+        retval = select(1, &rfds, NULL, NULL, &tv);
+        if(retval){
+            filelink = stdin;
+        }
+        else{
+            fprintf(stderr,"No input from stdin provided.\n");
+            return 0;
+        }
     }
-    //Reads line from file
-    while(fgets(buffer, MAX_BUFFER, input) != 0){
-        (*line)++;
-        //Ignore hashes
-        for(int i = 0; i < MAX_BUFFER; i++){
-            if(buffer[i] != '#' && buffer[i] != '\n'){
-                readBuffer[index++] = buffer[i];
-            }
-            else{
-                index = 0;
-                break;
-            }
-        }
-        //RULES:
-        if(strstr(readBuffer, "RULES:") != 0){
-            game->found++;
-            game->rules.found++;
-            if(!findRules(buffer, readBuffer, input, line, &game->rules)){
-                if(game->rules.found == 2)
-                    fprintf(stderr,"Limits not found line %d\n", *line);
-                return;
-            }
-        }
-        //Foundations
-        if(strstr(readBuffer, "FOUNDATIONS:") != 0){
-            if(game->found < 1){ // 1 if rules found
-                fprintf(stderr,"Rules not found at line: %d\n", *line);
-                return;
-            }
-            game->found++;
-            //This is where the foundations functions take over
-            if(!findFoundation(buffer, readBuffer, input, line, &game->foundation)){
-                fprintf(stderr,"Foundations are incorrect or incomplete line %d\n", *line);
-                return;
-            }
-            //printFoundation();
-        }
-        //Tableau
-        if(strstr(readBuffer, "TABLEAU:") != 0){
-            if(game->found < 2){ // 2 if TABLEAU: and the tableaus found
-                fprintf(stderr,"Foundations not found line %d\n", *line);
-                return;
-            }
-            game->found++;
-            if(!findTableau(buffer, readBuffer, input, line, &game->tableau)){
-                fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",*line);
-                return;
-            }
-        }
-        //STOCK:
-        if(strstr(readBuffer, "STOCK:") != 0){
-            if(game->found < 3){
-                fprintf(stderr, "TABLEAU: not found or tableau is incorrect line %d\n",*line);
-                return;
-            }
-            game->found++;
-            if(!findStockWaste(buffer, readBuffer, input, line, &game->stockwaste)){
-                fprintf(stderr, "Stock not found or stock is incorrect line %d\n",*line);
-                return;
-            }
-            //printStockWaste();
-        }
-        //MOVES:
-        if(strstr(readBuffer, "MOVES:") != 0){
-            if(game->found < 4){
-                fprintf(stderr,"Stock not found line %d\n", *line);
-                return;
-            }
-            game->found++;
-            return;
-        }
-        memset(buffer,0,MAX_BUFFER);
-        memset(readBuffer,0,MAX_BUFFER);
+    else{
+        filelink = fopen(filename,"r");
     }
-    fclose(input);
+    if(filelink == 0){
+        fprintf(stderr,"Unable to find file %s\n", filename);
+        return 0;
+    }
+    result = getRules(&game->rules, &line, filelink, buffer);
+    switch(result){
+        case 1 : fprintf(stderr,"Error near line %d: expecting 'RULES:", line); return 0;
+        case 2 : fprintf(stderr,"Error near line %d: expecting 'turn 1' or 'turn 3'", line); return 0;
+        case 3 : fprintf(stderr,"Error near line %d: expecting 'limit N' or 'unlimited'", line); return 0;
+        default : break;
+    }
+    result = getFoundations(&game->foundation, &line, filelink, buffer);
+    switch(result){
+        case 1 : fprintf(stderr, "Error near line %d: expecting 'FOUNDATIONS:'", line); return 0;
+        case 2 : fprintf(stderr, "Error near line %d: Foundation suits are in incorrect order", line); return 0;
+        case 3 : fprintf(stderr, "Error near line %d: Foundations not found", line); return 0;
+        default : break;
+    }
+    result = getTableau(&game->tableau, &line, filelink, buffer);
+    switch(result){
+        case 1 : fprintf(stderr, "Error near line %d: Tableau Column order incorrect", line); return 0;
+        case 2 : fprintf(stderr, "Error near line %d: Tableau is missing columns", line); return 0;
+        default : break;
+    }
+    result = getStockWaste(&game->stockwaste, &line, filelink, buffer);
+    switch(result){
+        case 1 : fprintf(stderr, "Error near line %d: Stock not found", line); return 0;
+        default : break;
+    }
+    fclose(filelink);
+    return 1;
 }
 
-void countCards(int *covered, int *stock, int *waste, GameConfiguration *game){
-    Card *ptr;
-    int col = 7;
-    while(col != 0){
-        ptr = setPointer(col, &game->tableau);
-        while(ptr->rank != '\0'){
-            if(ptr->covered == 'T')
-                *covered = *covered + 1;
-            ptr++;
-        }
-        col--;
-    }
-    ptr = stockWastePtr(&game->stockwaste);
-    while(ptr->rank != '\0'){
-        if(ptr->covered == 'T'){
-            *stock = *stock + 1;
-            *covered = *covered + 1;
-        }
-        else if(ptr->covered == 'F')
-            *waste = *waste + 1;
-        ptr++;
-    }
-}
+int countCards(GameConfiguration *game, int *covered, int *stock, int *waste){
+    Card countingdeck[52] = {0}, duplicateCards[52] = {0}, missingCards[52] = {0};
+    int dupIndex = 0, missIndex = 0;
 
-int indexSetter(char c){
-    switch (c){
-        case 'c' : return 0;
-        case 'd' : return 13;
-        case 'h' : return 26;
-        case 's' : return 39;
-        default: return -1;
-    }
-}
-
-int missingDuplicateCards(GameConfiguration *game){
-    int deck[52] = {0};
-    //Total counts all the cards
-    int missing = 0, duplicates = 0;
-
-    //get a pointer to the foundations
-    Card *ptrfd = fdPtr(&game->foundation);
-    for(int i = 0; i < 4; i++){
-        if(ptrfd[i].rank == '_')
-            continue;
-        int limit = rankValue(ptrfd[i].rank);
-        for(int j = limit; j >=0 ; j--){
-            deck[j + indexSetter(ptrfd[i].suit)]  += 1;
-        }
-    }
-    //count the cards in the Tableau
-    Card *ptr;
-    int col = 7;
-    while(col != 0){
-        ptr = setPointer(col, &game->tableau);
-        while(ptr->rank != '\0'){
-            if(ptr->rank != '|')
-                deck[rankValue(ptr->rank) + indexSetter(ptr->suit)] += 1;
-            ptr++;
-        }
-        col--;
-    }
-    //count the cards in the stock
-    ptr = stockWastePtr(&game->stockwaste);
-    while(ptr->rank != '\0'){
-        if(ptr->rank != '|')
-            deck[rankValue(ptr->rank) + indexSetter(ptr->suit)] += 1;
-        ptr++;
-    }
+    countFoundationCards(&game->foundation, countingdeck);
+    countTableauCards(&game->tableau, countingdeck);
+    countStockWasteCards(&game->stockwaste, countingdeck, stock, waste);
 
     for(int i = 0; i < 52; i++){
-        if(deck[i] > 1)
-            duplicates++;
-        else if(deck[i] == 0)
-            missing++;
+        if(countingdeck[i].faceUp == 'f')
+            (*covered)++;
+        if(countingdeck[i].cardCount > 1)
+            duplicateCards[dupIndex++] = countingdeck[i];
+        if(countingdeck[i].cardCount == 0){
+            Card temp;
+            char rank, suit;
+            if(i <= 12){
+                rank = getRank(i + 1);
+                suit = 'c';
+            }
+            else if(i > 12 && i <= 25){
+                rank = getRank(i + 1 - 13);
+                suit = 'd';
+            }
+            else if(i > 25 && i <= 38){
+                rank = getRank(i + 1 - 26);
+                suit = 'h';
+            }
+            else if(i > 38 && i <= 51){
+                rank = getRank(i + 1 - 39);
+                suit = 's';
+            }
+            temp.rank = rank;
+            temp.suit = suit;
+            temp.cardCount = 0;
+            temp.faceUp = 'f';
+            missingCards[missIndex++] = temp;
+        }
     }
 
-    if(missing > 0){
-        printf("Missing cards: ");
-        char l;
-        int offset = 0;
-        for(int i = 0; i < 52; i++){
-            if(i < 13){l = 'c';}
-            if(i >= 13 && i < 26){offset = 13; l = 'd';}
-            if(i >= 26 && i < 39){offset = 26; l = 'h';}
-            if(i >= 39){offset = 39; l = 's';}
-            if(deck[i] == 0){
-                printf("%c%c ", valueRank(i - offset),l);
+    if(dupIndex > 0 || missIndex > 0){
+        if(dupIndex > 0){
+            fprintf(stderr, "Duplicated cards: ");
+            for(int i = 0; i < dupIndex; i++){
+                fprintf(stderr, "%c%c ", duplicateCards[i].rank, duplicateCards[i].suit);
             }
+            fprintf(stderr,"\n");
         }
-        printf("\n");
-    }
-    if(duplicates > 0){
-        printf("Duplicate cards:");
-        char l;
-        int offset = 0;
-        for(int i = 0; i < 52; i++){
-            if(i < 13){l = 'c';}
-            if(i >= 13 && i < 26){offset = 13; l = 'd';}
-            if(i >= 26 && i < 39){offset = 26; l = 'h';}
-            if(i >= 39){offset = 39; l = 's';}
-            if(deck[i] > 1){
-                printf("%c%c ", valueRank(i - offset),l);
+        if(missIndex > 0){
+            fprintf(stderr, "Missing cards: ");
+            for(int i = 0; i < missIndex; i++){
+                fprintf(stderr, "%c%c ", missingCards[i].rank, missingCards[i].suit);
             }
+            fprintf(stderr,"\n");
         }
-        printf("\n");
+        return 1;
     }
-    return 1;
+
+    return 0;
 }
