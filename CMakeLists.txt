@@ -34,3 +34,4 @@ add_executable(advance
         ${COMMON_FILES}
         ${MOVE_FILES}
 )
+add_executable(winnable winnablefiles/main.cpp)

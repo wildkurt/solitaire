@@ -175,6 +175,8 @@ int moveCardFromColumnToColumn(Tableau  *tableau, char from, char to){
     //Can move any number of cards from one column to another
     //Need to get the top card of the to column, then find a card in the from column that is one rank lower and opposite
     //color
+    if(from == to)
+        return 0;
     int fromcolumn = from - '0', tocolumn = to - '0';
     Card destination;
     //Pointer to the top destination card
