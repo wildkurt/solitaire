@@ -17,4 +17,6 @@ typedef struct GameConfiguration{
     StockWaste stockwaste;
 } GameConfiguration;
 
+void printTheGameConfiguration(GameConfiguration *game);
+void getTheGameConfigFromFile(GameConfiguration *game, char *inputfile);
 #endif //SOLITAIRE_GAMECONFIGURATION_H

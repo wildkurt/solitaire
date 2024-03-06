@@ -1,6 +1,9 @@
 //
 // Created by wendellbest on 2/29/24.
 //
+#include <iostream>
+#include "winnable.h"
+
 /**This program's purpose is to search for a winning combination of moves.
  * Switches:
  * -m N how many moves will be played or the default is 1000.
@@ -33,6 +36,12 @@
  * 50 possible moves. Two numbers, number of moves followed by the number of the move*/
 
 int main(int args, char *argv[]){
-
+    Winnable winnable;
+    winnable.retrieveCommandLineArguments(args,argv);
+    if(!winnable.getAndCheckGameFile()){
+        exit(1);
+    }
+    winnable.printWinnableCLIArguments();
+    winnable.printGameConfiguration();
     return 0;
 }
