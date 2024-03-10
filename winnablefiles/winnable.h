@@ -9,6 +9,7 @@
 #include "../commonfiles/gameconfiguration.h"
 
 
+
 class Winnable{
 private:
     bool limitmoves;
