@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <array>
+#include <memory>
 #include "winnable.h"
 
 Winnable::Winnable() {
@@ -96,6 +98,51 @@ void Winnable::printWinnableCLIArguments() {
 
 void Winnable::printGameConfiguration() {
     printTheGameConfiguration(&this->game);
+}
+
+bool Winnable::checkForWinningCondition(std::string command) {
+    std::array <char, 128> buffer;
+    std::string result;
+    std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
+    int covered = -1, stock = -1, waste = -1;
+
+    if(!pipe) throw std::runtime_error("popen() failed!");
+    while(!feof(pipe.get())){
+        if(fgets(buffer.data(), 128, pipe.get()) != nullptr)
+            result = buffer.data();
+        if(result.find("covered cards") != std::string::npos){
+            covered = getNumberFromString(result);
+        }
+        if(result.find("stock cards") != std::string::npos){
+            stock = getNumberFromString(result);
+        }
+        if(result.find("waste cards") != std::string::npos){
+            waste = getNumberFromString(result);
+        }
+    }
+    if(covered != 0 && stock != 0 && (waste < 0 || waste > 1))
+        return false;
+    return true;
+}
+
+int Winnable::getNumberFromString(std::string result) {
+    const char *digits = "0123456789";
+    int resultNumber = -1;
+    std::size_t const n = result.find_first_of(digits);
+    if (n != std::string::npos)
+    {
+        std::size_t const m = result.find_first_not_of(digits, n);
+        resultNumber = stoi( result.substr(n, m != std::string::npos ? m-n : m));
+    }
+    return resultNumber;
+}
+
+bool Winnable::searchForWinningSeriesOfMoves() {
+    return false;
+}
+
+void Winnable::addValidMoveToWinningList(int index, Move move) {
+
 }
 
 

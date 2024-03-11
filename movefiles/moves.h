@@ -1,6 +1,9 @@
 //
 // Created by wendellbest on 2/5/24.
 //
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef SOLITAIRE_MOVES_H
 #define SOLITAIRE_MOVES_H
@@ -21,3 +24,7 @@ int getMoves(Move *moves, FILE *inputfile, char *buffer);
 void printMoves(Moves *moves);
 
 #endif //SOLITAIRE_MOVES_H
+
+#ifdef __cplusplus
+}
+#endif

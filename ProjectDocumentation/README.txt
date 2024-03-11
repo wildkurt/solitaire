@@ -74,3 +74,18 @@ Advance has the capability to write a configuration file, should it be the only 
 it reads a file it will essentially output it in exchange format without any comments and in a standard format. So if
 Winnable gets a STDIN then it can just pass to Advance. Advance can write the file out verbatim and pass to check then
 it can parse the file if it checks out as okay.
+
+Things that need to be done when searching for moves.
+
+1. Check to see if more moves can be made. Return indicates no moves can be found less than or equal to max moves.
+2. Check for a winning condition. Return will indicate success. Need to return list of winning moves.
+    a. No covered cards.
+    b. No stock, only one waste card at most
+    c. Maybe use Check to look for a winning condition? Check returns count of covered cards, stock cards, and waste cards.
+3. To track the list valid moves.
+    a. Find a valid move, add to valid moves, recurse to search for next valid move.
+    b. If no valid move found from all possible moves, then return to previous caller and search for next valid move
+    c. Use number of moves as index, overwrite moves that don't lead to winning configuration.
+4. Need to pass a game configuration to Advance. File or pipe?
+    a. Advance automatically makes a file for check, so piping to Advance would be fine.
+    b. Advance will make a file for Winnable to read.

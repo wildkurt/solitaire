@@ -7,8 +7,7 @@
 
 #include <string>
 #include "../commonfiles/gameconfiguration.h"
-
-
+#include "../movefiles/moves.h"
 
 class Winnable{
 private:
@@ -19,6 +18,7 @@ private:
     bool verboseMode;
     std::string inputfile;
     GameConfiguration game;
+    Moves winningList[1000];
 public:
     Winnable();
     bool getLimitedMoves();
@@ -31,5 +31,9 @@ public:
     bool getAndCheckGameFile();
     void printWinnableCLIArguments();
     void printGameConfiguration();
+    bool checkForWinningCondition(std::string inputfile);
+    int getNumberFromString(std::string result);
+    void addValidMoveToWinningList(int index, Move move);
+    bool searchForWinningSeriesOfMoves();
 };
 #endif //SOLITAIRE_WINNABLE_H

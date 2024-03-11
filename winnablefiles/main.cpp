@@ -36,12 +36,20 @@
  * 50 possible moves. Two numbers, number of moves followed by the number of the move*/
 
 int main(int args, char *argv[]){
+    //Creat a Winnable object
     Winnable winnable;
+    //Get the command line arguments
     winnable.retrieveCommandLineArguments(args,argv);
+    /*get the game from the file and also run advance and check. Running advance allows Advance to create a file for use
+     * by check to perform the check. This is done to retrieve the contents of stdin and make sure it is put into a file
+     * that can be accessed by the calling. If it isn't done this way, check would empty the stdin buffer and there would
+     * be no input for advance since check doesn't output the game configuration. Winnable also requires access to the file*/
     if(!winnable.getAndCheckGameFile()){
         exit(1);
     }
+    //Print the command line arguments for testing
     winnable.printWinnableCLIArguments();
+    //print the game configuration for testing
     winnable.printGameConfiguration();
     return 0;
 }
