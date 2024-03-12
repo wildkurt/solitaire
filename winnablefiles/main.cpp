@@ -36,6 +36,7 @@
  * 50 possible moves. Two numbers, number of moves followed by the number of the move*/
 
 int main(int args, char *argv[]){
+    int movesSoFar = 0;
     //Creat a Winnable object
     Winnable winnable;
     //Get the command line arguments
@@ -45,6 +46,10 @@ int main(int args, char *argv[]){
      * that can be accessed by the calling. If it isn't done this way, check would empty the stdin buffer and there would
      * be no input for advance since check doesn't output the game configuration. Winnable also requires access to the file*/
     if(!winnable.getAndCheckGameFile()){
+        exit(1);
+    }
+    if(!winnable.searchForWinningSeriesOfMoves(&movesSoFar)){
+        std::cerr << "# Game is not winnable in " << winnable.getMovestoPlay() << std::endl;
         exit(1);
     }
     //Print the command line arguments for testing

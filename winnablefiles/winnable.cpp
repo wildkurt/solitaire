@@ -6,6 +6,7 @@
 #include <cstring>
 #include <array>
 #include <memory>
+#include <fstream>
 #include "winnable.h"
 
 Winnable::Winnable() {
@@ -136,13 +137,61 @@ int Winnable::getNumberFromString(std::string result) {
     }
     return resultNumber;
 }
+// This function is called by winnable.searchForWinningSeriesOfMovies and needs to be recursive in nature.
+bool Winnable::searchForWinningSeriesOfMoves(int *movesSoFar) {
+    std::string movesFrom = "w1234567.r";
+    std::string movesTo = "1234567f";
+    // See if game is in winning configuration
+    if(this->checkForWinningCondition("./check exchange.txt")){
+        return true;
+    }
+    //See fi we have reached or exceeded the moves limit
+    else if(this->movestoplay <= *movesSoFar){
+        return false;
+    }
 
-bool Winnable::searchForWinningSeriesOfMoves() {
+    for(int i = 0; i < movesFrom.length() ; i++){
+        for(int j = 0; j < movesTo.length(); j++){
+            //need to append a move to the file then send to Advance to see if it is a valid file and move
+            std::ofstream appendMoveToFile;
+            appendMoveToFile.open("exchange.txt", std::ios_base::app);
+            if(i < 8) {
+                if (appendMoveToFile.is_open()) {
+                    appendMoveToFile << movesFrom[i] << "->" << movesTo[j] << std::endl;
+                } else {
+                    throw std::runtime_error("Failed to find exchange file!");
+                }
+            }
+            else{
+                if(appendMoveToFile.is_open()){
+                    appendMoveToFile << movesFrom[i] << std::endl;
+                }
+                else{
+                    throw std::runtime_error("Failed to find exchange file!");
+                }
+            }
+            //now check to see if the file is valid
+            if(this->getAndCheckGameFile()){
+                Move temp = {movesFrom[i], movesTo[j], 0};
+                this->addValidMoveToWinningList(*movesSoFar, temp);
+                *movesSoFar++;
+                this->searchForWinningSeriesOfMoves(movesSoFar);
+            }
+            else{
+                //An invalid move should print the
+                continue;
+            }
+        }
+    }
+
+
+    //Append a move to file
+    //run advance by calling getAndCheckGameFile()
     return false;
 }
 
 void Winnable::addValidMoveToWinningList(int index, Move move) {
-
+    winningList[index] = move;
 }
 
 

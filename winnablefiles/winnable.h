@@ -18,7 +18,7 @@ private:
     bool verboseMode;
     std::string inputfile;
     GameConfiguration game;
-    Moves winningList[1000];
+    Move winningList[1000];
 public:
     Winnable();
     bool getLimitedMoves();
@@ -34,6 +34,6 @@ public:
     bool checkForWinningCondition(std::string inputfile);
     int getNumberFromString(std::string result);
     void addValidMoveToWinningList(int index, Move move);
-    bool searchForWinningSeriesOfMoves();
+    bool searchForWinningSeriesOfMoves(int *movesSoFar);
 };
 #endif //SOLITAIRE_WINNABLE_H

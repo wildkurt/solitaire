@@ -184,3 +184,31 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
     }
     return 0;
 }
+
+void printGameInExchangeFormat(GameConfiguration game){
+    printRules(&game.rules);
+    printFoundations(&game.foundation);
+    printTableau(&game.tableau);
+    printStockWaste(&game.stockwaste);
+    printf("MOVES:\n");
+}
+
+void printGameInHumanReadable(GameConfiguration game){
+    printFoundations(&game.foundation);
+    printf("TABLEAU:\n");
+    printHumanReadTableau(&game.tableau);
+    printf("Waste top\n");
+    printfHumanReadTopWaste(&game.stockwaste);
+}
+
+void printGameConfigurationnToFile(GameConfiguration game, AdvanceArgs arguments){
+    FILE *outputtofile;
+
+    outputtofile = fopen(arguments.outputfile,"w");
+    printRulesToFile(outputtofile, &game.rules);
+    printFoundationToFile(outputtofile, &game.foundation);
+    printTableauToFile(outputtofile,&game.tableau);
+    printStockWasteToFile(outputtofile, &game.stockwaste);
+    fprintf(outputtofile,"MOVES:\n");
+    fclose(outputtofile);
+}

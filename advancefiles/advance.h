@@ -22,5 +22,7 @@ void writeSTDINtoFile(AdvanceArgs *arguments);
 int checkGameFile(AdvanceArgs *arguments);
 void getTheGameConfiguration(AdvanceArgs *arguments, GameConfiguration *game, Moves *moveList);
 int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *movesList, int *moves);
-
+void printGameInExchangeFormat(GameConfiguration game);
+void printGameInHumanReadable(GameConfiguration game);
+void printGameConfigurationnToFile(GameConfiguration game, AdvanceArgs arguments);
 #endif //SOLITAIRE_ADVANCE_H

@@ -47,28 +47,12 @@ int main(int args, char *argv[]){
     printf("Processed %d moves, all valid\n",moves);
 
     if(arguments.exchangeFormat == 't'){
-        printRules(&game.rules);
-        printFoundations(&game.foundation);
-        printTableau(&game.tableau);
-        printStockWaste(&game.stockwaste);
-        printf("MOVES:\n");
+        printGameInExchangeFormat(game);
     }
     else{
-        printFoundations(&game.foundation);
-        printf("TABLEAU:\n");
-        printHumanReadTableau(&game.tableau);
-        printf("Waste top\n");
-        printfHumanReadTopWaste(&game.stockwaste);
+        printGameInHumanReadable(game);
     }
     if(arguments.outputToFile == 't'){
-        FILE *outputtofile;
-
-        outputtofile = fopen(arguments.outputfile,"w");
-        printRulesToFile(outputtofile, &game.rules);
-        printFoundationToFile(outputtofile, &game.foundation);
-        printTableauToFile(outputtofile,&game.tableau);
-        printStockWasteToFile(outputtofile, &game.stockwaste);
-        fprintf(outputtofile,"MOVES:\n");
-        fclose(outputtofile);
+        printGameConfigurationnToFile(game, arguments);
     }
 }
