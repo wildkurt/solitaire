@@ -89,3 +89,13 @@ Things that need to be done when searching for moves.
 4. Need to pass a game configuration to Advance. File or pipe?
     a. Advance automatically makes a file for check, so piping to Advance would be fine.
     b. Advance will make a file for Winnable to read.
+
+ I was thinking about when searching for valid moves, what happens if a series of valid moves ends, and the algorithm
+ ends up going back more than one move. I was thinking I could get away with using the file to keep track of the game
+  configuration, but it gets over written and there is no way to roll back to a previous configuration. I am thinking
+  that what I can do is have the function make a copy of the game configuration and pass that on to the next recursive
+  call for valid moves. That way, if a path ends up not being winnable, then the algorithm still can pass along the
+  configuration it had before the unwinnable path was discovered, This will also preserve the original game configuration.
+  I don't see in the specification document a requirement to print out the configuration once a winning sequence is found,
+  but I could have a test where the original configuration is appended by the sequence of winning moves to confirm the
+  algorithm is valid.

@@ -39,6 +39,7 @@ int main(int args, char *argv[]){
     int movesSoFar = 0;
     //Creat a Winnable object
     Winnable winnable;
+    Move winningList[1000];
     //Get the command line arguments
     winnable.retrieveCommandLineArguments(args,argv);
     /*get the game from the file and also run advance and check. Running advance allows Advance to create a file for use
@@ -48,7 +49,7 @@ int main(int args, char *argv[]){
     if(!winnable.getAndCheckGameFile()){
         exit(1);
     }
-    if(!winnable.searchForWinningSeriesOfMoves(&movesSoFar)){
+    if(!winnable.searchForWinningSeriesOfMoves(&movesSoFar, winnable, winningList)){
         std::cerr << "# Game is not winnable in " << winnable.getMovestoPlay() << std::endl;
         exit(1);
     }
@@ -56,5 +57,6 @@ int main(int args, char *argv[]){
     winnable.printWinnableCLIArguments();
     //print the game configuration for testing
     winnable.printGameConfiguration();
+    winnable.printListOfWinningMoves(winningList);
     return 0;
 }

@@ -2,6 +2,10 @@
 // Created by wendellbest on 1/29/24.
 //
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #ifndef SOLITAIRE_TABLEAU_H
 #define SOLITAIRE_TABLEAU_H
 
@@ -34,3 +38,7 @@ void printHumanReadTableau(Tableau *tableau);
 void printTableauToFile(FILE *outputtofile, Tableau *tableau);
 
 #endif //SOLITAIRE_TABLEAU_H
+
+#ifdef __cplusplus
+}
+#endif

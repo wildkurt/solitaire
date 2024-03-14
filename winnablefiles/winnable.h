@@ -18,9 +18,10 @@ private:
     bool verboseMode;
     std::string inputfile;
     GameConfiguration game;
-    Move winningList[1000];
 public:
     Winnable();
+    Winnable(const Winnable &w);
+    Winnable& operator=(const Winnable& w );
     bool getLimitedMoves();
     int getMovestoPlay();
     bool getUseHashTable();
@@ -33,7 +34,9 @@ public:
     void printGameConfiguration();
     bool checkForWinningCondition(std::string inputfile);
     int getNumberFromString(std::string result);
-    void addValidMoveToWinningList(int index, Move move);
-    bool searchForWinningSeriesOfMoves(int *movesSoFar);
+    bool searchForWinningSeriesOfMoves(int *movesSoFar, Winnable winnable, Move *winninglist);
+    void printListOfWinningMoves(Move pMove[1000]);
+
+    void printGameToExchangeFile();
 };
 #endif //SOLITAIRE_WINNABLE_H
