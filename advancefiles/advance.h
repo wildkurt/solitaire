@@ -15,6 +15,7 @@ typedef struct AdvanceArgs{
     char *outputfile;
     char exchangeFormat;
     char *inputfile;
+    char suppressInvalidMoveMessage;
 } AdvanceArgs;
 
 void getCommandLineArguments(int args,char **argv, AdvanceArgs *arguments);

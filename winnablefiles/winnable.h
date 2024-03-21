@@ -17,6 +17,7 @@ private:
     bool foundationSafeMoves;
     bool verboseMode;
     std::string inputfile;
+    std::string outputfile;
     GameConfiguration game;
 public:
     Winnable();
@@ -38,5 +39,7 @@ public:
     void printListOfWinningMoves(Move pMove[1000]);
 
     void printGameToExchangeFile();
+
+    bool checkForValidMove();
 };
 #endif //SOLITAIRE_WINNABLE_H

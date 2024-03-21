@@ -4,13 +4,19 @@
 
 #include <string.h>
 #include "foundations.h"
-
+void initializeFoundations(Foundations *foundation){
+    Card temp = {0,0,0};
+    for(int i = 0; i < 4; i++){
+        foundation->foundation[i] = temp;
+    }
+}
 /**Find the foundations if they are in horizontal or vertical orientation. They must be in the correct order clubs,
  * diamonds, hearts, and spades. Rank can be empty "_". **/
 int getFoundations(Foundations *foundation, int *line, FILE *filelink, char *buffer){
     //Since FOUNDATIONS: should be in buffer, need to check for it and any cards first
     int found = 0;
     char cleanBuffer[MAX_BUFFER] = {0};
+    initializeFoundations(foundation);
     do{
         for(int i = 0; i < MAX_BUFFER && buffer[i] != '#' && buffer[i] != '\0'; i++){
             cleanBuffer[i]=buffer[i];
@@ -80,49 +86,43 @@ void printFoundations(Foundations *foundation){
 }
 
 void countFoundationCards(Foundations *foundation, Card *countingdeck){
-    int index = 0;
-
-    index = isRank(foundation->foundation[0].rank);
-    if(index != 0) {
-        for (int i = index - 1; i >= 0; i--) {
-            Card temp;
-            temp.rank = getRank(i + 1);
-            temp.suit = 'c';
-            temp.faceUp = 't';
-            temp.cardCount++;
-            countingdeck[i] = temp;
+        //52 cards in a deck, 13 cards per suit, array index starts at 0. An "Ac" would be index zero.
+        //Also, if the rank is greater than 1, then need to count back from the number to count the number of
+        //cards.
+        for(int i = 0; i < 4; i++){
+            if(i == 0){
+                int index = isRank(foundation->foundation[i].rank) - 1;
+                for(int j = index; j >= 0; j--){
+                    Card temp = {getRank(j + 1), 'c', 't', 0};
+                    temp.cardCount++;
+                    countingdeck[j] = temp;
+                }
+            }
+            if(i == 1){
+                int index = 13 - 1 + isRank(foundation->foundation[i].rank);
+                for(int j = index; j >= 12; j--){
+                    Card temp = {getRank(j - 12), 'd', 't', 0};
+                    temp.cardCount++;
+                    countingdeck[j] = temp;
+                }
+            }
+            if(i == 2){
+                int index = 26 - 1 + isRank(foundation->foundation[i].rank);
+                for(int j = index; j >= 25; j--){
+                    Card temp = {getRank(j - 25), 'h', 't', 0};
+                    temp.cardCount++;
+                    countingdeck[j] = temp;
+                }
+            }
+            if(i == 3){
+                int index = 39 - 1 + isRank(foundation->foundation[i].rank);
+                for(int j = index; j >= 38; j--){
+                    Card temp = {getRank(j - 38), 's', 't', 0};
+                    temp.cardCount++;
+                    countingdeck[j] = temp;
+                }
+            }
         }
-    }
-    index = isRank(foundation->foundation[1].rank);
-    if(index != 0) {
-        for (int i = 13 + index - 1; i >= 13; i--) {
-            Card temp;
-            temp.rank = getRank(i - 13 + 1);
-            temp.suit = 'd';
-            temp.faceUp = 't';
-            countingdeck[i] = temp;
-        }
-    }
-    index = isRank(foundation->foundation[2].rank);
-    if(index != 0){
-        for(int i = 26 + index - -1; i >= 26; i--){
-            Card temp;
-            temp.rank = getRank(i - 26 + 1);
-            temp.suit = 'h';
-            temp.faceUp = 't';
-            countingdeck[i] = temp;
-        }
-    }
-    index = isRank(foundation->foundation[3].rank);
-    if(index != 0){
-        for(int i = 39 + index - -1; i >= 39; i--){
-            Card temp;
-            temp.rank = getRank(i - 39 + 1);
-            temp.suit = 's';
-            temp.faceUp = 't';
-            countingdeck[i] = temp;
-        }
-    }
 }
 
 int addCardToFoundations(Foundations *foundation, Card source){

@@ -24,6 +24,9 @@ void getCommandLineArguments(int args,char **argv, AdvanceArgs *arguments){
         else if(strstr(argv[i], "-x")!=0){
             arguments->exchangeFormat = 't';
         }
+        else if(strstr(argv[i],"-s") != 0){
+            arguments->suppressInvalidMoveMessage = 't';
+        }
         else{
             int length = (int)strlen(argv[i]);
             arguments->inputfile = malloc((length + 1) * sizeof(char));
@@ -108,7 +111,8 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
         (*moves)++;
         //'w' can be a destination and 'f' can't be a source.
         if(movesList->moves[i].from == 'f' || movesList->moves[i].to == 'w'){
-            fprintf(stderr,"Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+            if(arguments->suppressInvalidMoveMessage != 't')
+                fprintf(stderr,"Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
             return 1;
         }
         //Moving from waste
@@ -118,7 +122,8 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
                 Card source;
                 getTopWasteCard(&game->stockwaste, &source);
                 if(addCardToFoundations(&game->foundation, source)){
-                    fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+                    if(arguments->suppressInvalidMoveMessage != 't')
+                        fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
                     return 1;
                 }
                 removeCardFromWaste(&game->stockwaste, &game->rules, &source);
@@ -136,7 +141,8 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
                     addCardToTableauColumn(&game->tableau, movesList->moves[i].to, &source);
                 }
                 else{
-                    fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+                    if(arguments->suppressInvalidMoveMessage != 't')
+                        fprintf(stderr, "Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
                     return 1;
                 }
             }
@@ -144,7 +150,8 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
         }
         else if(strchr(columns, movesList->moves[i].from) && strchr(columns, movesList->moves[i].to) && movesList->moves[i].from != 0){
             if(!moveCardFromColumnToColumn(&game->tableau, movesList->moves[i].from, movesList->moves[i].to)){
-                fprintf(stderr,"Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
+                if(arguments->suppressInvalidMoveMessage != 't')
+                    fprintf(stderr,"Move %d is illegal: %c->%c\n", *moves, movesList->moves[i].from, movesList->moves[i].to);
                 return 1;
             }
             continue;
@@ -153,7 +160,8 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
             Card source;
             getTopTableauColumnCard(&game->tableau, movesList->moves[i].from, &source);
             if(addCardToFoundations(&game->foundation, source)){
-                fprintf(stderr, "Move %d is illegal: %c->%c\n",*moves, movesList->moves[i].from, movesList->moves[i].to);
+                if(arguments->suppressInvalidMoveMessage != 't')
+                    fprintf(stderr, "Move %d is illegal: %c->%c\n",*moves, movesList->moves[i].from, movesList->moves[i].to);
                 return 1;
             }
             removeCardFromColumn(&game->tableau, movesList->moves[i].from, source);
@@ -162,7 +170,8 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
         //turn over cards in stock
         if(movesList->moves[i].actionn == '.'){
             if(doStockWasteCardTurnover(&game->stockwaste, &game->rules)){
-                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+                if(arguments->suppressInvalidMoveMessage != 't')
+                    fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
                 return 1;
             }
             continue;
@@ -170,14 +179,16 @@ int checkTheGameMoves(AdvanceArgs *arguments, GameConfiguration *game, Moves *mo
         //reset the waste back to stock
         if(movesList->moves[i].actionn == 'r'){
             if(remainingWastResets == game->rules.wasteResets){
-                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+                if(arguments->suppressInvalidMoveMessage != 't')
+                    fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
                 return 1;
             }
             if(resetWasteToStock(&game->stockwaste)){
                 remainingWastResets++;
             }
-            else{
-                fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
+            else {
+                if(arguments->suppressInvalidMoveMessage != 't')
+                    fprintf(stderr,"Move %d is illegal: %c\n", *moves, movesList->moves[i].actionn);
                 return 1;
             }
         }

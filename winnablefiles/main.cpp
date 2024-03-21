@@ -53,10 +53,13 @@ int main(int args, char *argv[]){
         std::cerr << "# Game is not winnable in " << winnable.getMovestoPlay() << std::endl;
         exit(1);
     }
+    else{
+        std::cout << "Game is winnable within " << winnable.getMovestoPlay() << " moves " << std::endl;
+    }
     //Print the command line arguments for testing
-    winnable.printWinnableCLIArguments();
+    //winnable.printWinnableCLIArguments();
     //print the game configuration for testing
-    winnable.printGameConfiguration();
+    //winnable.printGameConfiguration();
     winnable.printListOfWinningMoves(winningList);
     return 0;
 }

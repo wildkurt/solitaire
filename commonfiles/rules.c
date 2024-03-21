@@ -5,13 +5,16 @@
 #include <string.h>
 #include <stdlib.h>
 #include "rules.h"
-
+void initilizeRules(Rules *rules){
+    rules->wasteResets = -1;
+    rules->cardTurnover = 1;
+}
 int getRules(Rules *rules, int *line, FILE *filename, char *buffer) {
     //Buffer to strip # lines
     char cleanBuffer[MAX_BUFFER]={0};
     // Indicates if section is found
     int found = 0;
-
+    initilizeRules(rules);
     //Read each line from the file
     while(fgets(buffer,MAX_BUFFER, filename)){
         //Skip lines that start with # or ignore everything after #

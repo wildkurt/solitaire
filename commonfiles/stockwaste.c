@@ -4,12 +4,18 @@
 
 #include <string.h>
 #include "stockwaste.h"
+void initializeStockWaste(StockWaste *stock){
+    Card temp = {0,0,0};
 
+    for(int i = 0; i < 26; i++){
+        stock->sw[i] = temp;
+    }
+}
 int getStockWaste(StockWaste *stockwaste, int *line, FILE *filelink, char *buffer){
     char cleanBuffer[MAX_BUFFER] = {0};
     int found = 0, index = 0;
     char covered = 't';
-
+    initializeStockWaste(stockwaste);
     while(fgets(buffer, MAX_BUFFER, filelink)){
         (*line)++;
         for(int i = 0; i < MAX_BUFFER && buffer[i] != '#'; i++ ){
@@ -68,36 +74,27 @@ void printStockWaste(StockWaste *stockWaste){
 }
 
 void countStockWasteCards(StockWaste *stockwaste, Card *countingdeck, int *stock, int *waste){
-    for(int i = 0; stockwaste->sw[i].rank != 0; i++){
-        if(stockwaste->sw[i].faceUp =='t'){
+    for(int i = 0; stockwaste->sw[i].rank != 0; i++) {
+        if(stockwaste->sw[i].faceUp == 't')
             (*waste)++;
-        }
         else{
             (*stock)++;
         }
         if(stockwaste->sw[i].suit == 'c'){
-            countingdeck[isRank(stockwaste->sw[i].rank) - 1].rank = stockwaste->sw[i].rank;
-            countingdeck[isRank(stockwaste->sw[i].rank) - 1].suit = stockwaste->sw[i].suit;
-            countingdeck[isRank(stockwaste->sw[i].rank) - 1].faceUp = stockwaste->sw[i].faceUp;
+            countingdeck[isRank(stockwaste->sw[i].rank) - 1] = stockwaste->sw[i];
             countingdeck[isRank(stockwaste->sw[i].rank) - 1].cardCount++;
         }
-        if(stockwaste->sw[i].suit == 'd'){
-            countingdeck[13 + isRank(stockwaste->sw[i].rank) - 1].rank = stockwaste->sw[i].rank;
-            countingdeck[13 + isRank(stockwaste->sw[i].rank) - 1].suit = stockwaste->sw[i].suit;
-            countingdeck[13 + isRank(stockwaste->sw[i].rank) - 1].faceUp = stockwaste->sw[i].faceUp;
-            countingdeck[13 + isRank(stockwaste->sw[i].rank) - 1].cardCount++;
+        else if(stockwaste->sw[i].suit == 'd'){
+            countingdeck[isRank(stockwaste->sw[i].rank) + 12] = stockwaste->sw[i];
+            countingdeck[isRank(stockwaste->sw[i].rank) + 12].cardCount++;
         }
-        if(stockwaste->sw[i].suit == 'h'){
-            countingdeck[26 + isRank(stockwaste->sw[i].rank) - 1].rank = stockwaste->sw[i].rank;
-            countingdeck[26 + isRank(stockwaste->sw[i].rank) - 1].suit = stockwaste->sw[i].suit;
-            countingdeck[26 + isRank(stockwaste->sw[i].rank) - 1].faceUp = stockwaste->sw[i].faceUp;
-            countingdeck[26 + isRank(stockwaste->sw[i].rank) - 1].cardCount++;
+        else if(stockwaste->sw[i].suit == 'h'){
+            countingdeck[isRank(stockwaste->sw[i].rank) + 25] = stockwaste->sw[i];
+            countingdeck[isRank(stockwaste->sw[i].rank) + 25].cardCount++;
         }
-        if(stockwaste->sw[i].suit == 's'){
-            countingdeck[39 + isRank(stockwaste->sw[i].rank) - 1].rank = stockwaste->sw[i].rank;
-            countingdeck[39 + isRank(stockwaste->sw[i].rank) - 1].suit = stockwaste->sw[i].suit;
-            countingdeck[39 + isRank(stockwaste->sw[i].rank) - 1].faceUp = stockwaste->sw[i].faceUp;
-            countingdeck[39 + isRank(stockwaste->sw[i].rank) - 1].cardCount++;
+        else if(stockwaste->sw[i].suit == 's'){
+            countingdeck[isRank(stockwaste->sw[i].rank) + 38] = stockwaste->sw[i];
+            countingdeck[isRank(stockwaste->sw[i].rank) + 38].cardCount++;
         }
     }
 }

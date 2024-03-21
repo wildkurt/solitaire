@@ -9,13 +9,26 @@
  * to make sure that the cards for each line are put in the correct columns. Need to account for the '|' which is the
  * indicator that the cards following are face up. Foundations will exit once the last foundation block is found, so
  * still need to find the TABLEAU: header**/
-
+void initializeTableau(Tableau *tableau){
+    Card temp = {0,0,0};
+    for(int i = 0; i < 22; i++){
+        tableau->tab1[i] = temp;
+        tableau->tab2[i] = temp;
+        tableau->tab3[i] = temp;
+        tableau->tab4[i] = temp;
+        tableau->tab5[i] = temp;
+        tableau->tab6[i] = temp;
+        tableau->tab7[i] = temp;
+    }
+}
 
 
 int getTableau(Tableau *tableau, int *line, FILE *filelink, char *buffer){
     char cleanBuffer[MAX_BUFFER] = {0};
     int column = 7;
     char faceup = 'f';
+
+    initializeTableau(tableau);
 
     while(fgets(buffer, MAX_BUFFER, filelink)) {
         (*line)++;
