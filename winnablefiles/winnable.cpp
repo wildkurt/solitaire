@@ -197,48 +197,71 @@ int Winnable::getNumberFromString(std::string result) {
 // This function is called by winnable.searchForWinningSeriesOfMovies and needs to be recursive in nature.
 bool Winnable::searchForWinningSeriesOfMoves(int *movesSoFar, Winnable winnable, Move *winninglist) {
     //Strings of moves to check
-    std::string movesFrom = "w1234567.r", movesTo = "1234567f";
+    std::string movesFrom = "w1234567", movesTo = "1234567f";
 
     //File stream to append game text file
     std::fstream appendGameFileWithMove;
-    //Get a local copy of the winnable object
+
+    //Check if configuration is in winning condition.
     if(winnable.checkForWinningCondition("./check " + winnable.inputfile))
         return true;
+    //check if moves have reached limit
     if(winnable.movestoplay == *movesSoFar)
         return false;
+
+    //Get a local copy of the winnable object
     Winnable current(winnable);
     current.inputfile = "exchange1.txt";
 
+    //See if any moves from waste, columns are valid.
     for(int i = 0; i < movesFrom.length(); i++){
         for(int j = 0; j < movesTo.length(); j++){
+            //don't test moves with the same from and to locations
+            if(movesFrom[i] == movesTo[j])
+                continue;
+
+            //Print the game configuration to file
             current.printGameToExchangeFile();
+
+            //open a connection to the newly created file
             appendGameFileWithMove.open(current.inputfile, std::fstream::out | std::fstream::app);
-            if(movesFrom[i] == '.' || movesFrom[i] == 'r'){
-                appendGameFileWithMove << movesFrom[i] << std::endl;
-                appendGameFileWithMove.close();
+
+            //Test the file stream connection.
+            if(appendGameFileWithMove.is_open()){
+                appendGameFileWithMove << movesFrom[i] << "->" << movesTo[j] << " " << std::endl;
+                //check for a valid move
                 if(current.checkForValidMove()){
-                    Move temp = {0, 0, movesFrom[i]};
+                    Move temp = {movesTo[j], movesFrom[i], 0};
                     winninglist[*movesSoFar] = temp;
                     (*movesSoFar)++;
-                    return searchForWinningSeriesOfMoves(movesSoFar, current, winninglist);
+                    return current.searchForWinningSeriesOfMoves(movesSoFar, current, winninglist);
                 }
-                break;
-            }
-            else if(movesFrom[i] == movesTo[j]){
-                continue;
             }
             else{
-                appendGameFileWithMove << movesFrom[i] << "->" << movesTo[j] << std::endl;
-                appendGameFileWithMove.close();
-                if(current.checkForValidMove()){
-                    Move temp = {movesTo[i], movesFrom[j], 0 };
-                    winninglist[*movesSoFar] = temp;
-                    (*movesSoFar)++;
-                    return searchForWinningSeriesOfMoves(movesSoFar, current, winninglist);
-                }
+                std::cerr << "Unable to find " << current.inputfile << std::endl;
+                exit(1);
             }
         }
     }
+    current.printGameToExchangeFile();
+    appendGameFileWithMove << "." << std::endl;
+    if(current.checkForValidMove()){
+        Move temp = {0,0, '.'};
+        winninglist[*movesSoFar] = temp;
+        (*movesSoFar)++;
+        return current.searchForWinningSeriesOfMoves(movesSoFar, current, winninglist);
+    }
+    else{
+        current.printGameToExchangeFile();
+        appendGameFileWithMove << "r" << std::endl;
+        if(current.checkForValidMove()){
+            Move temp = {0,0, '.'};
+            winninglist[*movesSoFar] = temp;
+            (*movesSoFar)++;
+            return current.searchForWinningSeriesOfMoves(movesSoFar, current, winninglist);
+        }
+    }
+    appendGameFileWithMove.close();
     return false;
 }
 
