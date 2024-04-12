@@ -17,29 +17,24 @@ private:
     bool foundationSafeMoves;
     bool verboseMode;
     std::string inputfile;
-    std::string outputfile;
     GameConfiguration game;
 public:
     Winnable();
     Winnable(const Winnable &w);
     Winnable& operator=(const Winnable& w );
-    bool getLimitedMoves();
-    int getMovestoPlay();
-    bool getUseHashTable();
-    bool getFoundationSafeMoves();
-    bool getVerboseMode();
-    std::string getInputFileName();
     void retrieveCommandLineArguments(int args,char **argv);
-    bool getAndCheckGameFile();
+    bool getGameFile();
+    bool checkGameFile(std::string filename);
     void printWinnableCLIArguments();
     void printGameConfiguration();
-    bool checkForWinningCondition(std::string inputfile);
-    int getNumberFromString(std::string result);
-    bool searchForWinningSeriesOfMoves(int *movesSoFar, Winnable winnable, Move *winninglist);
-    void printListOfWinningMoves(Move pMove[1000]);
 
-    void printGameToExchangeFile();
+    bool isGameWinnable(Move pMove[1000], int *validMoves);
+    void printGameToFile(std::string filename);
 
-    bool checkForValidMove();
+    void appendMoveToFile(char i, char j, char k);
+
+    bool isMoveValid(std::string outputfilename);
+
+    bool gameIsInGauranteedWinCondition();
 };
 #endif //SOLITAIRE_WINNABLE_H

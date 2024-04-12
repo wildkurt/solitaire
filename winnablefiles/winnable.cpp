@@ -4,8 +4,6 @@
 #include <iostream>
 #include <string>
 #include <cstring>
-#include <array>
-#include <memory>
 #include <fstream>
 #include "winnable.h"
 #include "../commonfiles/tableau.h"
@@ -17,7 +15,6 @@ Winnable::Winnable() {
     foundationSafeMoves = false;
     verboseMode = false;
     inputfile = "";
-    outputfile = "exchange2.txt";
     game = {.rules = {.wasteResets = 0, .cardTurnover = 0}, .foundation = {.foundation = {0}}, .tableau ={.tab1 = {0},
           .tab2 = {0}, .tab3 = {0}, .tab4 = {0}, .tab5 = {0}, .tab6 = {0}, .tab7 = {0}}, .stockwaste = {.sw = {0}}};
 }
@@ -29,7 +26,6 @@ Winnable::Winnable(const Winnable &w) {
     this->foundationSafeMoves = w.foundationSafeMoves;
     this->verboseMode = w.verboseMode;
     this->inputfile = w.inputfile;
-    this->outputfile = w.outputfile;
     this->game.rules = w.game.rules;
     for(int i = 0; w.game.foundation.foundation[i].rank != 0; i++){
         this->game.foundation.foundation[i] = w.game.foundation.foundation[i];
@@ -54,7 +50,6 @@ Winnable &Winnable::operator=(const Winnable &w) {
     this->foundationSafeMoves = w.foundationSafeMoves;
     this->verboseMode = w.verboseMode;
     this->inputfile = w.inputfile;
-    this->outputfile = w.outputfile;
     this->game.rules = w.game.rules;
     for(int i = 0; w.game.foundation.foundation[i].rank != 0; i++){
         this->game.foundation.foundation[i] = w.game.foundation.foundation[i];
@@ -73,15 +68,9 @@ Winnable &Winnable::operator=(const Winnable &w) {
     }
     return *this;
 }
-bool Winnable::getLimitedMoves(){return limitmoves;}
-int Winnable::getMovestoPlay(){return movestoplay;}
-bool Winnable::getUseHashTable(){return useHashTable;}
-bool Winnable::getFoundationSafeMoves(){return foundationSafeMoves;}
-bool Winnable::getVerboseMode(){return verboseMode;}
-std::string Winnable::getInputFileName(){return inputfile;}
 
 void Winnable::retrieveCommandLineArguments(int args, char **argv) {
-    for(int i = 0; i < args ; i++){
+    for(int i = 1; i < args ; i++){
         std::string v(argv[i]);
         if(v == "-m"){
             this->limitmoves = true;
@@ -103,46 +92,28 @@ void Winnable::retrieveCommandLineArguments(int args, char **argv) {
     }
 }
 
-bool Winnable::getAndCheckGameFile() {
-    // There could be a file name given, or it is coming from stdin
-    // Using Advance will check the file and write the file to a clean exchange format, unless the file is invalid.
-    // The process will be to run Advance then if the file is valid, then get the Game Configuration from the file
-    char buffer[MAX_BUFFER] = {0};
-    std::string command = "./advance -x ", result, outputFromAdvance = "exchange2.txt";
-    FILE *advancePTR, *getGF;
-    int index = 0;
-
+bool Winnable::getGameFile() {
+    /*The game file can come from stdin or a file. The command line arguments determine that.*/
+    std::fstream writeToFile;
+    std::string defaultFileName = "gameFile.txt";
     if(this->inputfile.empty()){
-        //Run Advance without a file name
-        command.append(" -o ");
-        command.append(this->inputfile);
-        std::cout << command << std::endl;
-        advancePTR = popen(command.c_str(), "r");
+        //Get file from stdin. If the file goes straight to check, then it is gone. Need to make copy of the file
+        //for check.
+        writeToFile.open(defaultFileName, std::fstream::out | std::fstream::trunc);
+        if(writeToFile.is_open()){
+            for(std::string buffer; std::getline(std::cin, buffer);){
+                writeToFile << buffer << std::endl;
+            }
+        }
+        writeToFile.close();
+        this->inputfile = defaultFileName;
+    }
+    if(this->checkGameFile(this->inputfile)){
+        getTheGameConfigFromFile(&this->game,(char *)this->inputfile.c_str());
     }
     else{
-        //Run advance with a file name
-        command.append(this->inputfile);
-        command.append(" -o ");
-        command.append(this->outputfile);
-        std::cout << command << std::endl;
-        advancePTR = popen(command.c_str(), "r");
-    }
-    if(advancePTR == NULL){
-        std::cerr << "File " << this->inputfile << " not found." << std::endl;
         return false;
     }
-    while(fgets(buffer, MAX_BUFFER, advancePTR)!=NULL){
-        result = buffer;
-
-        if(result.find("moves, all valid") != std::string::npos){
-            char *filename = (char *)outputFromAdvance.c_str();
-            getTheGameConfigFromFile(&this->game, filename);
-        }
-        else{
-            std::cout << result << std::endl;
-        }
-    }
-
     return true;
 }
 
@@ -158,155 +129,155 @@ void Winnable::printGameConfiguration() {
     printTheGameConfiguration(&this->game);
 }
 
-bool Winnable::checkForWinningCondition(std::string command) {
-    std::array <char, 128> buffer;
-    std::string result;
-    std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
-    int covered = -1, stock = -1, waste = -1;
+bool Winnable::checkGameFile(std::string filename) {
+    FILE *ptr;
+    std::string command = "./check ";
+    char buffer[MAX_BUFFER] = {0};
 
-    if(!pipe) throw std::runtime_error("popen() failed!");
-    while(!feof(pipe.get())){
-        if(fgets(buffer.data(), 128, pipe.get()) != nullptr)
-            result = buffer.data();
-        if(result.find("covered cards") != std::string::npos){
-            covered = getNumberFromString(result);
-        }
-        if(result.find("stock cards") != std::string::npos){
-            stock = getNumberFromString(result);
-        }
-        if(result.find("waste cards") != std::string::npos){
-            waste = getNumberFromString(result);
-        }
+    command.append(filename);
+    ptr = popen(command.c_str(), "r");
+    if(ptr == nullptr){
+        std::cerr << "Unable to open " << filename << std::endl;
+        return false;
     }
-    if(covered == 0 && stock == 0 && waste <= 1)
-        return true;
-    return false;
+    while(fgets(buffer, MAX_BUFFER, ptr) != nullptr){
+        std::string temp = buffer;
+        if(temp.find("Input file is valid") != std::string::npos)
+            break;
+
+    }
+    if(strlen(buffer) == 0)
+        return false;
+    return true;
 }
 
-int Winnable::getNumberFromString(std::string result) {
-    const char *digits = "0123456789";
-    int resultNumber = -1;
-    std::size_t const n = result.find_first_of(digits);
-    if (n != std::string::npos)
-    {
-        std::size_t const m = result.find_first_not_of(digits, n);
-        resultNumber = stoi( result.substr(n, m != std::string::npos ? m-n : m));
-    }
-    return resultNumber;
-}
-// This function is called by winnable.searchForWinningSeriesOfMovies and needs to be recursive in nature.
-bool Winnable::searchForWinningSeriesOfMoves(int *movesSoFar, Winnable winnable, Move *winninglist) {
-    //Strings of moves to check
-    std::string movesFrom = "w1234567", movesTo = "1234567f";
+bool Winnable::isGameWinnable(Move *pMove, int *winningMoves) {
+    std::string movesFrom = "w1234567", movesTo = "1234567f", actions = ".r";
+    std::string advanceoutput = "advanceoutput.txt", winnableoutput = "winnableoutput.txt";
 
-    //File stream to append game text file
-    std::fstream appendGameFileWithMove;
-
-    //Check if configuration is in winning condition.
-    if(winnable.checkForWinningCondition("./check " + winnable.inputfile))
+    //Winnable game configuration
+    if(this->gameIsInGauranteedWinCondition())
         return true;
-    //check if moves have reached limit
-    if(winnable.movestoplay == *movesSoFar)
+
+    //Not winnable within a number of moves
+    if(this->movestoplay <= *winningMoves)
         return false;
 
-    //Get a local copy of the winnable object
-    Winnable current(winnable);
-    current.inputfile = "exchange1.txt";
-
-    //See if any moves from waste, columns are valid.
+    //Check all of the moves from waste and columns to columns and foundations for the current game configuration
     for(int i = 0; i < movesFrom.length(); i++){
         for(int j = 0; j < movesTo.length(); j++){
-            //don't test moves with the same from and to locations
+            this->printGameToFile(winnableoutput);
+            this->inputfile = winnableoutput;
             if(movesFrom[i] == movesTo[j])
                 continue;
-
-            //Print the game configuration to file
-            current.printGameToExchangeFile();
-
-            //open a connection to the newly created file
-            appendGameFileWithMove.open(current.inputfile, std::fstream::out | std::fstream::app);
-
-            //Test the file stream connection.
-            if(appendGameFileWithMove.is_open()){
-                appendGameFileWithMove << movesFrom[i] << "->" << movesTo[j] << " " << std::endl;
-                //check for a valid move
-                if(current.checkForValidMove()){
-                    Move temp = {movesTo[j], movesFrom[i], 0};
-                    winninglist[*movesSoFar] = temp;
-                    (*movesSoFar)++;
-                    return current.searchForWinningSeriesOfMoves(movesSoFar, current, winninglist);
-                }
-            }
-            else{
-                std::cerr << "Unable to find " << current.inputfile << std::endl;
-                exit(1);
+            this->appendMoveToFile(movesFrom[i], movesTo[j], 0);
+            if(this->isMoveValid(advanceoutput)){
+                (*winningMoves)++;
+                pMove[*winningMoves].to = movesTo[j];
+                pMove[*winningMoves].from = movesFrom[i];
+                pMove[*winningMoves].actionn = 0;
+                Winnable newGame;
+                newGame.inputfile = advanceoutput;
+                newGame.getGameFile();
+                return newGame.isGameWinnable(pMove, winningMoves);
             }
         }
     }
-    current.printGameToExchangeFile();
-    appendGameFileWithMove << "." << std::endl;
-    if(current.checkForValidMove()){
-        Move temp = {0,0, '.'};
-        winninglist[*movesSoFar] = temp;
-        (*movesSoFar)++;
-        return current.searchForWinningSeriesOfMoves(movesSoFar, current, winninglist);
-    }
-    else{
-        current.printGameToExchangeFile();
-        appendGameFileWithMove << "r" << std::endl;
-        if(current.checkForValidMove()){
-            Move temp = {0,0, '.'};
-            winninglist[*movesSoFar] = temp;
-            (*movesSoFar)++;
-            return current.searchForWinningSeriesOfMoves(movesSoFar, current, winninglist);
+
+    //Reaching this point means that none of the waste->column->foundations moves are valid, so do a card turn over or
+    //reset the waste to stock
+    for(int i = 0; i < actions.length(); i++){
+        this->printGameToFile(winnableoutput);
+        this->appendMoveToFile(0,0,actions[i]);
+        if(this->isMoveValid(advanceoutput)){
+            (*winningMoves)++;
+            pMove[*winningMoves].to = 0;
+            pMove[*winningMoves].from = 0;
+            pMove[*winningMoves].actionn = actions[i];
+            Winnable newGame;
+            newGame.inputfile = advanceoutput;
+            newGame.getGameFile();
+            return newGame.isGameWinnable(pMove, winningMoves);
         }
     }
-    appendGameFileWithMove.close();
+    //Should only reach here if there isn't any valid moves
     return false;
 }
 
-void Winnable::printListOfWinningMoves(Move *pMove) {
-    for(int i = 0; pMove[i].from != 0 || pMove[i].actionn != 0; i++){
-        if(pMove[i].actionn != 0)
-            std::cout << pMove[i].actionn << std::endl;
-        else
-            std::cout << pMove[i].from << "->" << pMove[i].to << std::endl;
+void Winnable::printGameToFile(std::string filenameString) {
+
+    const char *filename = filenameString.c_str();
+
+    FILE *fileptr = fopen(filename, "w");
+
+    printRulesToFile(fileptr, &this->game.rules);
+    printFoundationToFile(fileptr, &this->game.foundation);
+    printTableauToFile(fileptr,&this->game.tableau);
+    printStockWasteToFile(fileptr,&this->game.stockwaste);
+    fputs("MOVES:\n", fileptr);
+
+    fclose(fileptr);
+}
+
+void Winnable::appendMoveToFile(char i, char j, char k) {
+    std::fstream appendmove;
+    appendmove.open(this->inputfile, std::fstream::out | std::fstream::app);
+    if(!appendmove.is_open()){
+        std::cerr << "Unable to open " << this->inputfile << " for appending move." << std::endl;
+        exit(1);
     }
+    if(i !=0 && j != 0 && k == 0)
+        appendmove << i << "->" << j << std::endl;
+    else
+        appendmove << k << std::endl;
+    appendmove.close();
 }
 
-void Winnable::printGameToExchangeFile() {
-    FILE *outputFile;
-    char *cOutputFileName = (char *)this->inputfile.c_str();
-    outputFile = fopen(cOutputFileName, "w");
-    printRulesToFile(outputFile, &this->game.rules);
-    printFoundationToFile(outputFile, &this->game.foundation);
-    printTableauToFile(outputFile,&this->game.tableau);
-    printStockWasteToFile(outputFile, &this->game.stockwaste);
-    fprintf(outputFile, "MOVES:\n");
-    fclose(outputFile);
-}
+bool Winnable::isMoveValid(std::string outputfilename) {
+    FILE *ptr;
+    char buffer[MAX_BUFFER] = {0};
 
-bool Winnable::checkForValidMove() {
-    std::array <char, 128> buffer{};
-    std::string command = "./advance -x -s ", result;
+    std::string command = "./advance ";
     command.append(this->inputfile);
     command.append(" -o ");
-    command.append(this->outputfile);
-    std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
-    if(!pipe) throw std::runtime_error("popen() failed!");
-    char *readFile = (char *) this->outputfile.c_str();
-    while(!feof(pipe.get())){
-        if(fgets(buffer.data(), 128, pipe.get()) != nullptr){
-            result = buffer.data();
-            std::cout << result << std::endl;
-        }
-        if(result.find("Processed 1 moves, all valid") != std::string::npos){
-            getTheGameConfigFromFile(&this->game, readFile);
+    command.append(outputfilename);
+
+    ptr = popen((const char*) command.c_str(), "r");
+
+    while(fgets(buffer,MAX_BUFFER,ptr) != nullptr){
+        std::string stringBuffer = buffer;
+        if(stringBuffer.find("Processed ") && stringBuffer.find(" moves, all valid"))
             return true;
-        }
     }
     return false;
 }
+
+bool Winnable::gameIsInGauranteedWinCondition() {
+    int coveredCards = 0, stockCards = 0, wasteCards = 0;
+
+    for(int i = 1; i < 8; i++){
+        Card *ptr = getPointerToColumn(i, &this->game.tableau);
+        for(int j = 0; ptr[j].rank != 0; j++){
+            if(ptr[j].faceUp == 'f'){
+                coveredCards++;
+            }
+        }
+    }
+    Card *swptr = (Card *) &this->game.stockwaste.sw;
+    for(int i = 0; swptr[i].rank != 0; i++){
+        if(swptr[i].faceUp == 't')
+            wasteCards++;
+        else if(swptr[i].faceUp == 'f')
+            stockCards++;
+    }
+    if(coveredCards == 0 && stockCards == 0 && wasteCards <= 1)
+        return true;
+
+    return false;
+}
+
+
+
 
 
 

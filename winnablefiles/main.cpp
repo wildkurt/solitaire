@@ -34,32 +34,40 @@
  * col->f = 7
  * col->col = 42 because a move from the a col to the same col doesn't count. That eliminates 7 moves.
  * 50 possible moves. Two numbers, number of moves followed by the number of the move*/
+void printWinningMoves(Move *movesList);
 
 int main(int args, char *argv[]){
     int movesSoFar = 0;
     //Creat a Winnable object
     Winnable winnable;
     Move winningList[1000];
+    int validMoves = 0;
     //Get the command line arguments
     winnable.retrieveCommandLineArguments(args,argv);
     /*get the game from the file and also run advance and check. Running advance allows Advance to create a file for use
      * by check to perform the check. This is done to retrieve the contents of stdin and make sure it is put into a file
      * that can be accessed by the calling. If it isn't done this way, check would empty the stdin buffer and there would
      * be no input for advance since check doesn't output the game configuration. Winnable also requires access to the file*/
-    if(!winnable.getAndCheckGameFile()){
+    if(!winnable.getGameFile()){
         exit(1);
     }
-    if(!winnable.searchForWinningSeriesOfMoves(&movesSoFar, winnable, winningList)){
-        std::cerr << "# Game is not winnable in " << winnable.getMovestoPlay() << std::endl;
+    if(!winnable.isGameWinnable(winningList, &validMoves)){
+        printWinningMoves(winningList);
         exit(1);
-    }
-    else{
-        std::cout << "Game is winnable within " << winnable.getMovestoPlay() << " moves " << std::endl;
     }
     //Print the command line arguments for testing
     //winnable.printWinnableCLIArguments();
     //print the game configuration for testing
     //winnable.printGameConfiguration();
-    winnable.printListOfWinningMoves(winningList);
+    //winnable.printListOfWinningMoves(winningList);
     return 0;
+}
+
+void printWinningMoves(Move *movesList){
+    for(int i = 0; (movesList[i].to != 0 && movesList[i].from != 0) || movesList[i].actionn != 0; i++){
+        if(movesList[i].to != 0 && movesList[i].from != 0 && movesList[i].actionn == 0)
+            std::cout << movesList[i].from << "->" << movesList[i].to << std::endl;
+        else if(movesList[i].to == 0 && movesList[i].from == 0 && movesList[i].actionn != 0)
+            std::cout << movesList[i].actionn << std::endl;
+    }
 }
