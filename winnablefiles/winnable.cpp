@@ -92,22 +92,21 @@ void Winnable::retrieveCommandLineArguments(int args, char **argv) {
     }
 }
 
-bool Winnable::getGameFile() {
+bool Winnable::getGameFile(std::string filename) {
     /*The game file can come from stdin or a file. The command line arguments determine that.*/
     std::fstream writeToFile;
-    std::string defaultFileName = "gameFile.txt";
     if(this->inputfile.empty()){
         //Get file from stdin. If the file goes straight to check, then it is gone. Need to make copy of the file
         //for check.
-        writeToFile.open(defaultFileName, std::fstream::out | std::fstream::trunc);
+        writeToFile.open(filename, std::fstream::out | std::fstream::trunc);
         if(writeToFile.is_open()){
             for(std::string buffer; std::getline(std::cin, buffer);){
                 writeToFile << buffer << std::endl;
             }
         }
         writeToFile.close();
-        this->inputfile = defaultFileName;
     }
+    this->inputfile = filename;
     if(this->checkGameFile(this->inputfile)){
         getTheGameConfigFromFile(&this->game,(char *)this->inputfile.c_str());
     }
@@ -151,7 +150,7 @@ bool Winnable::checkGameFile(std::string filename) {
     return true;
 }
 
-bool Winnable::isGameWinnable(Move *pMove, int *winningMoves) {
+bool Winnable::isGameWinnable(Move *pMove, int validMoves, int *numberOfConfigurations) {
     std::string movesFrom = "w1234567", movesTo = "1234567f", actions = ".r";
     std::string advanceoutput = "advanceoutput.txt", winnableoutput = "winnableoutput.txt";
 
@@ -160,26 +159,27 @@ bool Winnable::isGameWinnable(Move *pMove, int *winningMoves) {
         return true;
 
     //Not winnable within a number of moves
-    if(this->movestoplay <= *winningMoves)
+    if(this->movestoplay <= validMoves)
         return false;
 
     //Check all of the moves from waste and columns to columns and foundations for the current game configuration
     for(int i = 0; i < movesFrom.length(); i++){
         for(int j = 0; j < movesTo.length(); j++){
+            (*numberOfConfigurations)++;
             this->printGameToFile(winnableoutput);
             this->inputfile = winnableoutput;
             if(movesFrom[i] == movesTo[j])
                 continue;
             this->appendMoveToFile(movesFrom[i], movesTo[j], 0);
             if(this->isMoveValid(advanceoutput)){
-                (*winningMoves)++;
-                pMove[*winningMoves].to = movesTo[j];
-                pMove[*winningMoves].from = movesFrom[i];
-                pMove[*winningMoves].actionn = 0;
+                pMove[validMoves].to = movesTo[j];
+                pMove[validMoves].from = movesFrom[i];
+                pMove[validMoves].actionn = 0;
                 Winnable newGame;
+                newGame = *this;
                 newGame.inputfile = advanceoutput;
-                newGame.getGameFile();
-                return newGame.isGameWinnable(pMove, winningMoves);
+                newGame.getGameFile(newGame.getGameInputfile());
+                return newGame.isGameWinnable(pMove, ++validMoves, numberOfConfigurations);
             }
         }
     }
@@ -187,17 +187,18 @@ bool Winnable::isGameWinnable(Move *pMove, int *winningMoves) {
     //Reaching this point means that none of the waste->column->foundations moves are valid, so do a card turn over or
     //reset the waste to stock
     for(int i = 0; i < actions.length(); i++){
+        (*numberOfConfigurations)++;
         this->printGameToFile(winnableoutput);
         this->appendMoveToFile(0,0,actions[i]);
         if(this->isMoveValid(advanceoutput)){
-            (*winningMoves)++;
-            pMove[*winningMoves].to = 0;
-            pMove[*winningMoves].from = 0;
-            pMove[*winningMoves].actionn = actions[i];
+            pMove[validMoves].to = 0;
+            pMove[validMoves].from = 0;
+            pMove[validMoves].actionn = actions[i];
             Winnable newGame;
+            newGame = *this;
             newGame.inputfile = advanceoutput;
-            newGame.getGameFile();
-            return newGame.isGameWinnable(pMove, winningMoves);
+            newGame.getGameFile(newGame.inputfile);
+            return newGame.isGameWinnable(pMove, ++validMoves, numberOfConfigurations);
         }
     }
     //Should only reach here if there isn't any valid moves

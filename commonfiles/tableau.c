@@ -183,56 +183,26 @@ void addCardToTableauColumn(Tableau *tableau, char to, Card *source){
     for(; ptr[i].rank != 0; i++){}
     ptr[i] = *source;
 }
-
+/**Tableau Rules:
+ * 1. On first deal, only one card is up in each column. Columns start with the same number of cards  as the column number.
+ * 2. Removing a card from a column that reveals a covered card mans the covered card is automatically turned over.
+ * 3. Kings can only move to blank spaces, don't move King if it is the bottom card.
+ * 4. Don't move a card if the card below it is face up and the same rank and color as the destination.
+ * 5. Don't move cards with the same source and destination
+ * */
 int moveCardFromColumnToColumn(Tableau  *tableau, char from, char to){
-    //Can move any number of cards from one column to another
-    //Need to get the top card of the to column, then find a card in the from column that is one rank lower and opposite
-    //color
-    if(from == to)
-        return 0;
-    int fromcolumn = from - '0', tocolumn = to - '0';
-    Card destination;
-    //Pointer to the top destination card
-    Card *toptr = getPointerToColumn(tocolumn, tableau);
-    //Move toptr to position after top card
-    while(toptr->rank != 0){toptr++;}
-    //Get the top card in to column
-    getTopTableauColumnCard(tableau, to, &destination);
-    //pointer to from column
-    Card *fromptr = getPointerToColumn(fromcolumn, tableau);
+    Card *fromPTR, *toPtr;
+    fromPTR = getPointerToColumn(from - '0', tableau);
+    toPtr = getPointerToColumn(to-'0', tableau);
 
-    //look for card that can be moved to "to" column.
-    //Find the uncovered cards
-    while(fromptr->faceUp == 'f'){fromptr++;}
-    //If the from card is a king and the to is empty column, then move
-    //compare the uncovered from cards to the to top card.
-    while(fromptr->rank != 0){
-        if(!isSameColor(destination.suit, fromptr->suit) && isRank(destination.rank) - 1 == isRank(fromptr->rank)){
-            if((fromptr-1)->faceUp == 'f')
-                (fromptr-1)->faceUp = 't';
-            break;
-        }
-        if(toptr->rank == 0 && fromptr->rank == 'K'){
-            if((fromptr-1)->faceUp == 'f')
-                (fromptr-1)->faceUp = 't';
-            break;
-        }
-        fromptr++;
+    if(from == to){
+        return 1;
     }
-    //Two possibilities: fromptr is pointing to a card that is one rank higher and the opposite color or it is pointing
-    //to a card with a rank of zero meaning it didn't find a card that met the criteria. So can test for fromptr->rank == 0
-    if(fromptr->rank == 0)
-        return 0;
-    else{
-        while(fromptr->rank != 0){
-            Card temp = {0,0,0,0};
-            *toptr = *fromptr;
-            *fromptr = temp;
-            fromptr++;
-            toptr++;
-        }
+    if(fromPTR->rank == 'K' && toPtr->rank == 0){
+        return 1;
     }
-    return 1;
+
+    return 0;
 }
 
 void removeCardFromColumn(Tableau *tableau, char column, Card source){

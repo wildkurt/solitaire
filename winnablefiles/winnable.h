@@ -23,12 +23,14 @@ public:
     Winnable(const Winnable &w);
     Winnable& operator=(const Winnable& w );
     void retrieveCommandLineArguments(int args,char **argv);
-    bool getGameFile();
+    bool getGameFile(std::string filename);
     bool checkGameFile(std::string filename);
+    std::string getGameInputfile(){return this->inputfile;}
+    int getMovesToPlay(){return this->movestoplay;}
     void printWinnableCLIArguments();
     void printGameConfiguration();
 
-    bool isGameWinnable(Move pMove[1000], int *validMoves);
+    bool isGameWinnable(Move pMove[1000], int validMoves, int *numberOfConfigurations);
     void printGameToFile(std::string filename);
 
     void appendMoveToFile(char i, char j, char k);
