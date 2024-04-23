@@ -151,7 +151,7 @@ bool Winnable::checkGameFile(std::string filename) {
 }
 
 bool Winnable::isGameWinnable(Move *pMove, int validMoves, int *numberOfConfigurations) {
-    std::string movesFrom = "w1234567", movesTo = "1234567f", actions = ".r";
+    std::string movesFrom = "1234567", movesTo = "1234567";
     std::string advanceoutput = "advanceoutput.txt", winnableoutput = "winnableoutput.txt";
 
     //Winnable game configuration
@@ -162,46 +162,106 @@ bool Winnable::isGameWinnable(Move *pMove, int validMoves, int *numberOfConfigur
     if(this->movestoplay <= validMoves)
         return false;
 
-    //Check all of the moves from waste and columns to columns and foundations for the current game configuration
-    for(int i = 0; i < movesFrom.length(); i++){
-        for(int j = 0; j < movesTo.length(); j++){
-            (*numberOfConfigurations)++;
-            this->printGameToFile(winnableoutput);
-            this->inputfile = winnableoutput;
-            if(movesFrom[i] == movesTo[j])
+    //Can any cards be moved to foundations
+    for (int i = 0; i < movesFrom.length(); i++){
+        (*numberOfConfigurations)++;
+        this->printGameToFile(winnableoutput);
+        this->appendMoveToFile(movesFrom[i], 'f', 0);
+        if(this->isMoveValid(advanceoutput)){
+            pMove[validMoves] = {'f', movesFrom[i],0};
+            validMoves++;
+            Winnable newConfig = *this;
+            newConfig.getGameFile(advanceoutput);
+            if(!newConfig.isGameWinnable(pMove, validMoves, numberOfConfigurations)){
                 continue;
-            this->appendMoveToFile(movesFrom[i], movesTo[j], 0);
-            if(this->isMoveValid(advanceoutput)){
-                pMove[validMoves].to = movesTo[j];
-                pMove[validMoves].from = movesFrom[i];
-                pMove[validMoves].actionn = 0;
-                Winnable newGame;
-                newGame = *this;
-                newGame.inputfile = advanceoutput;
-                newGame.getGameFile(newGame.getGameInputfile());
-                return newGame.isGameWinnable(pMove, ++validMoves, numberOfConfigurations);
+            }
+            else{
+                return true;
             }
         }
     }
 
-    //Reaching this point means that none of the waste->column->foundations moves are valid, so do a card turn over or
-    //reset the waste to stock
-    for(int i = 0; i < actions.length(); i++){
-        (*numberOfConfigurations)++;
-        this->printGameToFile(winnableoutput);
-        this->appendMoveToFile(0,0,actions[i]);
-        if(this->isMoveValid(advanceoutput)){
-            pMove[validMoves].to = 0;
-            pMove[validMoves].from = 0;
-            pMove[validMoves].actionn = actions[i];
-            Winnable newGame;
-            newGame = *this;
-            newGame.inputfile = advanceoutput;
-            newGame.getGameFile(newGame.inputfile);
-            return newGame.isGameWinnable(pMove, ++validMoves, numberOfConfigurations);
+    //Can cards be moved to other columns
+    for(int i = 0; i < movesFrom.length(); i++){
+        for(int j = 0; j < movesTo.length(); j++){
+            (*numberOfConfigurations)++;
+            if(movesFrom[i] == movesTo[j])
+                continue;
+            else{
+                this->printGameToFile(winnableoutput);
+                this->appendMoveToFile(movesFrom[i], movesTo[j], 0);
+                if(this->isMoveValid(advanceoutput)){
+                    pMove[validMoves] = {movesTo[j], movesFrom[i], 0};
+                    validMoves++;
+                    Winnable newConfig = *this;
+                    newConfig.getGameFile(advanceoutput);
+                    if(!newConfig.isGameWinnable(pMove, validMoves, numberOfConfigurations)){
+                        continue;
+                    }
+                }
+                else{
+                    return true;
+                }
+            }
         }
     }
-    //Should only reach here if there isn't any valid moves
+
+    //Can card be moved from waste to foundation
+    this->printGameToFile(winnableoutput);
+    this->appendMoveToFile('w', 'f', 0);
+    if(this->isMoveValid(advanceoutput)){
+        pMove[validMoves] = {'f', 'w', 0};
+        validMoves++;
+        Winnable newConfig = *this;
+        newConfig.getGameFile(advanceoutput);
+        if(newConfig.isGameWinnable(pMove, validMoves, numberOfConfigurations)){
+            return true;
+        }
+    }
+
+    for (int i = 0; i < movesFrom.length(); i++){
+        (*numberOfConfigurations)++;
+        this->printGameToFile(winnableoutput);
+        this->appendMoveToFile('w', movesTo[i], 0);
+        if(this->isMoveValid(advanceoutput)){
+            pMove[validMoves] = {movesTo[i],'w',0};
+            validMoves++;
+            Winnable newConfig = *this;
+            newConfig.getGameFile(advanceoutput);
+            if(!newConfig.isGameWinnable(pMove, validMoves, numberOfConfigurations)){
+                continue;
+            }
+            else{
+                return true;
+            }
+        }
+    }
+
+    //Turn card or cards over in Stock
+    this->printGameToFile(winnableoutput);
+    this->appendMoveToFile(0, 0, '.');
+    if(this->isMoveValid(advanceoutput)){
+        pMove[validMoves] = {0, 0, '.'};
+        validMoves++;
+        Winnable newConfig = *this;
+        newConfig.getGameFile(advanceoutput);
+        if(newConfig.isGameWinnable(pMove, validMoves, numberOfConfigurations)){
+            return true;
+        }
+    }
+    else{
+        this->printGameToFile(winnableoutput);
+        this->appendMoveToFile(0, 0, 'r');
+        if(this->isMoveValid(advanceoutput)){
+            pMove[validMoves] = {0, 0, 'r'};
+            validMoves++;
+            Winnable newConfig = *this;
+            newConfig.getGameFile(advanceoutput);
+            if(newConfig.isGameWinnable(pMove, validMoves, numberOfConfigurations)){
+                return true;
+            }
+        }
+    }
     return false;
 }
 

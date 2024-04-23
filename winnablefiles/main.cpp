@@ -40,7 +40,7 @@ int main(int args, char *argv[]){
     int movesSoFar = 0;
     //Creat a Winnable object
     Winnable winnable;
-    Move winningList[1000];
+    Move winningList[1000]={0,0,0};
     int validMoves = 0, numberOfConfigurations = 0;
     //Get the command line arguments
     winnable.retrieveCommandLineArguments(args,argv);
