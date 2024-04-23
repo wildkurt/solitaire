@@ -185,7 +185,7 @@ void addCardToTableauColumn(Tableau *tableau, char to, Card *source){
 }
 /**Tableau Rules:
  * 1. On first deal, only one card is up in each column. Columns start with the same number of cards  as the column number.
- * 2. Removing a card from a column that reveals a covered card mans the covered card is automatically turned over.
+ * 2. Removing a card from a column that reveals a covered card means the covered card is automatically turned over.
  * 3. Kings can only move to blank spaces, don't move King if it is the bottom card.
  * 4. Don't move a card if the card below it is face up and the same rank and color as the destination.
  * 5. Don't move cards with the same source and destination
@@ -194,12 +194,49 @@ int moveCardFromColumnToColumn(Tableau  *tableau, char from, char to){
     Card *fromPTR, *toPtr;
     fromPTR = getPointerToColumn(from - '0', tableau);
     toPtr = getPointerToColumn(to-'0', tableau);
-
+    //Can't move to same column
     if(from == to){
-        return 1;
+        return 0;
     }
-    if(fromPTR->rank == 'K' && toPtr->rank == 0){
-        return 1;
+    //Can't move from an empty column
+    if(fromPTR->rank == 0){
+        return 0;
+    }
+    //If the from column has a king on the bottom, then don't move
+    if(fromPTR->rank == 'K' && fromPTR->faceUp == 't' && toPtr->rank == 0){
+        return 0;
+    }
+    //Move the pointers to the first uncovered card
+    while(fromPTR->faceUp=='f'){fromPTR++;}
+    while(toPtr->faceUp=='f'){toPtr++;}
+    //If the to column is empty
+    if(toPtr->rank == 0){
+        while(fromPTR->rank != 'K'){fromPTR++;}
+        if(fromPTR->rank == 'k'){
+            while(fromPTR->rank != 0){
+                *toPtr++ = *fromPTR;
+                Card temp = {0,0,0,0};
+                *fromPTR++ = temp;
+            }
+            return 1;
+        }
+        return 0;
+    }
+    // Move cards from one column to another. Check every uncovered card in the from column and compare to the top card in
+    //The to column. Don't move if the to column top card is the same rank and color as one of the cards in the from column.
+    //Move to top card in to column
+    while((toPtr + 1)->rank != 0){toPtr++;}
+    while (fromPTR->rank != 0){
+        if(fromPTR->rank == toPtr->rank && isSameColor(fromPTR->suit, toPtr->suit))
+            return 0;
+        if(isRank(fromPTR->rank) == isRank(toPtr->rank) + 1 && !isSameColor(fromPTR->suit, toPtr->suit)){
+            while(fromPTR->rank != 0){
+                *(toPtr + 1) = *fromPTR;
+                Card temp = {0,0,0,0};
+                *fromPTR++ = temp;
+            }
+            return 1;
+        }
     }
 
     return 0;
