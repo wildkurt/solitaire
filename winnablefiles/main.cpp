@@ -57,6 +57,12 @@ int main(int args, char *argv[]){
         printWinningMoves(winningList);
         exit(1);
     }
+    else{
+        std::cout << "Checked " << numberOfConfigurations << " configurations" << std::endl;
+        std::cout << "Game is winnable in " << winnable.getMovesToPlay() << " moves" << std::endl;
+        printWinningMoves(winningList);
+        exit(0);
+    }
     //Print the command line arguments for testing
     //winnable.printWinnableCLIArguments();
     //print the game configuration for testing
@@ -66,6 +72,7 @@ int main(int args, char *argv[]){
 }
 
 void printWinningMoves(Move *movesList){
+    std::cout << "List of Valid Moves" << std::endl;
     for(int i = 0; (movesList[i].to != 0 && movesList[i].from != 0) || movesList[i].actionn != 0; i++){
         if(i % 10 == 0)
             std::cout << std::endl;
